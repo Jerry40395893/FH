@@ -12,6 +12,7 @@ public class TestCase
   public void test()
   {
     System.out.println(11111);
+    System.out.println();
   }
 
   /*
