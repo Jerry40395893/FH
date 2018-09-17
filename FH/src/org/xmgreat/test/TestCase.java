@@ -8,6 +8,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class TestCase
 {
+
+  public void test()
+  {
+    System.out.println(11111);
+  }
+
   /*
    * 
    * @Resource private AdminMapper adminMapper;
