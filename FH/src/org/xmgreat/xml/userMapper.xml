@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="org.xmgreat.mapper.AdminMapper">
+<mapper namespace="org.xmgreat.mapper.UserMapper">
 	
-	<select id="login" parameterType="org.xmgreat.entity.AdminEntity"
-		resultType="org.xmgreat.entity.AdminEntity">
-		select * from admin where adminName=#{adminName} and pasw=#{pasw}
+	<select id="login" parameterType="org.xmgreat.entity.UserEntity"
+		resultType="org.xmgreat.entity.UserEntity">
 	</select>
 	
-	<select id="getAllMenuList" parameterType="org.xmgreat.entity.AdminEntity"
+	<!-- <select id="getAllMenuList" parameterType="org.xmgreat.entity.AdminEntity"
 		resultType="org.xmgreat.entity.AdminEntity">
 		select * from menu  order by menuId asc
 	</select>
@@ -21,7 +20,7 @@
 	<select id="getAllList" parameterType="java.lang.String"
 		resultType="org.xmgreat.entity.UserEntity">
 		${sql}
-	</select>
+	</select> -->
 
 </mapper>
 	
