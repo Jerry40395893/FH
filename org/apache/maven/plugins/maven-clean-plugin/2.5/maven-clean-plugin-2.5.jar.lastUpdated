@@ -1,0 +1,7 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Tue Sep 18 08:44:18 CST 2018
+@default-alimaven-F\:\\caseFour/.lastUpdated=1537199783864
+F\:\\caseFour/.error=Could not transfer artifact org.apache.maven.plugins\:maven-clean-plugin\:jar\:2.5 from/to alimaven (F\:\\caseFour)\: Cannot access F\:\\caseFour with type default using the available connector factories\: AetherRepositoryConnectorFactory, BasicRepositoryConnectorFactory
+https\://github.com/Jerry40395893/FH.git/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1537231458006
+https\://github.com/Jerry40395893/FH.git/.lastUpdated=1537192757469

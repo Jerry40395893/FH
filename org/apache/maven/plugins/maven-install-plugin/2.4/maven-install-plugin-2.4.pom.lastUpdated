@@ -1,0 +1,6 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon Sep 17 23:51:26 CST 2018
+@default-alimaven-F\:\\caseFour/.lastUpdated=1537199486078
+F\:\\caseFour/.error=Could not transfer artifact org.apache.maven.plugins\:maven-install-plugin\:pom\:2.4 from/to alimaven (F\:\\caseFour)\: Cannot access F\:\\caseFour with type default using the available connector factories\: AetherRepositoryConnectorFactory, BasicRepositoryConnectorFactory
+https\://github.com/Jerry40395893/FH.git/.error=
+https\://github.com/Jerry40395893/FH.git/.lastUpdated=1537190921403
