@@ -12,7 +12,7 @@ public class TestCase
   @Test
   public void test()
   {
-    System.out.println("11133333311");
+    System.out.println("11133333311CLEAR");
   }
 
   /*
