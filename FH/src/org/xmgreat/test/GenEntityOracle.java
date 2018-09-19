@@ -16,9 +16,9 @@ public class GenEntityOracle
 {
 
   private String packageOutPath = "org.xmgreat.entity";// 指定实体生成所在包的路径
-  private String javaName = "UserEntity"; // .java文件名
-  private String authorName = "沈杰";// 作者名字
-  private String tablename = "userTable";// 表名
+  private String javaName = "WorkEntity"; // .java文件名
+  private String authorName = "沈杰---前台用户工作学习表";// 作者名字
+  private String tablename = "workTb";// 表名
   private String[] colnames; // 列名数组
   private String[] colTypes; // 列名类型数组
   private int[] colSizes; // 列名大小数组
@@ -26,8 +26,9 @@ public class GenEntityOracle
   private boolean f_sql = false; // 是否需要导入包java.sql.*
 
   // 数据库连接
-  private static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-  private static final String NAME = "jx180311";
+
+  private static final String URL = "jdbc:oracle:thin:@39.105.104.147:1521:orcl";
+  private static final String NAME = "jx1803";
   private static final String PASS = "123456";
   private static final String DRIVER = "oracle.jdbc.OracleDriver";
 

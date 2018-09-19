@@ -1,18 +1,26 @@
 package org.xmgreat.test;
 
+import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.xmgreat.entity.AdminEntity;
+import org.xmgreat.mapper.AdminMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 public class TestCase
 {
+  @Resource
+  private AdminMapper adminMapper;
+
   @Test
-  public void test()
+  public void getAdmin()
   {
-    System.out.println("11133333311CLEAR");
+    AdminEntity adminEntity = adminMapper.getAdmin(1);
+    System.out.println(adminEntity.getAdmin());
+
   }
 
   /*

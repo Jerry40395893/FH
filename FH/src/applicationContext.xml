@@ -18,8 +18,8 @@
 	<!-- 配置数据库连接池 -->
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-		<property name="username" value="jx180311" />
+		<property name="url" value="jdbc:oracle:thin:@39.105.104.147:1521:orcl" />
+		<property name="username" value="jx1803" />
 		<property name="password" value="123456" />
 	</bean>
 
@@ -38,6 +38,9 @@
 	<!-- 开启组件扫描 -->
 	<context:component-scan base-package="org.xmgreat" />
 	
+	<!-- properties配置 -->
+	<util:properties id="const" location="classpath:const.properties" />
+
 	<!-- properties配置 -->
 	<util:properties id="const" location="classpath:const.properties" />
 

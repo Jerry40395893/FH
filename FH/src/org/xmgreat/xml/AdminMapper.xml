@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="org.xmgreat.mapper.UserMapper">
+<mapper namespace="org.xmgreat.mapper.AdminMapper">
 	
-	<select id="login" parameterType="org.xmgreat.entity.UserEntity"
-		resultType="org.xmgreat.entity.UserEntity">
+	<select id="getAdmin" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.AdminEntity">
+		select * from adminTb where adminId=#{adminId}
 	</select>
 	
 	<!-- <select id="getAllMenuList" parameterType="org.xmgreat.entity.AdminEntity"

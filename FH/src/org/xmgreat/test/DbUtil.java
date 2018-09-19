@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 public class DbUtil
 { // 连接oracle数据库的应用
   private static final String jdbcName = "oracle.jdbc.OracleDriver";
-  private static final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-  private static final String user = "jx180311";
+  private static final String url = "jdbc:oracle:thin:@39.105.104.147:1521:orcl";
+  private static final String user = "jx1803";
   private static final String password = "123456";
   private static Connection connection = null;
 
