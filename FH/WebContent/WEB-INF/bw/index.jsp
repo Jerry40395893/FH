@@ -151,7 +151,8 @@ function vCodeUpdate() {
       </li>
       <li><a href="<%=basePath%>#prices">活动</a></li>
       <li><a href="<%=basePath%>#gallery">晒幸福</a></li>
-	  <li><a id="modal-1" href="#modal-container-704730" role="button" class="btn" data-toggle="modal">我要登录</a></li>    
+	  <li><a id="modal-1" href="#modal-container-704730" role="button" class="btn" data-toggle="modal">我要登录</a></li>  
+	  <li><a href="<%=basePath%>user/showBanking.action">人气排行榜</a></li>  
     </ul>
   </div>
 </div>

@@ -8,13 +8,22 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/user")
 public class UserHandle
 {
+  @RequestMapping("/showBanking.action")
+  public ModelAndView showBanking()
+  {
+    // 跳转前台人气排行榜
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("bw/banking");
+    return mav;
+  }
+
   // localhost:8080/FH/user/showWelcom.action
   @RequestMapping("/showWelcom.action")
   public ModelAndView showWelcom()
   {
     ModelAndView mv = new ModelAndView();
     /** springMVC会自动找到路径，然后进行页面跳转，展示欢迎页 */
-    mv.setViewName("bw/index");
+    mv.setViewName("web/banking");
     return mv;
   }
 }
