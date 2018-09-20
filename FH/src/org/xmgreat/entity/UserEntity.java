@@ -16,7 +16,7 @@ public class UserEntity
   private String sex;
   private String brithday;
   private String address;
-  private Integer teleNum;
+  private Long teleNum;
   private String email;
   private Integer married;
   private String salary;
@@ -38,7 +38,291 @@ public class UserEntity
   private Integer onStage;
   private Integer auditStage;
   private Integer popular;
+  private String headPortrait;
+  public static class Builder {
 
+	  private Integer userId;
+	  private Integer cityId;
+	  private Integer comboId;
+	  private String userName;
+	  private String pasw;
+	  private String sex;
+	  private String brithday;
+	  private String address;
+	  private Long teleNum;
+	  private String email;
+	  private Integer married;
+	  private String salary;
+	  private String height;
+	  private String doctor;
+	  private String information;
+	  private String zodiac;
+	  private String constellation;
+	  private String children;
+	  private String residence;
+	  private String bloodStyle;
+	  private String nation;
+	  private String car;
+	  private String rgTime;
+	  private String lgTime;
+	  private Integer score;
+	  private Integer onlineStage;
+	  private Integer deleteId;
+	  private Integer onStage;
+	  private Integer auditStage;
+	  private Integer popular;
+
+	  
+	  
+		public Builder setUserId(Integer userId) {
+		this.userId = userId;
+		return this;
+	}
+
+
+
+	public Builder setCityId(Integer cityId) {
+		this.cityId = cityId;
+		return this;
+	}
+
+
+
+	public Builder setComboId(Integer comboId) {
+		this.comboId = comboId;
+		return this;
+	}
+
+
+
+	public Builder setUserName(String userName) {
+		this.userName = userName;
+		return this;
+	}
+
+
+
+	public Builder setPasw(String pasw) {
+		this.pasw = pasw;
+		return this;
+	}
+
+
+
+	public Builder setSex(String sex) {
+		this.sex = sex;
+		return this;
+	}
+
+
+
+	public Builder setBrithday(String brithday) {
+		this.brithday = brithday;
+		return this;
+	}
+
+
+
+	public Builder setAddress(String address) {
+		this.address = address;
+		return this;
+	}
+
+
+
+	public Builder setTeleNum(Long teleNum) {
+		this.teleNum = teleNum;
+		return this;
+	}
+
+
+	public Builder setEmail(String email) {
+		this.email = email;
+		return this;
+	}
+
+
+
+	public Builder setMarried(Integer married) {
+		this.married = married;
+		return this;
+	}
+
+
+
+	public Builder setSalary(String salary) {
+		this.salary = salary;
+		return this;
+	}
+
+
+
+	public Builder setHeight(String height) {
+		this.height = height;
+		return this;
+	}
+
+
+
+	public Builder setDoctor(String doctor) {
+		this.doctor = doctor;
+		return this;
+	}
+
+
+
+	public Builder setInformation(String information) {
+		this.information = information;
+		return this;
+	}
+
+
+
+	public Builder setZodiac(String zodiac) {
+		this.zodiac = zodiac;
+		return this;
+	}
+
+
+
+	public Builder setConstellation(String constellation) {
+		this.constellation = constellation;
+		return this;
+	}
+
+
+
+	public Builder setChildren(String children) {
+		this.children = children;
+		return this;
+	}
+
+
+
+	public Builder setResidence(String residence) {
+		this.residence = residence;
+		return this;
+	}
+
+
+
+	public Builder setBloodStyle(String bloodStyle) {
+		this.bloodStyle = bloodStyle;
+		return this;
+	}
+
+
+
+	public Builder setNation(String nation) {
+		this.nation = nation;
+		return this;
+	}
+
+
+
+	public Builder setCar(String car) {
+		this.car = car;
+		return this;
+	}
+
+
+
+	public Builder setRgTime(String rgTime) {
+		this.rgTime = rgTime;
+		return this;
+	}
+
+
+
+	public Builder setLgTime(String lgTime) {
+		this.lgTime = lgTime;
+		return this;
+	}
+
+
+
+	public Builder setScore(Integer score) {
+		this.score = score;
+		return this;
+	}
+
+
+
+	public Builder setOnlineStage(Integer onlineStage) {
+		this.onlineStage = onlineStage;
+		return this;
+	}
+
+
+
+	public Builder setDeleteId(Integer deleteId) {
+		this.deleteId = deleteId;
+		return this;
+	}
+
+
+
+	public Builder setOnStage(Integer onStage) {
+		this.onStage = onStage;
+		return this;
+	}
+
+
+
+	public Builder setAuditStage(Integer auditStage) {
+		this.auditStage = auditStage;
+		return this;
+	}
+
+
+
+	public Builder setPopular(Integer popular) {
+		this.popular = popular;
+		return this;
+	}
+
+
+
+		public UserEntity build() {
+			return new UserEntity(this);
+		}
+	}
+
+  public UserEntity(Builder builder)
+		  {
+		    super();
+		    this.userId = builder.userId;
+		    this.cityId = builder.cityId;
+		    this.comboId = builder.comboId;
+		    this.userName = builder.userName;
+		    this.pasw = builder.pasw;
+		    this.sex = builder.sex;
+		    this.brithday = builder.brithday;
+		    this.address = builder.address;
+		    this.teleNum = builder.teleNum;
+		    this.email = builder.email;
+		    this.married = builder.married;
+		    this.salary = builder.salary;
+		    this.height = builder.height;
+		    this.doctor = builder.doctor;
+		    this.information = builder.information;
+		    this.zodiac = builder.zodiac;
+		    this.constellation = builder.constellation;
+		    this.children = builder.children;
+		    this.residence = builder.residence;
+		    this.bloodStyle = builder.bloodStyle;
+		    this.nation = builder.nation;
+		    this.car = builder.car;
+		    this.rgTime = builder.rgTime;
+		    this.lgTime = builder.lgTime;
+		    this.score = builder.score;
+		    this.onlineStage = builder.onlineStage;
+		    this.deleteId = builder.deleteId;
+		    this.onStage = builder.onStage;
+		    this.auditStage = builder.auditStage;
+		    this.popular = builder.popular;
+		  }
+  
   public UserEntity()
   {
     super();
@@ -46,12 +330,12 @@ public class UserEntity
 
   public UserEntity(Integer userId, Integer cityId, Integer comboId,
     String userName, String pasw, String sex, String brithday, String address,
-    Integer teleNum, String email, Integer married, String salary,
+    Long teleNum, String email, Integer married, String salary,
     String height, String doctor, String information, String zodiac,
     String constellation, String children, String residence, String bloodStyle,
     String nation, String car, String rgTime, String lgTime, Integer score,
     Integer onlineStage, Integer deleteId, Integer onStage, Integer auditStage,
-    Integer popular)
+    Integer popular,String headPortrait)
   {
     super();
     this.userId = userId;
@@ -84,6 +368,7 @@ public class UserEntity
     this.onStage = onStage;
     this.auditStage = auditStage;
     this.popular = popular;
+    this.headPortrait = headPortrait;
   }
 
   /**
@@ -153,7 +438,7 @@ public class UserEntity
   /**
    * @return the teleNum
    */
-  public Integer getTeleNum()
+  public Long getTeleNum()
   {
     return teleNum;
   }
@@ -402,7 +687,7 @@ public class UserEntity
    * @param teleNum
    *          the teleNum to set
    */
-  public void setTeleNum(Integer teleNum)
+  public void setTeleNum(Long teleNum)
   {
     this.teleNum = teleNum;
   }
@@ -596,4 +881,13 @@ public class UserEntity
     this.popular = popular;
   }
 
+public String getHeadPortrait() {
+	return headPortrait;
+}
+
+public void setHeadPortrait(String headPortrait) {
+	this.headPortrait = headPortrait;
+}
+
+  
 }

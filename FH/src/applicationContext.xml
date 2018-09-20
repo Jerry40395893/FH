@@ -41,7 +41,6 @@
 	<!-- properties配置 -->
 	<util:properties id="const" location="classpath:const.properties" />
 
-	<!-- properties配置 -->
-	<util:properties id="const" location="classpath:const.properties" />
+	
 
 </beans>

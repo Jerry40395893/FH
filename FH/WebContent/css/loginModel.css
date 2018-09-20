@@ -1,4 +1,5 @@
-.form{background: rgba(255,255,255,0.8);width:30%; margin:12.5% auto;}
-/*阴影*/
+.form{background: rgba(255,255,255,0.2);width:60%; margin:12.5% auto;}
 .fa{display: inline-block;top: 27px;left: 6px;position: relative;color: #ccc;}
 input[type="text"],input[type="password"]{padding-left:26px;}
+.btn-login{width:60%;}
+#btn-modal{text-align: center;}

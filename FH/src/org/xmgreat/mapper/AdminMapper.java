@@ -1,11 +1,14 @@
 package org.xmgreat.mapper;
 
-import org.apache.ibatis.annotations.Param;
+import java.util.List;
+
+
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.AdminEntity;
 
 @Repository
 public interface AdminMapper
 {
-  public AdminEntity getAdmin(@Param("adminId") Integer adminId);
+	 public AdminEntity login(AdminEntity adminEntity);
+	 public List<AdminEntity> selecAdmin(AdminEntity adminEntity);
 }

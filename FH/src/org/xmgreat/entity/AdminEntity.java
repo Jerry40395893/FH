@@ -12,18 +12,28 @@ public class AdminEntity
   private String admin;
   private String pasw;
   private String type;
+  private int page;
+
+  private RoleEntity roleEntity;
+
+  private RoleMiddleEntity roleMiddleEntity;
 
   public AdminEntity()
   {
     super();
   }
 
-  public AdminEntity(Integer adminId, String admin, String pasw)
+  public AdminEntity(Integer adminId, String admin, String pasw, String type,
+    int page, RoleEntity roleEntity, RoleMiddleEntity roleMiddleEntity)
   {
     super();
     this.adminId = adminId;
     this.admin = admin;
     this.pasw = pasw;
+    this.type = type;
+    this.page = page;
+    this.roleEntity = roleEntity;
+    this.roleMiddleEntity = roleMiddleEntity;
   }
 
   /**
@@ -85,6 +95,57 @@ public class AdminEntity
   public void setType(String type)
   {
     this.type = type;
+  }
+
+  /**
+   * @return the page
+   */
+  public int getPage()
+  {
+    return page;
+  }
+
+  /**
+   * @return the roleEntity
+   */
+  public RoleEntity getRoleEntity()
+  {
+    return roleEntity;
+  }
+
+  /**
+   * @return the roleMiddleEntity
+   */
+  public RoleMiddleEntity getRoleMiddleEntity()
+  {
+    return roleMiddleEntity;
+  }
+
+  /**
+   * @param page
+   *          the page to set
+   */
+  public void setPage(int page)
+  {
+    this.page = page;
+  }
+
+  /**
+   * @param roleEntity
+   *          the roleEntity to set
+   */
+  public void setRoleEntity(RoleEntity roleEntity)
+  {
+    this.roleEntity = roleEntity;
+  }
+
+  /**
+   * @param roleMiddleEntity
+   *          the roleMiddleEntity to set
+   */
+  public void setRoleMiddleEntity(RoleMiddleEntity roleMiddleEntity)
+  {
+    this.roleMiddleEntity = roleMiddleEntity;
   }
 
 }
