@@ -12,7 +12,7 @@ public class DoctorEntity
   private Integer doctorId;
   private String name;
   private Integer userData;
-  private String styleName;
+  private Integer styleName;
 
   public void setName(String name)
   {
@@ -48,7 +48,7 @@ public class DoctorEntity
   /**
    * @return the styleName
    */
-  public String getStyleName()
+  public Integer getStyleName()
   {
     return styleName;
   }
@@ -75,13 +75,13 @@ public class DoctorEntity
    * @param styleName
    *          the styleName to set
    */
-  public void setStyleName(String styleName)
+  public void setStyleName(Integer styleName)
   {
     this.styleName = styleName;
   }
 
   public DoctorEntity(Integer doctorId, String name, Integer userData,
-    String styleName)
+    Integer styleName)
   {
     super();
     this.doctorId = doctorId;

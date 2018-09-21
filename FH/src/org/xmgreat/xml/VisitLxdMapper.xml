@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.VisitLxdMapper">
+	
+	<!-- 添加记录 -->
+	<insert id="addVisit"  parameterType="org.xmgreat.entity.VisitEntity">
+		insert into visitTb values(seq_visit.nextval,#{userId},#{touserId},
+		to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),#{style})
+	</insert>
+	
+    <!-- 查询所有记录 -->
+	<select id="selectAllVisit" resultType="org.xmgreat.entity.VisitEntity" parameterType="org.xmgreat.entity.VisitEntity">
+		select * from visitTb where 1=1
+		<if test="userId!=0">
+			and userId=#{userId}
+		</if>	
+		<if test="touserId!=0">
+			and touserId=#{touserId}
+		</if>
+		and style=#{style}	
+	</select>
+	
+	<!-- 查询单页记录 -->
+	<!-- <select id="selectPageVisit" resultType="org.xmgreat.entity.VisitEntity" parameterType="org.xmgreat.entity.VisitEntity">
+		select b.* from(select a.*,rownum rn from (select * from visitTb where 1=1
+		<if test="userId!=0">
+			and userId=#{userId}
+		</if>	
+		<if test="touserId!=0">
+			and touserId=#{touserId}
+		</if>
+		and style=#{style}	order by time desc ) a where rownum &lt;= 5) b where rn &gt; 0
+	</select> -->
+	
+	<select id="selectPageVisit" resultType="org.xmgreat.entity.VisitEntity" parameterType="org.xmgreat.entity.VisitEntity">
+		select b.* from(select a.*,rownum rn from (select * from visitTb where 1=1
+		<if test="ve.userId!=0">
+			and userId=#{ve.userId}
+		</if>	
+		<if test="ve.touserId!=0">
+			and touserId=#{ve.touserId}
+		</if>
+		and style=#{ve.style}	order by time desc ) a where rownum &lt;= #{max}) b where rn &gt; #{min}
+	</select>
+
+</mapper>
+	

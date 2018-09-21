@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.PageNumLxdMapper">
+	
+	
+    <!-- 查询每页显示数量-->
+	<select id="selectPara"  resultType="org.xmgreat.entity.ParaEntity">
+		select * from pageNumTb where numId=#{numId}	
+	</select>
+
+</mapper>
+	

@@ -103,7 +103,7 @@
   <div class="navbar-collapse navbar-collapse_ collapse">
     <ul class="nav navbar-nav sf-menu clearfix">
       <li class="active"><a href="<%=basePath%>#home">首页</a></li>
-      <li class="sub-menu sub-menu-1"><a href="MyCompany.jsp">我的佳缘</a>
+      <li class="sub-menu sub-menu-1"><a href="user/showMycompany.action">我的佳缘</a>
 
       </li>
       <li class="sub-menu sub-menu-1"><a href="<%=basePath%>#services">搜索</a>

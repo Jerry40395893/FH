@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+
     
     <%
   String path = request.getContextPath();
@@ -11,7 +10,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Search result | </title>
+  <title>我的资料</title>
 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -51,7 +50,97 @@
   <link href="<%=basePath%>assets/corporate/css/style-responsive.css" rel="stylesheet">
   <link href="<%=basePath%>assets/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
   <link href="<%=basePath%>assets/corporate/css/custom.css" rel="stylesheet">
+  <script type = "text/javascript" src="<%=basePath%>js/jquery.min.js"></script>
   <!-- Theme styles END -->
+<script type="text/javascript">
+  
+$(document).ready(function(){
+	 
+	$("#area").onclick({
+		
+		$.ajax({
+			
+			url:"showCity.action",
+		    type: "POST",
+			dataType:"json",
+			success : function(res){
+				console.log(res.cityName);
+			}
+		});
+			
+			
+			
+		})
+      
+ 
+<%-- 
+$("#field").change(function(){
+	
+ 	$.ajax({
+		url:"<%=path%>UserSideServlet?action=field",
+		data:"field="+$("#field").val(),
+		dataType:"json",
+		type:"post",
+		
+		success:function(redata){
+			$("#counselor").find("option").remove();
+			$("#counselor").append("<option>"+"--请选择--"+"</option>");
+			$.each(redata,function(i,item){
+				$("#counselor").append("<option value="+item.name+">"+item.name+"</option>");
+				
+				
+			});
+			
+			
+		}
+
+	}); 
+	
+	
+	
+});
+
+$("#counselor").change(function(){
+	$.ajax({
+		url:"<%=path%>UserSideServlet?action=counselor",
+		data:"counselor="+$("#counselor").val(),
+		dataType:"json",
+		type:"post",
+		
+		success:function(redate){
+			$.each(redate,function(i,it){
+				$("#name").html(it.name);
+				$("#school").html(it.graduateSchool);
+				$("#title").html(it.title);
+				$("#fieldName").html(it.fieldName);
+				$("#price").html(it.appointmentPrice);
+				$("#profession").html(it.professionalBackground);
+				
+			})
+			
+			
+			
+		}
+		
+	})
+
+})
+
+
+
+
+}) --%>
+  
+  
+  
+  
+  
+</script>
+  
+  
+  
+  
+  
 </head>
 <!-- Head END -->
 
@@ -241,7 +330,7 @@
                   
                   
                   
-                  
+                  <form method="post" action="">
                   
                   <table colspan = "3" width="450" cellpadding="0" cellspacing="0" class="f-table">
 					<tr>
@@ -324,13 +413,20 @@
 					<tr >
 						<td class="item"><span class="ico_stars">*</span><span style="color:#666;">所在地区：</span></td>
 						<td>
-							<select name="work_location" id="profile_location" class="select1" onchange="build_second(this.value,'profile_sublocation',LOK);select_changed();" ></select>&nbsp;&nbsp;<select name="work_sublocation" id="profile_sublocation" class="select2" onChange="document.getElementById('change_area_div').style.display='';select_changed()" ></select>							<script type="text/javascript">init_location(35, 3502, 'profile');</script>
+							
+	  <select name="area" id="area" style="width:150px">
+      </select>
+      <select name="area" id="area" style="width:150px">
+      </select>
 						</td>
 					</tr>
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span >户口：</span></td>
-						<td><select onchange="build_second(this.value,'home_sublocation',LOK);select_changed();"  class="select1" id="home_location" name="home_location"></select>&nbsp;&nbsp;<select onchange="select_changed()"  class="select2" id="home_sublocation" name="home_sublocation"></select></td>
-						<!--<script type="text/javascript">build_select("home_location","home_sublocation",LSK,LOK,"");</script>-->
+						<td>
+						
+			<input type="text" name="residence">
+      </td>
+						
 						<script type="text/javascript">init_location(0, 0, 'home');</script>
 					</tr>
 					<tr>

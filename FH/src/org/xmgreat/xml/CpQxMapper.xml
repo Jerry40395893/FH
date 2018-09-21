@@ -10,6 +10,10 @@
 		
 	</select>
 	
+	<select id="city" resultType="org.xmgreat.entity.CityEntity">
 	
+	select * from CITYTB
+	
+	</select>
 
 </mapper>

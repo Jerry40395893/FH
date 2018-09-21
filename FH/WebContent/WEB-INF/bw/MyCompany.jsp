@@ -30,8 +30,8 @@
  
 
   <!-- Global styles START -->          
-  <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%=basePath%>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="<%=basePath%>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Global styles END --> 
    
   <!-- Page level plugin styles START -->
@@ -210,9 +210,9 @@
               </div>
               
               <span class="item" ><a href="shop-item.html" ><img src="<%=basePath%>assets/pages/img/products/k4.jpg" ></a></span>
-              <h3 align="center"><a href="shop-item.html">我的资料</a></h3>
+              <h3 align="center"><a href="showMyData.action">我的资料</a></h3>
               <div class="item">
-                <h3 align="center"><a href="shop-item.html">我的资料</a></h3>
+                <h3 align="center"><a href="showMyData.action">我的资料</a></h3>
                 <input type="button"  value="收件箱">&nbsp;<input type="button" value="谁看过我">
               </div>
           

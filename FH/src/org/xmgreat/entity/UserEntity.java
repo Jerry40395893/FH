@@ -38,7 +38,7 @@ public class UserEntity
   private Integer onStage;
   private Integer auditStage;
   private Integer popular;
-  private String headPortrait;
+
   public static class Builder {
 
 	  private Integer userId;
@@ -335,7 +335,7 @@ public class UserEntity
     String constellation, String children, String residence, String bloodStyle,
     String nation, String car, String rgTime, String lgTime, Integer score,
     Integer onlineStage, Integer deleteId, Integer onStage, Integer auditStage,
-    Integer popular,String headPortrait)
+    Integer popular)
   {
     super();
     this.userId = userId;
@@ -368,7 +368,6 @@ public class UserEntity
     this.onStage = onStage;
     this.auditStage = auditStage;
     this.popular = popular;
-    this.headPortrait = headPortrait;
   }
 
   /**
@@ -881,13 +880,4 @@ public class UserEntity
     this.popular = popular;
   }
 
-public String getHeadPortrait() {
-	return headPortrait;
-}
-
-public void setHeadPortrait(String headPortrait) {
-	this.headPortrait = headPortrait;
-}
-
-  
 }

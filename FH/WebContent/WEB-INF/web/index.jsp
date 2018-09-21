@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="renderer" content="webkit">
-    <title>后台欢迎页</title>  
+    <title>后台管理中心</title>  
     <link rel="stylesheet" href="<%=basePath %>css/pintuer.css">
     <link rel="stylesheet" href="<%=basePath %>css/admin.css">
     <script src="<%=basePath %>js/jquery.js"></script>   
@@ -25,19 +25,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
+  
+  
+  	
+  
+  <c:forEach items="${menulist}" var="Power">
   <h2><span class="icon-user"></span>用户管理</h2>
   <ul style="display:block">
     <li><a href="<%=basePath %>info.html" target="right"><span class="icon-caret-right"></span>会员管理</a></li>
-    <li><a href="<%=basePath %>admin/adminList.action?page=1" target="right"><span class="icon-caret-right"></span>后台管理</a></li>
-    <li><a href="<%=basePath %>page.html" target="right"><span class="icon-caret-right"></span>会员审核</a></li>  
-  </ul>   
+    <li><a href="<%=basePath %>admin/zzh/adminList.action?page=1" target="right"><span class="icon-caret-right"></span>后台管理</a></li>
+   <li><a href="<%=basePath %>page.html" target="right"><span class="icon-caret-right"></span>会员审核</a></li> 
+    <li><a href="<%=basePath %>admin/sj/comManager.action" target="right"><span class="icon-caret-right"></span>套餐管理</a></li>  
+  </ul> 
+  </c:forEach>  
   <h2><span class="icon-pencil-square-o"></span>运营管理</h2>
   <ul>
     <li><a href="<%=basePath %>list.html" target="right"><span class="icon-caret-right"></span>活动管理</a></li>
     <li><a href="<%=basePath %>add.html" target="right"><span class="icon-caret-right"></span>图片展示规则</a></li>
     <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>智能匹配规则</a></li>
     <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>套餐管理</a></li>
-     <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>标签管理</a></li>               
+    <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>标签管理</a></li>               
   </ul>  
 </div>
 <script type="text/javascript">
@@ -63,6 +70,25 @@ $(function(){
 <div class="admin">
   <iframe scrolling="auto" rameborder="0" src="<%=basePath %>backwelcome.jsp" name="right" width="100%" height="100%"></iframe>
 </div>
+
+<c:forEach items="${menulist}" var="Power">
+		<c:if test="${Power.pId==0 }">
+			<A onClick=show('${Power.powerId}') ">
+			
+			<img src="img/fclose.gif" border="0">${Power.powerNikeName }</A>
+			<div id="${Power.powerId}" style="display: none">
+				<c:forEach items="${listPower}" var="Power1">
+					 <c:if test="${Power1.pId==Power.powerId }">
+						<a href="${Power1.functionName}" target="center"> <img
+							src="img/doc.gif">${Power1.powerNikeName }
+						</a>
+						<br>
+					</c:if> 
+				</c:forEach>
+			</div>
+			<br>
+		</c:if>
+	</c:forEach>
 
 </body>
 </html>

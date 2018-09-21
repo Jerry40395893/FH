@@ -21,10 +21,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <form method="post" action="" id="listform">
   <div class="panel admin-panel">
-    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="<%=basePath %>" style="float:right; display:none;">添加字段</a></div>
+    <div class="panel-head"><strong class="icon-reorder">内容列表</strong> <a href="<%=basePath %>" style="float:right; display:none;">添加字段</a></div>
     <div class="padding border-bottom">
       <ul class="search" style="padding-left:10px;">
-        <li> <a class="button border-main icon-plus-square-o" href="add.html"> 添加内容</a> </li>
+        <li> <a class="button border-main icon-plus-square-o" href="<%=basePath %>admin/zzh/showAddAdmin.action"> 添加管理员</a> </li>
         <li>搜索：</li>
        
         <li>
@@ -34,26 +34,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <table class="table table-hover text-center">
       <tr>
-       
         <th width="10%">序号</th>
-       
         <th>管理账号</th>
-         <th>角色</th>
-
+        <th>角色</th>
         <th width="310">操作</th>
       </tr>
       <volist name="list" id="vo">
       <c:forEach  items="${ulist}"  var="user" varStatus="vs" >
         <tr> 
-          <td><input type="text" name="sort[1]" value="1" style="width:50px; text-align:center; border:1px solid #ddd; padding:7px 0;" /></td>
+          <!-- <td><input type="text" name="sort[1]" value="1" style="width:50px; text-align:center; border:1px solid #ddd; padding:7px 0;" /></td> -->
+          <td>${(adminEntity.page-1)*5+vs.index+1}</td>
           <td>${user.admin}</td>
-          <td>${user.roleEntity.rolename}</td> 
+          <td>${user.roleEntity.roleName}</td> 
           <td>
           <div class="button-group"> 
-           <a class="button border-main" href="<%=basePath %>add.html">
-             <span class="icon-edit"></span> 修改
+           <a class="button border-main" href="<%=basePath %>admin/zzh/upAdminPsw.action?adminId=${user.adminId}&page=${adminEntity.page}">
+             <span class="icon-edit"></span> 重置密码
            </a>
-           <a class="button border-red" href="<%=basePath %>admin/adminmain.action?adminid=${user.adminid}" onclick="return del(1,1,1)">
+           <a class="button border-red" href="<%=basePath %>admin/zzh/delAdmin.action?adminId=${user.adminId}&page=${adminEntity.page}" onclick="return del(1,1,1)">
            <span class="icon-trash-o"></span> 删除
            </a> 
            </div>
@@ -65,7 +63,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       
       </tr>
       <tr>
-        <td colspan="8"><div class="pagelist"> <a href="">上一页</a><a href="">下一页</a> </div></td>
+        <td colspan="8">
+        <div class="pagelist"> 
+           <a href="<%=basePath %>admin/zzh/adminList.action?page=${adminEntity.page-1}">上一页</a>
+           <a href="<%=basePath %>admin/zzh/adminList.action?page=${adminEntity.page+1}">下一页</a> 
+         </div>
+        </td>
       </tr>
     </table>
   </div>

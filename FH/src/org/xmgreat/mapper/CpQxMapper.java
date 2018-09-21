@@ -7,10 +7,13 @@
  */
 package org.xmgreat.mapper;
 
+import org.xmgreat.entity.CityEntity;
+
 /**
  * @author 周群新
  *
  */
-public interface MyCompanyMapper {
+public interface CpQxMapper {
 
+	public CityEntity selectCity();
 }

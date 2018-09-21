@@ -1,5 +1,7 @@
 package org.xmgreat.entity;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,9 +15,10 @@ public class AdminEntity
   private String pasw;
   private String type;
   private int page;
-
+  
+  @Resource
   private RoleEntity roleEntity;
-
+  @Resource
   private RoleMiddleEntity roleMiddleEntity;
 
   public AdminEntity()
