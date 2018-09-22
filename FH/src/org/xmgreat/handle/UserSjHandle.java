@@ -22,7 +22,7 @@ public class UserSjHandle
     return mav;
   }
 
-  // localhost:8080/FH/user/showWelcom.action
+  // localhost:8080/FH/user/sj/showWelcom.action
   @RequestMapping("/showWelcom.action")
   public ModelAndView showWelcom()
   {

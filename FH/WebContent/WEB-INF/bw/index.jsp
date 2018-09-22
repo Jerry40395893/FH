@@ -57,7 +57,7 @@ $(document).ready(function(){
 	$('#loginModal').on('hide.bs.modal', function () {
 		isModalON = false;
 	});
-})
+});
 
 $(document).on("click",function(){
 	if(${user == null} && isModalON == false ){
@@ -69,12 +69,12 @@ $(document).on("click",function(){
 			isModalClosed = true;
 		}
 	}
-})
+});
 
 function vCodeUpdate() {
 	var vCode = document.getElementById("vCode");
 	vCode.src = "global/vCode.action?time="+ Math.random();
-}
+};
 
 function ajaxLogin() {
 		
@@ -240,6 +240,7 @@ function ajaxLogin() {
 										href="<%=basePath%>#services">搜索</a></li>
 									<li><a href="<%=basePath%>#prices">活动</a></li>
 									<li><a href="<%=basePath%>#gallery">晒幸福</a></li>
+									<li><a href="<%=basePath%>user/sj/showBanking.action">人气排行榜</a></li>
 									<c:if test="${user == null}">
 										<li><a id="modal-1" href="#loginModal" role="button"
 											class="btn" data-toggle="modal">我要登录</a></li>

@@ -4,19 +4,20 @@
 <mapper namespace="org.xmgreat.mapper.ComSjMapper">
 
 	<!-- 服务器后台套餐管理分页查询加模糊搜索 -->
-	<select id="geComboEntity" resultType="org.xmgreat.entity.ComboEntity"
+	<select id="getComboEntity" resultType="org.xmgreat.entity.ComboEntity"
 		parameterType="org.xmgreat.entity.ConditionEntity">
 		select *from (select rownum rw ,comboTb.* from comboTb
 		where
 		deleteId!=16
-		<if test='name!=null and name!=""'>
-			and name like #{name}
+		<if test='comName!=null and comName!=""'>
+			and name like '%'||upper(#{comName,jdbcType=VARCHAR})||'%'
 		</if>
 		<if test='price!=null and price!=""'>
-			and fare like #{price}
+			and fare like '%'||upper(#{price,jdbcType=VARCHAR})||'%'
 		</if>
+		<!-- 模糊搜索的条件要用oracle内置的函数进行拼接 -->
 		<if test='time!=null and time!=""'>
-			and month like #{time}
+			and month like '%'||upper(#{time,jdbcType=VARCHAR})||'%'
 		</if>
 		order by comboId desc) where rw &gt;=#{forNum} and
 		rw &lt;=#{toNum}
@@ -24,20 +25,58 @@
 	</select>
 
 	<!-- 服务器后台套餐管理不带分页查询加模糊搜索 -->
-	<select id="geComboCount" resultType="org.xmgreat.entity.ComboEntity">
+	<select id="getComboCount" resultType="org.xmgreat.entity.ComboEntity">
 		select rownum rw ,comboTb.* from comboTb
 		where
 		deleteId!=16
-		<if test='name!=null and name!=""'>
-			and name like #{name}
+		<if test='comName!=null and comName!=""'>
+			and name like '%'||upper(#{comName,jdbcType=VARCHAR})||'%'
 		</if>
 		<if test='price!=null and price!=""'>
-			and fare like #{price}
+			and fare like '%'||upper(#{price,jdbcType=VARCHAR})||'%'
 		</if>
 		<if test='time!=null and time!=""'>
-			and month like #{time}
+			and month like '%'||upper(#{time,jdbcType=VARCHAR})||'%'
 		</if>
 		order by comboId desc
+	</select>
+	<!-- 获取后台分页条数 -->
+	<select id="getNum" resultType="org.xmgreat.entity.ConditionEntity"
+		parameterType="java.lang.Integer">
+		select userData baseNum from doctorTb where
+		styleName=#{styleName}
+	</select>
+	<!--获取套餐信息，进行套餐修改 -->
+	<select id="getCom" resultType="org.xmgreat.entity.ComboEntity"
+		parameterType="java.lang.Integer">
+		select * from comboTb where comboId=#{comboId}
+	</select>
+
+	<!-- 新增套餐 -->
+	<insert id="add" useGeneratedKeys="true" keyProperty="comboId"
+		parameterType="org.xmgreat.entity.ComboEntity">
+		<selectKey resultType="int" order="BEFORE" keyProperty="comboId">
+			SELECT seqComboTb.NEXTVAL from dual
+		</selectKey>
+		insert into comboTb(comboId,name,fare,month,discount,recommend)
+		values(#{comboId},#{name},#{fare},#{month},#{discount},#{recommend})
+	</insert>
+
+	<!-- 逻辑删除套餐 -->
+	<update id="update" parameterType="java.lang.Integer">
+		update comboTb set deleteId=16
+		where comboId=#{comboId}
+	</update>
+	<!-- 套餐修改 -->
+	<update id="updateCom" parameterType="org.xmgreat.entity.ComboEntity">
+		update comboTb set
+		name=#{name}, fare=#{fare},month=#{month},
+		discount=#{discount},recommend=#{recommend} where comboId=#{comboId}
+	</update>
+	<!--获取套餐信息，对套餐名字查重 -->
+	<select id="getCombo" resultType="org.xmgreat.entity.ComboEntity"
+		parameterType="java.lang.String">
+		select * from comboTb where name=#{name}
 	</select>
 
 </mapper>

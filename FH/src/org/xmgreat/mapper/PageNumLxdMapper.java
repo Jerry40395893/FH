@@ -8,5 +8,7 @@ import org.xmgreat.entity.ParaEntity;
 public interface PageNumLxdMapper
 {
 
+	//查询单页数据量
 	public ParaEntity selectPara(@Param(value = "numId") int numId);
 }
+

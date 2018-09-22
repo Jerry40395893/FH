@@ -3,6 +3,7 @@ package org.xmgreat.biz.impl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.xmgreat.biz.VisitLxdBiz;
@@ -19,11 +20,10 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 	private VisitLxdMapper visitLxdMapper;
 	@Resource
 	private PageNumLxdMapper pageNumLxdMapper;
-
 	
-	
+	 /** 添加访问或赞的记录*/
 	@Override
-	public int addVisit(VisitEntity visitEntity)
+	public void addVisit(VisitEntity visitEntity)
 	{
 		// 添加的结果
 		int rs = 0;
@@ -33,39 +33,48 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 		if (visitList.size() == 0)
 		{
 			// 添加记录
-			rs = visitLxdMapper.addVisit(visitEntity);
+			visitLxdMapper.addVisit(visitEntity);
+		} else
+		{
+			// 更新访问时间
+			visitLxdMapper.updateVisitTime(visitEntity);
 		}
 
-		return rs;
 	}
 
 	@Override
-	public List<VisitEntity> selectPageVisit(VisitEntity visitEntity,int page)
+	public List<VisitEntity> selectPageVisit(HttpServletRequest request,VisitEntity visitEntity, int page)
 	{
-		
+
 		// 查询所有记录
 		List<VisitEntity> visitList = visitLxdMapper.selectAllVisit(visitEntity);
-		//每页显示数量
-		ParaEntity paraEntity=pageNumLxdMapper.selectPara(1);
-		int pageNum=paraEntity.getPageNum();
-		int pageTotal=0;
-		if(visitList!=null) {
-			
-			//计算总页数
-			if(visitList.size()%pageNum==0) {
-				pageTotal=visitList.size()/pageNum;
-			}else {
-				pageTotal=visitList.size()/pageNum+1;
+		// 每页显示数量
+		ParaEntity paraEntity = pageNumLxdMapper.selectPara(1);
+		int pageNum = paraEntity.getPageNum();
+		int totalPage = 0;
+		if (visitList != null)
+		{
+
+			// 计算总页数
+			if (visitList.size() % pageNum == 0)
+			{
+				totalPage = visitList.size() / pageNum;
+			} else
+			{
+				totalPage = visitList.size() / pageNum + 1;
 			}
-			
-			if(page>0&&page<=pageTotal) {
-			    //获取分信息
-				visitList=visitLxdMapper.selectPageVisit(visitEntity,pageNum*(page-1),pageNum*page);
-			
+
+			if (page > 0 && page <= totalPage)
+			{
+				// 获取分信息
+				visitList = visitLxdMapper.selectPageVisit(visitEntity, pageNum * (page - 1), pageNum * page);
+
 			}
-			
+
 		}
-		
+		request.setAttribute("visitTotalPage", totalPage);
+		request.setAttribute("visitCurrentPage", page);
+		request.setAttribute("visitList", visitList);
 		return visitList;
 	}
 

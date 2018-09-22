@@ -9,97 +9,115 @@ import org.springframework.stereotype.Component;
 @Component
 public class VisitEntity
 {
-  private Integer visitId;
-  private Integer userId;
-  private Integer touserId;
-  private String time;
-  private Integer style;
+	/** 访问或赞的Id */
+	private Integer visitId;
+	/** 谁访问或赞的用户Id */
+	private Integer userId;
+	/** 被访问或赞的用户Id */
+	private Integer touserId;
+	/** 访问或赞的时间 */
+	private String time;
+	/** 1为访问，2为赞 */
+	private Integer style;
+	/** 获取头像 */
+	private PhotoEntity photoEntity;
 
-  public void setTime(String time)
-  {
-    this.time = time;
-  }
+	public void setTime(String time)
+	{
+		this.time = time;
+	}
 
-  public String getTime()
-  {
-    return time;
-  }
+	public String getTime()
+	{
+		return time;
+	}
 
-  public void setStyle(Integer style)
-  {
-    this.style = style;
-  }
+	public void setStyle(Integer style)
+	{
+		this.style = style;
+	}
 
-  public Integer getStyle()
-  {
-    return style;
-  }
+	public Integer getStyle()
+	{
+		return style;
+	}
 
-  public VisitEntity()
-  {
-    super();
-  }
+	public VisitEntity()
+	{
+		super();
+	}
 
-  public VisitEntity(Integer visitId, Integer userId, Integer touserId,
-    String time, Integer style)
-  {
-    super();
-    this.visitId = visitId;
-    this.userId = userId;
-    this.touserId = touserId;
-    this.time = time;
-    this.style = style;
-  }
+	public VisitEntity(Integer visitId, Integer userId, Integer touserId, String time, Integer style,
+			PhotoEntity photoEntity)
+	{
+		super();
+		this.visitId = visitId;
+		this.userId = userId;
+		this.touserId = touserId;
+		this.time = time;
+		this.style = style;
+		this.photoEntity = photoEntity;
+	}
 
-  /**
-   * @return the visitId
-   */
-  public Integer getVisitId()
-  {
-    return visitId;
-  }
+	/**
+	 * @return the visitId
+	 */
+	public Integer getVisitId()
+	{
+		return visitId;
+	}
 
-  /**
-   * @return the userId
-   */
-  public Integer getUserId()
-  {
-    return userId;
-  }
+	/**
+	 * @return the userId
+	 */
+	public Integer getUserId()
+	{
+		return userId;
+	}
 
-  /**
-   * @return the touserId
-   */
-  public Integer getTouserId()
-  {
-    return touserId;
-  }
+	/**
+	 * @return the touserId
+	 */
+	public Integer getTouserId()
+	{
+		return touserId;
+	}
 
-  /**
-   * @param visitId
-   *          the visitId to set
-   */
-  public void setVisitId(Integer visitId)
-  {
-    this.visitId = visitId;
-  }
+	/**
+	 * @param visitId
+	 *            the visitId to set
+	 */
+	public void setVisitId(Integer visitId)
+	{
+		this.visitId = visitId;
+	}
 
-  /**
-   * @param userId
-   *          the userId to set
-   */
-  public void setUserId(Integer userId)
-  {
-    this.userId = userId;
-  }
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(Integer userId)
+	{
+		this.userId = userId;
+	}
 
-  /**
-   * @param touserId
-   *          the touserId to set
-   */
-  public void setTouserId(Integer touserId)
-  {
-    this.touserId = touserId;
-  }
+	/**
+	 * @param touserId
+	 *            the touserId to set
+	 */
+	public void setTouserId(Integer touserId)
+	{
+		this.touserId = touserId;
+	}
+
+	public PhotoEntity getPhotoEntity()
+	{
+		return photoEntity;
+	}
+
+	public void setPhotoEntity(PhotoEntity photoEntity)
+	{
+		this.photoEntity = photoEntity;
+	}
 
 }

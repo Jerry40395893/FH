@@ -2,8 +2,19 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
  <display-name>FH</display-name> 
   <welcome-file-list>
-    <welcome-file>user/index.action</welcome-file>
+    <welcome-file>user/sj/index.action</welcome-file>
   </welcome-file-list>
+  
+  	<filter>
+		<filter-name>EncodeFilter</filter-name>
+		<filter-class>org.xmgreat.tools.EncodeFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>EncodeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

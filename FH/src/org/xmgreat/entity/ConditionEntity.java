@@ -15,11 +15,11 @@ public class ConditionEntity
   /** 为了biz层能够将数据展示在前端jsp页面 */
   private HttpServletRequest request;
   /** 搜索条件，套餐名称 */
-  private String name;
+  private String comName;
   /** 搜索时间，套餐持续时间 */
-  private String time;
+  private Integer time;
   /** 搜索价格，套餐价格 */
-  private String price;
+  private Integer price;
   /** 条件分页参数，大于当前页数 */
   private Integer forNum;
   /** 条件分页参数，小于当前页数 */
@@ -28,6 +28,10 @@ public class ConditionEntity
   private Integer sumCount;
   /** 当前页数 */
   private Integer currentPage;
+  /** 数据库中当前后台每页的条数 */
+  private Integer baseNum;
+  /** 跳页类型 */
+  private Integer turnPage;
 
   public ConditionEntity()
   {
@@ -43,17 +47,9 @@ public class ConditionEntity
   }
 
   /**
-   * @return the name
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
    * @return the time
    */
-  public String getTime()
+  public Integer getTime()
   {
     return time;
   }
@@ -61,7 +57,7 @@ public class ConditionEntity
   /**
    * @return the price
    */
-  public String getPrice()
+  public Integer getPrice()
   {
     return price;
   }
@@ -76,19 +72,27 @@ public class ConditionEntity
   }
 
   /**
-   * @param name
-   *          the name to set
+   * @return the comName
    */
-  public void setName(String name)
+  public String getComName()
   {
-    this.name = name;
+    return comName;
+  }
+
+  /**
+   * @param comName
+   *          the comName to set
+   */
+  public void setComName(String comName)
+  {
+    this.comName = comName;
   }
 
   /**
    * @param time
    *          the time to set
    */
-  public void setTime(String time)
+  public void setTime(Integer time)
   {
     this.time = time;
   }
@@ -97,7 +101,7 @@ public class ConditionEntity
    * @param price
    *          the price to set
    */
-  public void setPrice(String price)
+  public void setPrice(Integer price)
   {
     this.price = price;
   }
@@ -140,6 +144,26 @@ public class ConditionEntity
   public void setCurrentPage(Integer currentPage)
   {
     this.currentPage = currentPage;
+  }
+
+  public Integer getBaseNum()
+  {
+    return baseNum;
+  }
+
+  public void setBaseNum(Integer baseNum)
+  {
+    this.baseNum = baseNum;
+  }
+
+  public Integer getTurnPage()
+  {
+    return turnPage;
+  }
+
+  public void setTurnPage(Integer turnPage)
+  {
+    this.turnPage = turnPage;
   }
 
 }

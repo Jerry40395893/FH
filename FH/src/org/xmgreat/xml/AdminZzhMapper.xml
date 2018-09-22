@@ -73,13 +73,35 @@
     and e.menuId = m.menuId
     and a.adminId = #{adminId}
   </select>
-  
-	<!-- <select id="getAllMenuList" parameterType="org.xmgreat.entity.AdminEntity" 
-		resultType="org.xmgreat.entity.AdminEntity"> select * from menu order by 
-		menuId asc </select> <select id="getSql" parameterType="java.lang.Integer" 
-		resultType="org.xmgreat.entity.RuleEntity"> select * from rule where ruleId=#{ruleId} 
-		</select> <select id="getAllList" parameterType="java.lang.String" resultType="org.xmgreat.entity.UserEntity"> 
-		${sql} </select> -->
+   <!--显示会员管理列表-->
+	<select id="selecUser"
+	parameterType="org.xmgreat.entity.ConditionEntity"
+	resultType="org.xmgreat.entity.UserEntity"
+	>
+	select * from(select t.*,rownum rn
+    from
+	(select * from usertb where deleteId = 1
+	 <if test="userName !=null and userName != ''">
+	  and userName like '%${userName}%' 
+     </if>
+		) t where rownum &lt;= #{page}*5) where rn &gt; (#{page}-1)*5
+	</select>
+
+<!--查询会员的个数-->
+	<select id="getUserCount"
+	parameterType="org.xmgreat.entity.UserEntity"
+	resultType="org.xmgreat.entity.UserEntity"
+	>
+	select * from usertb where deleteId = 1
+	 <if test="userName !=null and userName != ''">
+	  and userName like '%${userName}%' 
+     </if>
+      <if test="onStage != 0">
+	  and onStage = #{onStage}
+     </if>
+	</select>
+
+
 
 </mapper>
 	

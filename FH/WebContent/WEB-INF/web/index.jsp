@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html;  charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -25,27 +26,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-  
-  
-  	
-  
-  <c:forEach items="${menulist}" var="Power">
-  <h2><span class="icon-user"></span>用户管理</h2>
-  <ul style="display:block">
-    <li><a href="<%=basePath %>info.html" target="right"><span class="icon-caret-right"></span>会员管理</a></li>
-    <li><a href="<%=basePath %>admin/zzh/adminList.action?page=1" target="right"><span class="icon-caret-right"></span>后台管理</a></li>
-   <li><a href="<%=basePath %>page.html" target="right"><span class="icon-caret-right"></span>会员审核</a></li> 
-    <li><a href="<%=basePath %>admin/sj/comManager.action" target="right"><span class="icon-caret-right"></span>套餐管理</a></li>  
-  </ul> 
-  </c:forEach>  
-  <h2><span class="icon-pencil-square-o"></span>运营管理</h2>
-  <ul>
-    <li><a href="<%=basePath %>list.html" target="right"><span class="icon-caret-right"></span>活动管理</a></li>
-    <li><a href="<%=basePath %>add.html" target="right"><span class="icon-caret-right"></span>图片展示规则</a></li>
-    <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>智能匹配规则</a></li>
-    <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>套餐管理</a></li>
-    <li><a href="<%=basePath %>cate.html" target="right"><span class="icon-caret-right"></span>标签管理</a></li>               
-  </ul>  
+ 
+    <c:forEach items="${menulist}" var="Power">
+     <c:if test="${Power.pId==0}">
+      <h2><span class="icon-user">${Power.menuname}</span></h2>
+       <ul style="display:block">
+        <c:forEach items="${menulist}" var="Power1">
+	     	<c:if test="${Power1.pId==Power.menuId }">
+            <li><a href="<%=basePath %>${Power1.URL}" target="right"><span class="icon-caret-right">${Power1.menuname}</span></a></li>
+            </c:if> 
+       </c:forEach>
+     </ul> 
+  	</c:if>
+  </c:forEach>
 </div>
 <script type="text/javascript">
 $(function(){
@@ -62,33 +55,18 @@ $(function(){
 </script>
 
 <ul class="bread">
+
   <li><a href="<%=basePath %>{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
   <li><a href="<%=basePath %>##" id="a_leader_txt">网站信息</a></li>
   <li><b>当前语言：</b><span style="color:red;">中文</php></span>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="<%=basePath %>##">英文</a> </li>
+
 </ul>
 <div class="admin">
   <iframe scrolling="auto" rameborder="0" src="<%=basePath %>backwelcome.jsp" name="right" width="100%" height="100%"></iframe>
 </div>
 
-<c:forEach items="${menulist}" var="Power">
-		<c:if test="${Power.pId==0 }">
-			<A onClick=show('${Power.powerId}') ">
-			
-			<img src="img/fclose.gif" border="0">${Power.powerNikeName }</A>
-			<div id="${Power.powerId}" style="display: none">
-				<c:forEach items="${listPower}" var="Power1">
-					 <c:if test="${Power1.pId==Power.powerId }">
-						<a href="${Power1.functionName}" target="center"> <img
-							src="img/doc.gif">${Power1.powerNikeName }
-						</a>
-						<br>
-					</c:if> 
-				</c:forEach>
-			</div>
-			<br>
-		</c:if>
-	</c:forEach>
+
 
 </body>
 </html>
