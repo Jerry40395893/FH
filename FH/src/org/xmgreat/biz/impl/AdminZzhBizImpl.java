@@ -35,8 +35,8 @@ public class AdminZzhBizImpl implements AdminZzhBiz {
     private Integer sumCount;
     /** 当前页数 */
     private Integer currentPage;
-	
-	
+	/**管理员列表*/
+    private List<AdminEntity> adminList;
 	/*
 	 * 管理员登录
 	 * */
@@ -51,6 +51,14 @@ public class AdminZzhBizImpl implements AdminZzhBiz {
 	@Override
 	public List<AdminEntity> selecAdmin(AdminEntity adminEntity) {
 		List<AdminEntity> adminList = adminMapper.selecAdmin(adminEntity);
+		return adminList;
+	}
+	/*
+	 * 查询管理员-页数
+	 * */
+	@Override
+	public List<AdminEntity> selecAdminP(int page) {
+		List<AdminEntity> adminList = adminMapper.selecAdminP(page);
 		return adminList;
 	}
 	/*
@@ -99,22 +107,113 @@ public class AdminZzhBizImpl implements AdminZzhBiz {
 		 userList = adminMapper.selecUser(conditionEntity);
 		 userCountList=adminMapper.getUserCount(conditionEntity);
 		 /** 判断并计算总页数 */
-		 listSize = userCountList.size() / 5 + ((userCountList.size() % 5) > 0 ? 1 : 0); 
+		 listSize = userCountList.size() / 5 + ((userCountList.size() % 5) > 0 ? 1 : 0);
+		 /** 清除之前遗留的数据 */
+		    list.clear();
 		 for (int i = 0; i < listSize; i++)
 		    {
 		      list.add(i);
 		    }
-		 currentPage = conditionEntity.getCurrentPage();
-		 if (currentPage == null)
+		
+		 currentPage = conditionEntity.getCurrentPage();	 
+		 if (currentPage <= 0)
 		    {
-		      currentPage = 1;
-		    } 
+			 System.out.println("打印"+currentPage);
+			 currentPage = 1;
+			 conditionEntity.setCurrentPage(currentPage);
+		    } else
+		    {   	
+		      userList = adminMapper.selecUser(conditionEntity);
+		      if (userList.size() == 0)
+		      {
+		    	  currentPage = currentPage - 1;
+		    	  conditionEntity.setCurrentPage(currentPage);
+		      }
+		    }
+		 userList = adminMapper.selecUser(conditionEntity);
+		   	 
 		 sumCount = userCountList.size();
 		 request.setAttribute("currentPage", currentPage);
 		 request.setAttribute("sumCount", sumCount);
 		 request.setAttribute("userList", userList);
 		 request.setAttribute("list", list);
+		 /** 每次过去带模糊搜索的条件回去，分页的时候在带回来 */
+		    request.setAttribute("userName", conditionEntity.getUserName());
+		    request.setAttribute("sex", conditionEntity.getSex());
+		    request.setAttribute("onStage", conditionEntity.getOnStage());
+		    request.setAttribute("teleNum", conditionEntity.getTeleNum());
 		return userList;
+	}
+	/*
+	 * 启用会员
+	 * */
+	@Override
+	public void startUser(ConditionEntity conditionEntityint) {
+		adminMapper.startUser(conditionEntityint);	
+	}
+	/*
+	 *禁用会员
+	 * */
+	@Override
+	public void forbidUser(ConditionEntity conditionEntity) {
+		adminMapper.forbidUser(conditionEntity);
+		
+		
+	}
+	/*
+	 * 删除会员
+	 * */
+	@Override
+	public void delUser(ConditionEntity conditionEntity) {
+		adminMapper.delUser(conditionEntity);
+	}
+	/*
+	 * 审核会员不通过
+	 * */
+	@Override
+	public void audNUser(ConditionEntity conditionEntityint) {
+		adminMapper.audNoUser(conditionEntityint);
+	}
+	/*
+	 * 审核会员通过
+	 * */
+	@Override
+	public void audYUser(ConditionEntity conditionEntityint) {
+		adminMapper.audYUser(conditionEntityint);
+		
+	}
+	/*
+	 * 查重新增管理员名称
+	 * */
+	@Override
+	public String checkAdmin(AdminEntity adminEntity) {
+		System.out.println("yuel"+adminEntity.getAdmin().toString());
+		adminList=adminMapper.nSAdmin(adminEntity);
+		
+		String msg1 = "已存在";
+		//String adminA = request.getParameter("admin");// 账号
+		
+
+		if (adminList.size() != 0) {
+			msg1 = "已存在";
+		} else {
+			msg1 = "未注册，可用";
+		}
+		
+		return msg1;
+	}
+	@Override
+	public List<UserEntity> userInfo(ConditionEntity conditionEntity) {
+		request = ((ServletRequestAttributes) RequestContextHolder
+			      .getRequestAttributes()).getRequest();
+		userList = adminMapper.infoUser(conditionEntity);
+		request.setAttribute("userList", userList);
+		return userList;
+	}
+	@Override
+	public void addRoleId(AdminEntity adminEntity) {
+		adminMapper.addRoleId(adminEntity);
+		
 	}
 
 }

@@ -1,37 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
- <display-name>FH</display-name> 
-  <welcome-file-list>
-    <welcome-file>user/sj/index.action</welcome-file>
-  </welcome-file-list>
-  
-  	<filter>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>FH</display-name>
+	<welcome-file-list>
+		<welcome-file>user/sj/showWelcom.action</welcome-file>
+	</welcome-file-list>
+
+	<filter>
 		<filter-name>EncodeFilter</filter-name>
 		<filter-class>org.xmgreat.tools.EncodeFilter</filter-class>
 	</filter>
-	
+	<!-- 判断前台用户是否存在 -->
+	<!-- <filter> <filter-name>UserFilter</filter-name> <filter-class>org.xmgreat.tools.UserFilter</filter-class> 
+		<init-param> <param-name>ignores</param-name> <param-value>/adminmain.action,/login.action,/,/showWelcom.action</param-value> 
+		</init-param> </filter> -->
+	<!-- 判断后台用户是否存在 -->
+	<filter>
+		<filter-name>AdminFilter</filter-name>
+		<filter-class>org.xmgreat.tools.AdminFilter</filter-class>
+		<init-param>
+			<param-name>ignores</param-name>
+			<param-value>/adminmain.action,/login.action,/,/showWelcom.action</param-value>
+		</init-param>
+	</filter>
+
 	<filter-mapping>
 		<filter-name>EncodeFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-  
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:applicationContext.xml</param-value>
-  </context-param>
-  <servlet>
-    <servlet-name>springmvc</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:springmvc.xml</param-value>
-    </init-param>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>springmvc</servlet-name>
-    <url-pattern>*.action</url-pattern>
-  </servlet-mapping>
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<!-- <filter-mapping> <filter-name>UserFilter</filter-name> <url-pattern>*.action</url-pattern> 
+		</filter-mapping> -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- 每天定时刷新人气排行榜 -->
+	<listener>
+		<listener-class>org.xmgreat.tools.FlashBankTimer</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+	<!-- 设定一些常见的异常报错，统一的错误页跳转 -->
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+
+
 </web-app>

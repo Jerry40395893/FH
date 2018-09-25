@@ -65,7 +65,7 @@
   <select id="selecMenu"  
     parameterType="org.xmgreat.entity.AdminEntity"
     resultType="org.xmgreat.entity.MenuEntity"   >
-    select m.menuId,m.menuName,m.pId 
+    select m.menuId,m.menuName,m.url,m.pId 
     from adminTb a,menuTb m,roleMiddleTb r,roleTb t,roleMuneTb e 
     where  a.adminId=r.adminId 
     and r.roleId = t.roleId

@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.UserEntity;
 
 /*
  * 作者：沈杰
@@ -28,4 +29,11 @@ public interface ComSjBiz
 
   /** 通过套餐名称获取套餐信息套餐 */
   public ComboEntity getCombo(@Param("name") String name);
+
+  /** 人气排行榜获取用户List根据性别各取前十位 **/
+  public List<UserEntity> getUserList(@Param("sex") String sex);
+
+  /** 每天24点定时更新用户评分 */
+  public void updateBanking();
+
 }

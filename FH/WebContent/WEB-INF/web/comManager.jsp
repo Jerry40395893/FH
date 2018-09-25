@@ -30,7 +30,7 @@
 	// 单个修改
 	function alertCom() {
 		if (confirm("您确定要进入修改页面?")) {
-			return ture;
+			return true;
 		}
 		return false;
 	};

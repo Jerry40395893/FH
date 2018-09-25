@@ -210,9 +210,9 @@
               </div>
               
               <span class="item" ><a href="shop-item.html" ><img src="<%=basePath%>assets/pages/img/products/k4.jpg" ></a></span>
-              <h3 align="center"><a href="showMyData.action">我的资料</a></h3>
+              <h3 align="center"><a href="<%=basePath%>user/qx/showMyData.action">我的资料</a></h3>
               <div class="item">
-                <h3 align="center"><a href="showMyData.action">我的资料</a></h3>
+                <h3 align="center"><a href="<%=basePath%>user/qx/showMyData.action">我的资料</a></h3>
                 <input type="button"  value="收件箱">&nbsp;<input type="button" value="谁看过我">
               </div>
           

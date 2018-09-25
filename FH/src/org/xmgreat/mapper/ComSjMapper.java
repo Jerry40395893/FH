@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.UserEntity;
 
 /*
  * 作者：沈杰
@@ -37,4 +38,24 @@ public interface ComSjMapper
   /** 通过套餐名称获取套餐信息套餐 */
   public ComboEntity getCombo(@Param("name") String name);
 
+  /** 人气排行榜获取用户List根据性别各取前十位 **/
+  public List<UserEntity> getUserList(@Param("sex") String sex);
+
+  /** 通过id获取城市名称 */
+  public String getCityName(@Param("cityId") Integer cityId);
+
+  /** 获取用户的邮件数 */
+  public Integer getEmail(@Param("userId") Integer userId);
+
+  /** 获取用户的访问量 */
+  public Integer getVisit(@Param("userId") Integer userId);
+
+  /** 获取用户的每天推荐数 */
+  public Integer getRem(@Param("userId") Integer userId);
+
+  /*** 更新用户评分 */
+  public void updateBanking(UserEntity userEntity);
+
+  /** 获取所有用户 **/
+  public List<UserEntity> getAllUserList();
 }

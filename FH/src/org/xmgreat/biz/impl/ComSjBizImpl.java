@@ -1,6 +1,9 @@
 package org.xmgreat.biz.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +13,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.xmgreat.biz.ComSjBiz;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.ComSjMapper;
+import org.xmgreat.tools.ChangeAge;
 
 /*
  * 作者：沈杰
  * 用途：处理套餐管理业务
  */
-@Service
+@Service("comBiz")
 public class ComSjBizImpl implements ComSjBiz
 {
   @Resource
@@ -46,6 +51,88 @@ public class ComSjBizImpl implements ComSjBiz
 
   /** 因为样式的原因，前端页面模糊搜索的时候名字会多出一个， */
   private String comName;
+
+  /** 每天定时更新用户推荐评分 */
+  @Override
+  public void updateBanking()
+  {
+    List<UserEntity> mList = comSjMapper.getAllUserList();
+    for (int i = 0; i < mList.size(); i++)
+    {
+      UserEntity userEntity = mList.get(i);
+      int email = comSjMapper.getEmail(userEntity.getUserId());
+      int visit = comSjMapper.getVisit(userEntity.getUserId());
+      int remend = comSjMapper.getRem(userEntity.getUserId());
+      int popular = (int) (((email * 2) + (visit * 1.5) + remend) / 4.5);
+      userEntity.setPopular(popular);
+      comSjMapper.updateBanking(userEntity);
+    }
+  }
+
+  /*
+   * 添加套餐的时候名字查重
+   */
+  @Override
+  public List<UserEntity> getUserList(String sex)
+  {
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+      .getRequestAttributes()).getRequest();
+    List<UserEntity> mList = comSjMapper.getUserList("男");
+    List<UserEntity> woList = comSjMapper.getUserList("女");
+    List<UserEntity> manList = new ArrayList<>();
+    List<UserEntity> womenList = new ArrayList<>();
+    String brithday = null;
+    String height = null;
+    /** 获取到的用户在获取城市名称 ，将生日换算成年龄 */
+    for (int i = 0; i < mList.size(); i++)
+    {
+      UserEntity userEntity = mList.get(i);
+
+      String cityName = comSjMapper.getCityName(userEntity.getCityId());
+      userEntity.setCityName(cityName);
+      height = userEntity.getHeight();
+      userEntity.setHeight(height + "cm");
+      /** 将出生日期转换成年龄 */
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+      Date bithday;
+      try
+      {
+        bithday = format.parse(userEntity.getBrithday());
+        userEntity.setAge(ChangeAge.getAgeByBirth(bithday) + "岁");
+      } catch (ParseException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      manList.add(userEntity);
+
+    }
+    for (int i = 0; i < woList.size(); i++)
+    {
+      UserEntity userEntity = woList.get(i);
+
+      String cityName = comSjMapper.getCityName(userEntity.getCityId());
+      userEntity.setCityName(cityName);
+      height = userEntity.getHeight();
+      userEntity.setHeight("身高:" + height + "cm");
+      /** 将出生日期转换成年龄 */
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+      Date bithday;
+      try
+      {
+        bithday = format.parse(userEntity.getBrithday());
+        userEntity.setAge(ChangeAge.getAgeByBirth(bithday) + "岁");
+      } catch (ParseException e)
+      {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      womenList.add(userEntity);
+    }
+    request.setAttribute("manList", manList);
+    request.setAttribute("womenList", womenList);
+    return null;
+  }
 
   /*
    * 添加套餐的时候名字查重

@@ -57,6 +57,21 @@ $(document).ready(function(){
 	$('#loginModal').on('hide.bs.modal', function () {
 		isModalON = false;
 	});
+<<<<<<< HEAD
+})
+
+$(document).on("click",function(){
+	if(${user == null} && isModalON == false ){
+		if(isModalClosed == true){
+			document.getElementById("modal-1").click();
+			isModalON = true;
+			isModalClosed = false;
+		}else{
+			isModalClosed = true;
+		}
+	}
+})
+=======
 });
 
 $(document).on("click",function(){
@@ -70,11 +85,48 @@ $(document).on("click",function(){
 		}
 	}
 });
+>>>>>>> branch 'master' of https://github.com/Jerry40395893/FH.git
 
 function vCodeUpdate() {
 	var vCode = document.getElementById("vCode");
 	vCode.src = "global/vCode.action?time="+ Math.random();
 };
+
+function ajaxLogin() {
+		
+	var userAccount=$("#userAccount").val();
+	var pasw=$("#pasw").val();
+	
+<%-- 	$("#loginForm").ajaxSubmit({
+		url:'<%=basePath%>user/ajaxLogin.action',
+		type: 'post',
+		dateType:'json',
+		contentType:"application/json",
+		success:function(data){
+			alert('success'+data);
+		},
+		error:function(e){
+			alert('error'+e);
+		}
+	}); --%>
+	
+	$.ajax({
+		url:'<%=basePath%>user/ajaxLogin.action',
+		data:'userAccount='+userAccount+'&pasw='+pasw,
+		type: 'post',
+		success:function(data){
+			if(data == 'true'){
+			window.location.href="<%=url%>"; 
+			}else{
+				alert('账号或密码错误')
+			}
+		},
+		error:function(e){
+			alert('error'+e);
+		}
+	});
+
+}
 
 function ajaxLogin() {
 		
@@ -240,7 +292,10 @@ function ajaxLogin() {
 										href="<%=basePath%>#services">搜索</a></li>
 									<li><a href="<%=basePath%>#prices">活动</a></li>
 									<li><a href="<%=basePath%>#gallery">晒幸福</a></li>
+<<<<<<< HEAD
+=======
 									<li><a href="<%=basePath%>user/sj/showBanking.action">人气排行榜</a></li>
+>>>>>>> branch 'master' of https://github.com/Jerry40395893/FH.git
 									<c:if test="${user == null}">
 										<li><a id="modal-1" href="#loginModal" role="button"
 											class="btn" data-toggle="modal">我要登录</a></li>

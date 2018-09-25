@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;  charset=UTF-8"
+<%@ page language="java"  import="java.util.*" contentType="text/html;  charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -16,6 +16,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath %>css/admin.css">
 <script src="<%=basePath %>js/jquery.js"></script>
 <script src="<%=basePath %>js/pintuer.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function(){$("#admin").blur(function(){
+ //第一步：取数据,这里用到了用户名和密码
+  
+  var admin=$("#admin").val();
+ 
+  //var pwd=$("#upwd").val();
+  //第二步：验证数据，这里需要从数据库调数据，我们就用到了ajax
+  $.ajax({
+    url:"<%=basePath %>admin/zzh/checkAdmin.action",//请求地址
+    type:"POST",//提交的方式
+    data:{"admin":admin},//提交的数据
+    dataType:"text", //返回类型 TEXT字符串 JSON XML
+    success:function(data){
+   //开始之前要去空格，用trim() 
+   if(data.equals("已存在")){
+	alert(data);
+   $("#admin").val("");
+   }
+      //document.getElementById("cn").innerHTML=data;
+    }
+  });
+});
+});
+</script>
 </head>
 <body>
 <div class="panel admin-panel">
@@ -27,8 +54,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <label for="sitename">管理员帐号：</label>
         </div>
         <div class="field">
-          <input type="text" class="input w50" name="admin" size="50" placeholder="请输入用户名" data-validate="required:请填写用户名" />         
-        </div>
+          <input type="text" class="input w50" name="admin" id="admin" size="50" placeholder="请输入用户名" data-validate="required:请填写用户名" />         
+        <span id = "cn" style= "color:red"></span></div>
       </div>      
         
       <div class="form-group">

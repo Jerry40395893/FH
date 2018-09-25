@@ -23,19 +23,19 @@ public class AdminHandleZZH
 
   @Resource
   private AdminZzhBizImpl adminBizImpl;
-  
+
   @Resource
   private UserEntity userEntity;
-  
+
   private List<AdminEntity> uList;
-  private List<MenuEntity>  menulist;
-  private List<UserEntity>  userList;
+  private List<MenuEntity> menulist;
+  private List<UserEntity> userList;
   private AdminEntity adminB;
 
-// localhost:8080/FH/admin/login.action          --跳转登录路径
-//跳转后台的登录页面
+  // localhost:8080/FH/admin/zzh/login.action --跳转登录路径
+  // 跳转后台的登录页面
   @RequestMapping("/login.action")
-  public ModelAndView login() 
+  public ModelAndView login()
   {
     System.out.println("执行login页面");
     ModelAndView mav = new ModelAndView();
@@ -44,7 +44,8 @@ public class AdminHandleZZH
   }
 
   @RequestMapping(value = "/adminmain.action")
-  public ModelAndView adminmain(HttpServletRequest request, AdminEntity adminEntity)
+  public ModelAndView adminmain(HttpServletRequest request,
+    AdminEntity adminEntity)
   {
     // 登录进入后台首页
     System.out.println("登录进入后台首页");
@@ -78,8 +79,8 @@ public class AdminHandleZZH
       udf.setPage(page);
     } else
     {
-    
-    	uList = adminBizImpl.selecAdmin(udf);
+
+      uList = adminBizImpl.selecAdmin(udf);
       if (uList.size() == 0)
       {
         int page = udf.getPage() - 1;
@@ -95,54 +96,60 @@ public class AdminHandleZZH
     mav.addObject("ulist", uList);
     return mav;
   }
-//删除管理员--假删除
+
+  // 删除管理员--假删除
   @RequestMapping(value = "/delAdmin.action") //
   public ModelAndView delAdmin(HttpServletRequest request, AdminEntity udf)
   {
-	  System.out.println("删除");
-	  ModelAndView mav = new ModelAndView("web/adminList");
-	  adminBizImpl.delAdmin(udf);
-	  uList = adminBizImpl.selecAdmin(udf);
-	  mav.addObject("ulist", uList);
-	    return mav;
+    System.out.println("删除");
+    ModelAndView mav = new ModelAndView("web/adminList");
+    adminBizImpl.delAdmin(udf);
+    uList = adminBizImpl.selecAdmin(udf);
+    mav.addObject("ulist", uList);
+    return mav;
   }
-// 跳转后台的添加管理员
+
+  // 跳转后台的添加管理员
   @RequestMapping("/showAddAdmin.action")
-  public ModelAndView showAddAdmin() 
+  public ModelAndView showAddAdmin()
   {
     System.out.println("执行添加管理员页面");
     ModelAndView mav = new ModelAndView();
     mav.setViewName("web/addAdmin");
     return mav;
   }
-//添加管理员
+
+  // 添加管理员
   @RequestMapping(value = "/addAdmin.action") //
   public ModelAndView addAdmin(HttpServletRequest request, AdminEntity udf)
   {
-	  System.out.println("添加");
-	  ModelAndView mav = new ModelAndView("web/adminList");
-	  adminBizImpl.addAdmin(udf);
-	  uList = adminBizImpl.selecAdmin(udf);
-	  mav.addObject("ulist", uList);
-	    return mav;
+    System.out.println("添加");
+    ModelAndView mav = new ModelAndView("web/adminList");
+    adminBizImpl.addAdmin(udf);
+    uList = adminBizImpl.selecAdmin(udf);
+    mav.addObject("ulist", uList);
+    return mav;
   }
-//重置密码
-  @RequestMapping(value = "/upAdminPsw.action") 
+
+  // 重置密码
+  @RequestMapping(value = "/upAdminPsw.action")
   public ModelAndView upAdminPsw(HttpServletRequest request, AdminEntity udf)
   {
-	  System.out.println("重置密码");
-	  ModelAndView mav = new ModelAndView("web/adminList");
-	  adminBizImpl.upPsw(udf);
-	  uList = adminBizImpl.selecAdmin(udf);
-	  mav.addObject("ulist", uList);
-	  return mav;
+    System.out.println("重置密码");
+    ModelAndView mav = new ModelAndView("web/adminList");
+    adminBizImpl.upPsw(udf);
+    uList = adminBizImpl.selecAdmin(udf);
+    mav.addObject("ulist", uList);
+    return mav;
   }
-//会员管理列表显示
-  @RequestMapping(value = "/userList.action")  
-  public ModelAndView userList(HttpServletRequest request,ConditionEntity uet) {
-	  System.out.println("会员列表显示");
-	  ModelAndView mav = new ModelAndView("web/cusUserList");
-	  adminBizImpl.selecUserL(uet);
-	return mav; 
+
+  // 会员管理列表显示
+  @RequestMapping(value = "/userList.action")
+  public ModelAndView userList(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员列表显示");
+    ModelAndView mav = new ModelAndView("web/cusUserList");
+    adminBizImpl.selecUserL(uet);
+    return mav;
   }
 }

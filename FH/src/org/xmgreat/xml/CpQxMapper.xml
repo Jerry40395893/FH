@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="org.xmgreat.mapper.MyCompanyMapper">
+<mapper namespace="org.xmgreat.mapper.CpQxMapper">
+	
 	
 	<select id="" parameterType="org.xmgreat.entity.UserEntity"
 		resultType="org.xmgreat.entity.PhotoEntity">
@@ -10,10 +11,23 @@
 		
 	</select>
 	
-	<select id="city" resultType="org.xmgreat.entity.CityEntity">
+	<!--查询省份城市  -->
+	<select id="selectCity" resultType="org.xmgreat.entity.CityEntity">
 	
 	select * from CITYTB
 	
 	</select>
 
+    <!-- 保存资料 -->
+    <update id="saveData" parameterType="org.xmgreat.entity.UserEntity">
+    update userTb set userName=#{userName},height=#{height},doctor=#{doctor},married=#{married},children=#{children},
+    residence=#{residence},bloodStyle=#{bloodStyle},nation=#{nation},salary=#{salary},car=#{car} where userId=2
+   
+    </update>
+    
+    <!-- 保存内心独白 -->
+    <update id="saveSoliloquy" parameterType="org.xmgreat.entity.UserEntity">
+    update userTb set information=#{information} where userId=2
+    </update>
+    
 </mapper>

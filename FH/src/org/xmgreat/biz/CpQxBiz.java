@@ -8,6 +8,7 @@
 package org.xmgreat.biz;
 
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.UserEntity;
 
 /**
  * @author 周群新
@@ -15,5 +16,9 @@ import org.xmgreat.entity.CityEntity;
  */
 public interface CpQxBiz {
 
-	public CityEntity selectCity();
+	public CityEntity selectCity();//二级联动查找省份城市
+	
+	public void saveData(UserEntity user);//保存资料
+	
+	public void saveSoliloquy(UserEntity userEntity);
 }

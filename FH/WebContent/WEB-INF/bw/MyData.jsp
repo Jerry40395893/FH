@@ -56,7 +56,7 @@
   
 $(document).ready(function(){
 	 
-	$("#area").onclick({
+/* 	$("#area").onclick({
 		
 		$.ajax({
 			
@@ -70,7 +70,7 @@ $(document).ready(function(){
 			
 			
 			
-		})
+		}) */
       
  
 <%-- 
@@ -146,6 +146,8 @@ $("#counselor").change(function(){
 
 <!-- Body BEGIN -->
 <body class="ecommerce">
+
+  
     <!-- BEGIN STYLE CUSTOMIZER -->
     <div class="color-panel hidden-sm">
       <div class="color-mode-icons icon-color"></div>
@@ -288,8 +290,8 @@ $("#counselor").change(function(){
           <div class="sidebar col-md-3 col-sm-5">
             <div class="sidebar-filter margin-bottom-25">
               <h3><input type="button" value="基本资料"></h3>
-              <h3><input type="button" value="内心独白"></h3>
-              <h3><input type="button" value="我的照片"></h3>
+              <h3><input type="button" value="内心独白" onclick="location.href='<%=basePath%>user/qx/showSoliloquy.action'"></h3>
+              <h3><input type="button" value="我的照片" onclick="location.href='<%=basePath%>user/qx/showPhoto.action'"></h3>
               <h3><input type="button" value="我的地图"></h3>
               <h3><input type="button" value="详细资料"></h3>
               <div class="checkbox-list">
@@ -329,14 +331,14 @@ $("#counselor").change(function(){
                   <h1>&nbsp;</h1>
                   
                   
-                  
-                  <form method="post" action="">
+               
+                  <form method="post" action="saveData.action">
                   
                   <table colspan = "3" width="450" cellpadding="0" cellspacing="0" class="f-table">
 					<tr>
 						<td class="item"><span style="color:#666;">昵称：</span></td>
 						<!--如果手机没有验证-->
-																				<td id="show_nickname" style="color:#666;"><input type="text">
+						<td id="show_nickname" style="color:#666;"><input type="text" id="userName" name="userName">
 							
 																			</td>
 						
@@ -387,7 +389,7 @@ $("#counselor").change(function(){
 						<td class="item"><span class="ico_stars">*</span><span style="color:#666;">婚姻状况：</span></td>
 						<td>
 							<span class="item-txt2">
-								<select name="married" id="married" onChange="select_changed();"  >
+								<select name="married" id="married"   >
 								<option value="0">--请选择--</option>
 								<option label="未婚" value="1">未婚</option>
 <option label="离异" value="2">离异</option>
@@ -401,11 +403,11 @@ $("#counselor").change(function(){
 					<tr>
 						<td class="item"><a id="l_pos" name="l_pos"></a><span class="ico_stars">*</span><span >有无子女：</span></td>
 						<td>
-							<select name="children" id="children" onChange="select_changed();"  >
+							<select name="children" id="children" >
 								<option value="0">--请选择--</option>
-								<option label="无小孩" value="1">无小孩</option>
-<option label="有小孩归自己" value="2">有小孩归自己</option>
-<option label="有小孩归对方" value="3">有小孩归对方</option>
+								<option label="无小孩" value="无小孩">无小孩</option>
+<option label="有小孩归自己" value="有小孩归自己">有小孩归自己</option>
+<option label="有小孩归对方" value="有小孩归对方">有小孩归对方</option>
 
 							</select>
 						</td>
@@ -414,17 +416,17 @@ $("#counselor").change(function(){
 						<td class="item"><span class="ico_stars">*</span><span style="color:#666;">所在地区：</span></td>
 						<td>
 							
-	  <select name="area" id="area" style="width:150px">
+	<!--   <select name="area" id="area" style="width:150px">
       </select>
       <select name="area" id="area" style="width:150px">
-      </select>
+      </select> -->
 						</td>
 					</tr>
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span >户口：</span></td>
 						<td>
 						
-			<input type="text" name="residence">
+			<input type="text" name="residence" id="residence">
       </td>
 						
 						<script type="text/javascript">init_location(0, 0, 'home');</script>
@@ -432,14 +434,14 @@ $("#counselor").change(function(){
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span  >血型：</span></td>
 						<td>
-							<select name="bloodtype" id="bloodtype" onChange="select_changed();"  >
+							<select name="bloodStyle" id="bloodStyle"  >
 								<option value="0">--请选择--</option>
-								<option label="A型" value="1">A型</option>
-<option label="B型" value="2">B型</option>
-<option label="O型" value="3">O型</option>
-<option label="AB型" value="4">AB型</option>
-<option label="其它" value="5">其它</option>
-<option label="保密" value="6">保密</option>
+								<option label="A型" value="A型">A型</option>
+<option label="B型" value="B型">B型</option>
+<option label="O型" value="O型">O型</option>
+<option label="AB型" value="AB型">AB型</option>
+<option label="其它" value="其它">其它</option>
+<option label="保密" value="保密">保密</option>
 
 							</select>
 						</td>
@@ -447,27 +449,31 @@ $("#counselor").change(function(){
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span>民族：</span></td>
 						<td>
-							<select name="nation" id="nation"  onChange="select_changed();"><option value="0">--请选择--</option><option label="汉族" value="1">汉族</option>
-<option label="藏族" value="2">藏族</option>
-<option label="朝鲜族" value="3">朝鲜族</option>
-<option label="蒙古族" value="4">蒙古族</option>
-<option label="回族" value="5">回族</option>
-<option label="满族" value="6">满族</option>
-<option label="维吾尔族" value="7">维吾尔族</option>
-<option label="壮族" value="8">壮族</option>
-<option label="彝族" value="9">彝族</option>
-<option label="苗族" value="10">苗族</option>
-<option label="其它民族" value="11">其它民族</option>
+							<select name="nation" id="nation"  ><option value="0">--请选择--</option><option label="汉族" value="汉族">汉族</option>
+<option label="藏族" value="藏族">藏族</option>
+<option label="朝鲜族" value="朝鲜族">朝鲜族</option>
+<option label="蒙古族" value="蒙古族">蒙古族</option>
+<option label="回族" value="回族">回族</option>
+<option label="满族" value="满族">满族</option>
+<option label="维吾尔族" value="维吾尔族">维吾尔族</option>
+<option label="壮族" value="壮族">壮族</option>
+<option label="彝族" value="彝族">彝族</option>
+<option label="苗族" value="苗族">苗族</option>
+<option label="其它民族" value="其它民族">其它民族</option>
 </select>
 						</td>
 					</tr>						
-					<tr>
-						<td class="item"><span class="ico_stars">*</span><span  style="color:#666;">月薪：</span></td>
+				
+					
+							<tr>
+						<td class="item"><span class="ico_stars">*</span><span >月薪：</span></td>
 						<td>
-																																																					<input type="text" id="salary" name="salary">
-																																																																			
-						</td>
-					</tr>
+						
+			<input type="text" name="salary" id="salary">
+      </td>
+					
+					
+					
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span >居住情况：</span></td>
 						<td>
@@ -489,7 +495,7 @@ $("#counselor").change(function(){
 					<tr>
 						<td class="item"><span class="ico_stars">*</span><span >购车情况：</span></td>
 						<td>
-							<select id="auto" name="auto" onChange="select_changed();">
+							<select id="car" name="car" >
 								<option value="0">--请选择--</option>
 																	<option label="暂未购车" value="1">暂未购车</option>
 <option label="已购车（经济型）" value="3">已购车（经济型）</option>
@@ -500,10 +506,15 @@ $("#counselor").change(function(){
 
 															</select>
 						</td>
-					</tr>					
+					</tr>	
+					
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" class="save" value="保存并继续"  /></td>
+					</tr>				
 				</table>
-                
-                
+                </form>
+             <!--    
                 
                 <h1>联系信息</h1>
 				<h2>以下资料我们将为您保密，不会显示在您的个人资料页面上。</h2>
@@ -551,14 +562,14 @@ $("#counselor").change(function(){
 					<tr style='display:none;'>
 					  <td class="item"></td>
 					  <input type="hidden" name="share" value="1" >
-					 <!-- <td class="item" style="width:200px; "><input type="checkbox" name="share" value="1"  style="vertical-align:middle"/> 同意分享</td>-->
+					 <td class="item" style="width:200px; "><input type="checkbox" name="share" value="1"  style="vertical-align:middle"/> 同意分享</td>
 				   </tr>
 				   
 					<tr>
 						<td>&nbsp;</td>
 						<td><input type="submit" class="save" value="保存并继续" onmousedown="send_jy_pv2('editprofile|save_base|m|182580144');" /><input type="button" value="跳过此页" class="skip" onClick="skip()" onmousedown="send_jy_pv2('editprofile|skip_base|m|182580144');" /></td>
 					</tr>
-				</table>
+				</table> -->
                 </div>
               </div>
             </div>

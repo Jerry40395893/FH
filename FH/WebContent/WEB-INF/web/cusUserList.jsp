@@ -17,18 +17,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="<%=basePath %>css/admin.css">
 <script src="<%=basePath %>js/jquery.js"></script>
 <script src="<%=basePath %>js/pintuer.js"></script>
+
 </head>
 <body>
-<form method="post" action="admin/zzh/userList.action?" id="listform">
+<form method="post" action="<%=basePath %>admin/zzh/userList.action?currentPage=${currentPage-1}" id="listform">
   <div class="panel admin-panel">
     <div class="panel-head"><strong class="icon-reorder">内容列表</strong> <a href="<%=basePath %>" style="float:right; display:none;">添加字段</a></div>
     <div class="padding border-bottom">
       <ul class="search" style="padding-left:10px;">
-        <li> <a class="button border-main icon-plus-square-o" href="<%=basePath %>admin/zzh/showAddAdmin.action"> 添加管理员</a> </li>
+       
         <li>搜索：</li>
         <li>
-          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          <a href="<%=basePath %>javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
+         <input type="text" placeholder="请输入会员名称" name="userName"
+						id="userName" class="input"
+						style="width: 160px; line-height: 17px; display: inline-block" />
+						&nbsp;&nbsp;<input type="text" placeholder="请输入性别" id="sex"
+						name="sex" class="input"
+						style="width: 160px; line-height: 17px; display: inline-block" />
+						&nbsp;&nbsp;<input type="text" placeholder="请输入手机号码" id="teleNum"
+						name="teleNum" class="input"
+						style="width: 160px; line-height: 17px; display: inline-block" />
+						&nbsp;&nbsp;<input type="submit"
+						class="button border-main icon-search" value="搜索"
+						style="width: 60px;"></li>
       </ul>
     </div>
     <table class="table table-hover text-center">
@@ -55,11 +66,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <td>启用</td>
            <td>
            <div class="button-group"> 
-           <a class="button border-main" href="<%=basePath %>admin/zzh/forBid.action?userId=${user.userId}&page=${adminEntity.page}">
-             <span class="icon-edit">禁用</span> 
+           <a class="button border-main" href="<%=basePath %>admin/zzh/forBid.action?userId=${user.userId}&currentPage=${conditionEntity.currentPage}">
+              <span class="icon-edit">禁用</span> 
            </a>
-           <a class="button border-red" href="<%=basePath %>admin/zzh/delUser.action?userId=${user.userId}&page=${adminEntity.page}" onclick="return del(1,1,1)">
-           <span class="icon-trash-o"></span> 删除
+           <a class="button border-red"  href="<%=basePath %>admin/zzh/delUser.action?userId=${user.userId}&currentPage=${conditionEntity.currentPage}" onclick="return del(1,1,1)">
+           <span class="icon-trash-o">删除</span> 
            </a> 
            </div>
           </td>
@@ -69,11 +80,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <td>禁用</td>
            <td>
            <div class="button-group"> 
-           <a class="button border-main" href="<%=basePath %>admin/zzh/stratUsing.action?userId=${user.userId}&page=${adminEntity.page}">
+           <a class="button border-main" href="<%=basePath %>admin/zzh/stratUsing.action?userId=${user.userId}&currentPage=${conditionEntity.currentPage}">
              <span class="icon-edit">启用</span> 
            </a>
-           <a class="button border-red" href="<%=basePath %>admin/zzh/delUser.action?userId=${user.userId}&page=${adminEntity.page}" onclick="return del(1,1,1)">
-           <span class="icon-trash-o"></span> 删除
+           <a class="button border-red" href="<%=basePath %>admin/zzh/delUser.action?userId=${user.userId}&currentPage=${conditionEntity.currentPage}" onclick="return del(1,1,1)">
+           <span class="icon-trash-o">删除</span> 
            </a> 
            </div>
           </td>
@@ -86,14 +97,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <tr>
         <td colspan="8">
         <div class="pagelist"> 
-        	共 ${sumCount}条 &nbsp; 当前页数[ ${currentPage} /
+        	共 ${sumCount}条 &nbsp; 当前页数[${currentPage} /
         	<c:if test="${list.size()==0}">1</c:if>
         	<c:if test="${list.size()!=0}">${list.size()}</c:if>
         	] &nbsp;
-           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=1">第一页</a>
-           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${conditionEntity.currentPage-1}">上一页</a>
-           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${conditionEntity.currentPage+1}">下一页</a> 
-           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${sumCount}">末页</a> 
+           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=1&userName=${userName}&sex=${sex}&onStage=${onStage}&teleNum=${teleNum}">第一页</a>
+           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${currentPage-1}&userName=${userName}&sex=${sex}&onStage=${onStage}&teleNum=${teleNum}">上一页</a>
+           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${currentPage+1}&userName=${userName}&sex=${sex}&onStage=${onStage}&teleNum=${teleNum}">下一页</a> 
+           <a href="<%=basePath %>admin/zzh/userList.action?currentPage=${list.size()}&userName=${userName}&sex=${sex}&onStage=${onStage}&teleNum=${teleNum}">末页</a> 
            <select id="selectPage" name="selectPage" class="button border-main icon-search" style="width: 110px;">
 			<option value="0">--请选择页数--</option>
 				<c:forEach items="${list}" var="user" step="1">
@@ -277,5 +288,8 @@ function changecopy(o){
 }
 
 </script>
+    <input type="hidden" id="hidenName" value="${userName}" />
+	<input type="hidden" id="hidenSex" value="${sex}" />
+	<input type="hidden" id="hidenonStage" value="${onStage}" />
 </body>
 </html>

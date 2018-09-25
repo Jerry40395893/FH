@@ -1,8 +1,10 @@
 package org.xmgreat.handle;
 
+import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.xmgreat.biz.impl.ComSjBizImpl;
 
 /*
  * 作者：沈杰
@@ -12,12 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/user/sj")
 public class UserSjHandle
 {
+  @Resource
+  private ComSjBizImpl comSjBizImpl;
 
   @RequestMapping("/showBanking.action")
   public ModelAndView showBanking()
   {
-    // 跳转前台人气排行榜
+    // 跳转前台人气排行榜获取用户列表前十男神和女神 localhost:8080/FH/user/sj/showBanking.action
     ModelAndView mav = new ModelAndView();
+    comSjBizImpl.getUserList("获取人气排行榜信息");
     mav.setViewName("bw/banking");
     return mav;
   }

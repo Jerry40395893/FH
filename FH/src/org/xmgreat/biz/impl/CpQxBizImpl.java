@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.xmgreat.biz.CpQxBiz;
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.CpQxMapper;
 
 /**
@@ -30,6 +31,22 @@ public class CpQxBizImpl implements CpQxBiz {
 	public CityEntity selectCity() {
 		// TODO Auto-generated method stub
 		return cpQxMapper.selectCity();
+	}
+	/* (non-Javadoc)
+	 * @see org.xmgreat.biz.CpQxBiz#saveData(org.xmgreat.entity.UserEntity)
+	 */
+	@Override
+	public void saveData(UserEntity user) {
+		// TODO Auto-generated method stub
+		cpQxMapper.saveData(user);
+	}
+	/* (non-Javadoc)
+	 * @see org.xmgreat.biz.CpQxBiz#saveSoliloquy(org.xmgreat.entity.UserEntity)
+	 */
+	@Override
+	public void saveSoliloquy(UserEntity userEntity) {
+		// TODO Auto-generated method stub
+		cpQxMapper.saveSoliloquy(userEntity);
 	}
 
 }

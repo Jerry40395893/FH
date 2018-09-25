@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html;  charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%
   String path = request.getScheme() + "://" + request.getServerName() + ":"
     + request.getServerPort() + request.getContextPath() + "/";
@@ -35,57 +37,104 @@
 			<section class="container">
 			<ul class="slides">
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/first.png" alt="" /></span> <span class="right">2pm
-							- 3pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong> &nbsp &nbsp Indoor Cycling </strong></a></li>
+							src="<%=path%>/images/first.png" alt="" /></span> 
+							<%-- <c:if test="${fn:length(womenList)>=1}"> --%>
+							<span class="right">${womenList[0].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+						 <strong> &nbsp &nbsp ${womenList[0].userName} 
+						&nbsp ${womenList[0].cityName} &nbsp ${womenList[0].age} &nbsp ${womenList[0].height}</strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/second.png" alt="" /></span> <span class="right">3pm
-							- 3:30pm &nbsp<img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Cardio Fitness</strong></a></li>
+							src="<%=path%>/images/second.png" alt="" /></span> 
+							<%-- <c:if test="${fn:length(womenList)>=2 }"> --%>
+							<span class="right">${womenList[1].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							 <strong>&nbsp &nbsp ${womenList[1].userName}
+							&nbsp ${womenList[1].cityName} &nbsp ${womenList[1].age} &nbsp ${womenList[1].height}</strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/thrid.png" alt="" /></span> <span class="right">4pm
-							- 6pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Cardio</strong></a></li>
+							src="<%=path%>/images/thrid.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(womenList)>=3 }"> --%>
+							<span class="right">${womenList[2].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[2].userName}
+					&nbsp ${womenList[2].cityName} &nbsp ${womenList[2].age}  &nbsp ${womenList[2].height}</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/four.png" alt="" /></span> <span class="right">7pm
-							- 7:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Intro to Yoga</strong></a></li>
+							src="<%=path%>/images/four.png" alt="" /></span>
+					<%-- <c:if test="${fn:length(womenList)>=4 }"> --%>
+							<span class="right">${womenList[3].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					 <strong>&nbsp &nbsp ${womenList[3].userName}
+					 &nbsp ${womenList[3].cityName} &nbsp ${womenList[3].age} &nbsp ${womenList[3].height}
+					 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/five.png" alt="" /></span> <span class="right">8pm
-							- 11pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Boxing</strong></a></li>
+							src="<%=path%>/images/five.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(womenList)>=5 }"> --%>
+							<span class="right">${womenList[4].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[4].userName}
+					&nbsp ${womenList[4].cityName} &nbsp ${womenList[4].age}  &nbsp ${womenList[4].height}
+					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/six.png" alt="" /></span> <span class="right">7am
-							- 8am &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Cardio</strong></a></li>
+							src="<%=path%>/images/six.png" alt="" /></span>
+						<%-- <c:if test="${fn:length(womenList)>=6 }"> --%>
+							<span class="right">${womenList[5].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					 <strong>&nbsp &nbsp ${womenList[5].userName}
+					 &nbsp ${womenList[5].cityName} &nbsp ${womenList[5].age} &nbsp ${womenList[5].height}
+					 
+					 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/seven.png" alt="" /></span> <span class="right">9:30am
-							- 11am &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Intro to Yoga</strong></a></li>
+							src="<%=path%>/images/seven.png" alt="" /></span>
+					<%-- <c:if test="${fn:length(womenList)>=7 }"> --%>
+							<span class="right">${womenList[6].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[6].userName}
+					&nbsp ${womenList[6].cityName} &nbsp ${womenList[6].age}  &nbsp ${womenList[6].height}
+					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/eight.png" alt="" /></span> <span class="right">2pm
-							- 3pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Indoor Cycling</strong></a></li>
+							src="<%=path%>/images/eight.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(womenList)>=8 }"> --%>
+							<span class="right">${womenList[7].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[7].userName}
+					&nbsp ${womenList[7].cityName} &nbsp ${womenList[7].age}  &nbsp ${womenList[7].height}
+					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/nine.png" alt="" /></span> <span class="right">3pm
-							- 3:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Cardio Fitness</strong></a></li>
+							src="<%=path%>/images/nine.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(womenList)>=9 }"> --%>
+							<span class="right">${womenList[8].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[8].userName}
+					&nbsp ${womenList[8].cityName} &nbsp ${womenList[8].age} &nbsp ${womenList[8].height}
+					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/ten.png" alt="" /></span> <span class="right">4pm
-							- 3:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Cardio Fitness</strong></a></li>
+							src="<%=path%>/images/ten.png" alt="" /></span> 
+							<span class="right">${womenList[9].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${womenList[9].userName}
+					&nbsp ${womenList[9].cityName} &nbsp ${womenList[9].age} &nbsp ${womenList[9].height}
+					</strong></a></li>
 			</ul>
 			</section>
 		</li>
@@ -97,57 +146,114 @@
 			<section class="container">
 			<ul class="slides">
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/first.png" alt="" /></span> <span class="right">2pm
-							- 3pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong> &nbsp &nbsp Indoor Cycling </strong></a></li>
+							src="<%=path%>/images/first.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(manList)>=1 }"> --%>
+							<span class="right">${manList[0].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					 <strong> &nbsp &nbsp ${manList[0].userName}
+					 &nbsp ${manList[0].cityName} &nbsp ${manList[0].age}  &nbsp ${manList[0].height}
+					  </strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/second.png" alt="" /></span> <span class="right">3pm
-							- 3:30pm &nbsp<img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Cardio Fitness</strong></a></li>
+							src="<%=path%>/images/second.png" alt="" /></span> 
+					<%-- <c:if test="${fn:length(manList)>=2 }"> --%>
+							<span class="right">${manList[1].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					 <strong>&nbsp &nbsp ${manList[1].userName}
+					 &nbsp ${manList[1].cityName} &nbsp ${manList[1].age}  &nbsp ${manList[1].height}
+					 </strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/thrid.png" alt="" /></span> <span class="right">4pm
-							- 6pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Cardio</strong></a></li>
+							src="<%=path%>/images/thrid.png" alt="" /></span>
+					<%-- <c:if test="${fn:length(manList)>=3 }"> --%>
+							<span class="right">${manList[2].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+					<strong>&nbsp &nbsp ${manList[2].userName}
+					&nbsp ${manList[2].cityName} &nbsp ${manList[2].age}  &nbsp ${manList[2].height}
+					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/four.png" alt="" /></span> <span class="right">7pm
-							- 7:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Intro to Yoga</strong></a></li>
+							src="<%=path%>/images/four.png" alt="" /></span> 
+							
+							<%-- <c:if test="${fn:length(manList)>=4 }"> --%>
+							<span class="right">${manList[3].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							 <strong>&nbsp &nbsp ${manList[3].userName}
+							 &nbsp ${manList[3].cityName} &nbsp ${manList[3].age}  &nbsp ${manList[3].height}
+							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/five.png" alt="" /></span> <span class="right">8pm
-							- 11pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Boxing</strong></a></li>
+							src="<%=path%>/images/five.png" alt="" /></span> 
+						<%-- 	<c:if test="${fn:length(manList)>=5}"> --%>
+							<span class="right">${manList[4].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							 <strong>&nbsp &nbsp ${manList[4].userName}
+							 &nbsp ${manList[4].cityName} &nbsp ${manList[4].age}  &nbsp ${manList[4].height}
+							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/six.png" alt="" /></span> <span class="right">7am
-							- 8am &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Advanced Cardio</strong></a></li>
+							src="<%=path%>/images/six.png" alt="" /></span> 
+							
+						<%-- 	<c:if test="${fn:length(manList)>=6 }"> --%>
+							<span class="right">${manList[5].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+								
+							<strong>&nbsp &nbsp ${manList[5].userName}
+							&nbsp ${manList[5].cityName} &nbsp ${manList[5].age} &nbsp ${manList[5].height}
+							</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/seven.png" alt="" /></span> <span class="right">9:30am
-							- 11am &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Intro to Yoga</strong></a></li>
+							src="<%=path%>/images/seven.png" alt="" /></span> 
+							<%-- <c:if test="${fn:length(manList)>=7 }"> --%>
+							<span class="right">${manList[6].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							<strong>&nbsp &nbsp ${manList[6].userName}
+							&nbsp ${manList[6].cityName} &nbsp ${manList[6].age} &nbsp ${manList[6].height}
+							</strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/eight.png" alt="" /></span> <span class="right">2pm
-							- 3pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Indoor Cycling</strong></a></li>
+							src="<%=path%>/images/eight.png" alt="" /></span> 
+							
+							<%-- <c:if test="${fn:length(manList)>=8 }"> --%>
+							<span class="right">${manList[7].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+								
+							 <strong>&nbsp &nbsp ${manList[7].userName}
+							 &nbsp ${manList[7].cityName} &nbsp ${manList[7].age} &nbsp ${manList[7].height}
+							 
+							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/nine.png" alt="" /></span> <span class="right">3pm
-							- 3:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp Cardio Fitness</strong></a></li>
+							src="<%=path%>/images/nine.png" alt="" /></span> 
+							
+							<%-- <c:if test="${fn:length(manList)>=9 }"> --%>
+							<span class="right">${manList[8].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							 <strong>&nbsp &nbsp ${manList[8].userName}
+							 &nbsp ${manList[8].cityName} &nbsp ${manList[8].age} &nbsp ${manList[8].height}
+							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
-							src="<%=path%>/images/ten.png" alt="" /></span> <span class="right">4pm
-							- 3:30pm &nbsp <img style="margin-top: 8px; float: right;"
-							src="<%=path%>/images/love.png" />
-					</span> <strong>&nbsp &nbsp  Fitness</strong></a></li>
+							src="<%=path%>/images/ten.png" alt="" /></span>
+						<%-- <c:if test="${fn:length(manList)>=10 }"> --%>
+							<span class="right">${manList[9].popular} &nbsp <img
+								style="margin-top: 8px; float: right;"
+								src="<%=path%>/images/love.png" />
+								</span> 
+							 <strong>&nbsp &nbsp ${manList[9].userName}
+							 &nbsp ${manList[9].cityName} &nbsp ${manList[9].age} &nbsp ${manList[9].height}
+							 </strong></a></li>
 			</ul>
 			</section>
 		</li>

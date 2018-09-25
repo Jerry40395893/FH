@@ -45,7 +45,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!-- <td><input type="text" name="sort[1]" value="1" style="width:50px; text-align:center; border:1px solid #ddd; padding:7px 0;" /></td> -->
           <td>${(adminEntity.page-1)*5+vs.index+1}</td>
           <td>${user.admin}</td>
-          <td>${user.roleEntity.roleName}</td> 
+          <%-- <td>${user.roleEntity.roleName}</td> --%>
+          <c:if test="${empty user.roleEntity.roleName}">
+          <td>待分配角色</td>
+          </c:if>
+          <c:if test="${not empty user.roleEntity.roleName}">
+          <td>${user.roleEntity.roleName}</td>
+          </c:if>
+
+
           <td>
           <div class="button-group"> 
            <a class="button border-main" href="<%=basePath %>admin/zzh/upAdminPsw.action?adminId=${user.adminId}&page=${adminEntity.page}">

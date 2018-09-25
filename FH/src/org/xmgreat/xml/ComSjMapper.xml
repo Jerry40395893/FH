@@ -3,6 +3,48 @@
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="org.xmgreat.mapper.ComSjMapper">
 
+	<!-- 获取所有未删除用户，未牵手成功用户 -->
+	<select id="getAllUserList" resultType="org.xmgreat.entity.UserEntity">
+		select * from userTb where userId in (select userId from userTb where
+		deleteId!=16 minus select userId from showTb)
+	</select>
+	<!-- 将刷新后的分数更新到用户列表 -->
+	<update id="updateBanking" parameterType="org.xmgreat.entity.UserEntity">
+		update userTb set
+		popular=#{popular} where userId=#{userId}
+	</update>
+
+	<!-- 获取用户一共收件数量 -->
+	<select id="getEmail" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		select count(*) from emailTb where userId=#{cityId}
+	</select>
+	<!-- 获取用户一共有多少访问量 -->
+	<select id="getVisit" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		select count(*) from visitTb where userId=#{cityId}
+	</select>
+	<!-- 获取用户可以享受的推荐数 -->
+	<select id="getRem" resultType="java.lang.Integer"
+		parameterType="java.lang.Integer">
+		select a.recommend from comboTb a,comMiddleTb
+		b,CTMiddleTb c where c.userId=#{userId} and b.timeId=c.timeId and
+		a.comboId=b.comboId
+	</select>
+	<!-- 根据性别获取受欢迎程度前十的用户 -->
+	<select id="getCityName" resultType="java.lang.String"
+		parameterType="java.lang.Integer">
+		select cityName from cityTb where cityId=#{cityId}
+	</select>
+	<!-- 根据性别获取受欢迎程度前十的用户 -->
+	<select id="getUserList" resultType="org.xmgreat.entity.UserEntity"
+		parameterType="java.lang.String">
+		select *from ( select userTb.*,rownum rw from userTb
+		where userId in(select userId from userTb where sex=#{sex} minus
+		select
+		userId from showTb) order by popular desc) where rw &lt;=10
+	</select>
+
 	<!-- 服务器后台套餐管理分页查询加模糊搜索 -->
 	<select id="getComboEntity" resultType="org.xmgreat.entity.ComboEntity"
 		parameterType="org.xmgreat.entity.ConditionEntity">
@@ -40,6 +82,7 @@
 		</if>
 		order by comboId desc
 	</select>
+
 	<!-- 获取后台分页条数 -->
 	<select id="getNum" resultType="org.xmgreat.entity.ConditionEntity"
 		parameterType="java.lang.Integer">

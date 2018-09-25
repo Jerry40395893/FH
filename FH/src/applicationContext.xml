@@ -22,7 +22,6 @@
 		<property name="username" value="jx1803" />
 		<property name="password" value="123456" />
 	</bean>
-
 	<!-- 配置SqlSessionFactoryBean -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
@@ -37,8 +36,9 @@
 
 	<!-- 开启组件扫描 -->
 	<context:component-scan base-package="org.xmgreat" />
-	
+
 	<!-- properties配置 -->
 	<util:properties id="const" location="classpath:const.properties" />
-
+	<!-- 手动实例化上下文 -->
+	<bean id="applicationContextUtil" class="org.xmgreat.tools.ApplicationContextUtil"></bean>
 </beans>

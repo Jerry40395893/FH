@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
  * 版本：第一版
  * 更改时间：2018-9-21
  */
+/*
+* 更改者：zzh
+* 用途：添加了   搜索会员名称 、状态条件
+* 更改时间：2018-9-22
+*/
 @Component
 public class ConditionEntity
 {
@@ -32,6 +37,18 @@ public class ConditionEntity
   private Integer baseNum;
   /** 跳页类型 */
   private Integer turnPage;
+  /** 搜索会员名称 */
+  private String  userName;
+  /** 状态（启用和禁用） */
+  private Integer onStage;
+  /** 会员id */
+  private int userId;
+  /**会员性别*/
+  private String sex;
+  /**会员电话*/
+  private Long teleNum;
+  /**会员邮箱*/
+  private String email;
 
   public ConditionEntity()
   {
@@ -165,5 +182,53 @@ public class ConditionEntity
   {
     this.turnPage = turnPage;
   }
+
+public String getUserName() {
+	return userName;
+}
+
+public void setUserName(String userName) {
+	this.userName = userName;
+}
+
+public Integer getOnStage() {
+	return onStage;
+}
+
+public void setOnStage(Integer onStage) {
+	this.onStage = onStage;
+}
+
+public int getUserId() {
+	return userId;
+}
+
+public void setUserId(int userId) {
+	this.userId = userId;
+}
+
+public String getSex() {
+	return sex;
+}
+
+public void setSex(String sex) {
+	this.sex = sex;
+}
+
+public Long getTeleNum() {
+	return teleNum;
+}
+
+public void setTeleNum(Long teleNum) {
+	this.teleNum = teleNum;
+}
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
 
 }

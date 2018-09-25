@@ -1,24 +1,24 @@
 $(document).ready(
 		function() {
-			/*修改的时候名字查重*/
-			$("#alertName").blur(function() {
+			/* 修改的时候名字查重 */
+			$("#alertName").change(function() {
 				$.ajax({
 					url : $("#hidenPath").val() + "admin/sj/checkName.action",
 					type : "post",
 					dataType : "text",
 					data : {
-						name : $("#name").val().trim(),
+						name : $("#alertName").val().trim(),
 					},
 					success : function(res) {
 						console.log(res);
-						if ((res!=null)&&(res!="")) {
+						if ((res != null) && (res != "")) {
 							alert("套餐重名, 请重新设定");
 						}
 					}
 				});
 			});
 
-			/*添加套餐的时候名字查重*/
+			/* 添加套餐的时候名字查重 */
 			$("#name").blur(function() {
 				$.ajax({
 					url : $("#hidenPath").val() + "admin/sj/checkName.action",
@@ -29,8 +29,9 @@ $(document).ready(
 					},
 					success : function(res) {
 						console.log(res);
-						if ((res!=null)&&(res!="")) {
+						if ((res != null) && (res != "")) {
 							alert("套餐重名, 请重新设定");
+							$("#name").val("");
 						}
 					}
 				});

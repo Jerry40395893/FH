@@ -7,13 +7,20 @@
  */
 package org.xmgreat.mapper;
 
+import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.UserEntity;
 
 /**
  * @author 周群新
  *
  */
+@Repository
 public interface CpQxMapper {
 
 	public CityEntity selectCity();
+	
+	public void saveData(UserEntity user);//保存我的资料
+	
+	public void saveSoliloquy(UserEntity userEntity);//保存内心独白
 }

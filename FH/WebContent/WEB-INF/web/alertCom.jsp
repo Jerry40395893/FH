@@ -83,9 +83,10 @@
 							提交</button>
 					</div>
 				</div>
-				<input type="hidden" name="comboId" value="${com.comboId}"/>
+				<input type="hidden" name="comboId" value="${com.comboId}" />
 			</form>
 		</div>
+	<input type="hidden" id="hidenPath" value="<%=basePath%>" />
 	</div>
 </body>
 </html>
