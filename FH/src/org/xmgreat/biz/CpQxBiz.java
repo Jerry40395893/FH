@@ -20,5 +20,7 @@ public interface CpQxBiz {
 	
 	public void saveData(UserEntity user);//保存资料
 	
-	public void saveSoliloquy(UserEntity userEntity);
+	public void saveSoliloquy(UserEntity userEntity);//保存内心独白
+	
+	public void upHeadPortrait(UserEntity userEntity);//上传头像
 }

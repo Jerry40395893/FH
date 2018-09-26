@@ -20,8 +20,8 @@
 		and m.roleId = r.roleId
 		and r.roleId=2
 		and u.stype=1
-		 <if test="admin !=null and admin != ''"> and u.admin like 
-			'%${admin}%' 
+		 <if test="admin !=null and admin != ''">
+		  and u.admin like '%${admin}%' 
 		 </if>
 		) t where rownum &lt;= #{page}*5) where rn &gt; (#{page}-1)*5
 	</select>  
@@ -51,10 +51,25 @@
 	</update>
 
   <!-- 添加管理员 -->
-    <insert id="addAdmin" parameterType="org.xmgreat.entity.AdminEntity">
+    <insert id="addAdmin" 
+    parameterType="org.xmgreat.entity.AdminEntity"
+    >
        insert into admintb (adminId, admin, pasw, stype)
        values(ADMIN_TBL.Nextval,#{admin},#{pasw},1)
      </insert>
+<!-- 添加中间表角色id -->
+    <insert id="addRoleId" 
+    parameterType="org.xmgreat.entity.AdminEntity">
+       insert into roleMiddleTb (middleId,adminId, roleId)
+       values(MIDDLEID_1.Nextval,ADMINID_1.Nextval,2)
+     </insert>     
+     
+  <!-- 查询管理员是否存在 -->
+    <select id="nSAdmin"
+    parameterType="org.xmgreat.entity.AdminEntity"
+    resultType="org.xmgreat.entity.AdminEntity">
+       select * from adminTb where admin=#{admin} 
+    </select>
   
    <!--  重置密码-->
     <update id="upAdminPsw"
@@ -65,7 +80,7 @@
   <select id="selecMenu"  
     parameterType="org.xmgreat.entity.AdminEntity"
     resultType="org.xmgreat.entity.MenuEntity"   >
-    select m.menuId,m.menuName,m.url,m.pId 
+    select m.menuId,m.menuName,m.pId,m.URL
     from adminTb a,menuTb m,roleMiddleTb r,roleTb t,roleMuneTb e 
     where  a.adminId=r.adminId 
     and r.roleId = t.roleId
@@ -75,33 +90,83 @@
   </select>
    <!--显示会员管理列表-->
 	<select id="selecUser"
-	parameterType="org.xmgreat.entity.ConditionEntity"
+	parameterType="org.xmgreat.entity.ConditionEntity"	
 	resultType="org.xmgreat.entity.UserEntity"
 	>
 	select * from(select t.*,rownum rn
     from
 	(select * from usertb where deleteId = 1
-	 <if test="userName !=null and userName != ''">
+	<if test="userName !=null and userName != ''">
 	  and userName like '%${userName}%' 
      </if>
-		) t where rownum &lt;= #{page}*5) where rn &gt; (#{page}-1)*5
+     <if test="onStage != null and onStage !=''">
+	  and onStage = #{onStage}
+     </if> 
+      <if test="sex !=null and sex != ''">
+	  and sex like '%${sex}%' 
+     </if>
+    <if test="teleNum != null and  teleNum != ''">
+	  and teleNum = #{teleNum}
+     </if> 
+       <if test="email !=null and email != ''">
+	  and email like '%${email}%' 
+     </if>
+		) t where rownum &lt;= #{currentPage}*5) where rn &gt; (#{currentPage}-1)*5
 	</select>
 
 <!--查询会员的个数-->
 	<select id="getUserCount"
-	parameterType="org.xmgreat.entity.UserEntity"
+	parameterType="org.xmgreat.entity.ConditionEntity"
 	resultType="org.xmgreat.entity.UserEntity"
 	>
 	select * from usertb where deleteId = 1
 	 <if test="userName !=null and userName != ''">
 	  and userName like '%${userName}%' 
      </if>
-      <if test="onStage != 0">
+     <if test="onStage != null and onStage !=''">
 	  and onStage = #{onStage}
+     </if> 
+      <if test="sex !=null and sex != ''">
+	  and sex like '%${sex}%' 
+     </if>
+     <if test="teleNum != null and  teleNum != ''">
+	  and teleNum = #{teleNum}
+     </if> 
+       <if test="email !=null and email != ''">
+	  and email like '%${email}%' 
      </if>
 	</select>
-
-
-
+ <!--对会员启用-->
+	<update id="startUser"
+		parameterType="org.xmgreat.entity.UserEntity">
+		update usertb set  onStage=1 where userId=#{userId}
+	</update>
+ <!--对会员禁用-->
+	<update id="forbidUser"
+		parameterType="org.xmgreat.entity.UserEntity">
+		update usertb set  onStage=2 where userId=#{userId}
+	</update>
+<!--对会员删除-->
+	<update id="delUser"
+		parameterType="org.xmgreat.entity.UserEntity">
+		update usertb set  deleteId=2 where userId=#{userId}
+	</update>
+<!--对会员审核 不通过-->
+	<update id="audNoUser"
+		parameterType="org.xmgreat.entity.UserEntity">
+		update usertb set  auditStage=3 where userId=#{userId}
+	</update>
+<!--对会员审核 通过-->
+	<update id="audYUser"
+		parameterType="org.xmgreat.entity.UserEntity">
+		update usertb set  auditStage=1 where userId=#{userId}
+	</update>
+<!--查看详情-->
+	<select id="infoUser"
+		parameterType="org.xmgreat.entity.ConditionEntity"
+		resultType="org.xmgreat.entity.UserEntity">
+		select * from userTb  where userId=#{userId}
+	</select>
+		
 </mapper>
 	

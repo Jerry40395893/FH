@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xmgreat.biz.impl.AdminZzhBizImpl;
 import org.xmgreat.entity.AdminEntity;
@@ -92,7 +94,7 @@ public class AdminHandleZZH
     {
       System.out.println(uList.get(i));
     }
-    System.out.println(uList.size());
+
     mav.addObject("ulist", uList);
     return mav;
   }
@@ -126,7 +128,8 @@ public class AdminHandleZZH
     System.out.println("添加");
     ModelAndView mav = new ModelAndView("web/adminList");
     adminBizImpl.addAdmin(udf);
-    uList = adminBizImpl.selecAdmin(udf);
+    adminBizImpl.addRoleId(udf);
+    uList = adminBizImpl.selecAdminP(udf.getPage());
     mav.addObject("ulist", uList);
     return mav;
   }
@@ -148,8 +151,101 @@ public class AdminHandleZZH
   public ModelAndView userList(HttpServletRequest request, ConditionEntity uet)
   {
     System.out.println("会员列表显示");
+    uet.setRequest(request);
     ModelAndView mav = new ModelAndView("web/cusUserList");
     adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+
+  // 会员管理禁用
+  @RequestMapping(value = "/forBid.action")
+  public ModelAndView forBid(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员禁用");
+    ModelAndView mav = new ModelAndView("web/cusUserList");
+    adminBizImpl.forbidUser(uet);
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+
+  // 会员管理启用
+  @RequestMapping(value = "/stratUsing.action")
+  public ModelAndView stratUsing(HttpServletRequest request,
+    ConditionEntity uet)
+  {
+    System.out.println("会员启用");
+    ModelAndView mav = new ModelAndView("web/cusUserList");
+    adminBizImpl.startUser(uet);
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+
+  // 会员管理删除
+  @RequestMapping(value = "/delUser.action")
+  public ModelAndView delUser(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员删除启用");
+    ModelAndView mav = new ModelAndView("web/cusUserList");
+    adminBizImpl.delUser(uet);
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+
+  // 会员审核列表显示
+  @RequestMapping(value = "/audUserList.action")
+  public ModelAndView audUserList(HttpServletRequest request,
+    ConditionEntity uet)
+  {
+    System.out.println("会员列表显示");
+    uet.setRequest(request);
+    ModelAndView mav = new ModelAndView("web/audUserList");
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+
+  // 会员审核不通过
+  @RequestMapping(value = "/audNUser.action")
+  public ModelAndView audNUser(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员启用");
+    ModelAndView mav = new ModelAndView("web/audUserList");
+    adminBizImpl.audNUser(uet);
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+  // 会员审核通过
+
+  @RequestMapping(value = "/audYUser.action")
+  public ModelAndView audYUser(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员启用");
+    ModelAndView mav = new ModelAndView("web/cusUserList");
+    adminBizImpl.audYUser(uet);
+    adminBizImpl.selecUserL(uet);
+    return mav;
+  }
+  // 添加管理员账号是否重复admin/checkAdmin.action
+
+  @RequestMapping(value = "/checkAdmin.action", method = RequestMethod.POST,
+    produces = "application/json;charset=utf-8")
+  // public @ResponseBody User userinfo4(@RequestBody User user){
+  // @RequestMapping(value = "/checkAdmin.action")
+  public @ResponseBody String checkAdmin(AdminEntity udf)
+  {
+    System.out.println("查询账户存在与否" + udf.getAdmin().toString());
+    // ModelAndView mav = new ModelAndView("web/addAdmin");
+    String flag = adminBizImpl.checkAdmin(udf);
+    return flag;
+  }
+
+  // 会员信息查询
+  @RequestMapping(value = "/infoUser.action")
+  public ModelAndView infoUser(HttpServletRequest request, ConditionEntity uet)
+  {
+    System.out.println("会员信息");
+    uet.setRequest(request);
+    ModelAndView mav = new ModelAndView("web/userInfo");
+    adminBizImpl.userInfo(uet);
     return mav;
   }
 }

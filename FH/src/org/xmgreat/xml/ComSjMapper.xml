@@ -3,10 +3,74 @@
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="org.xmgreat.mapper.ComSjMapper">
 
+	<!-- 更新智能推荐的SQL语句 -->
+	<update id="updateSql" parameterType="org.xmgreat.entity.RuleEntity">
+		update ruleTb set
+		sqlStr=#{sqlStr} where ruleId=#{ruleId}
+	</update>
+	<!-- 获取用户本身信息 -->
+	<select id="getUser" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.UserEntity">
+		select * from userTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的择偶要求 -->
+	<select id="getMateEntity" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.MateEntity">
+		select * from mateTb where userId=#{userId}
+	</select>
+	<!-- 获取智能推荐的SQL语句 -->
+	<select id="getSql" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select sqlStr from ruleTb where ruleId=#{ruleId}
+	</select>
+	<!-- 通过查找出来的SQL语句获取智能推荐获取用户列表,联查所有条件表 -->
+	<select id="getAllList" resultMap="recomendList" parameterType="java.lang.String"
+		resultType="org.xmgreat.entity.UserEntity">
+		${sql}
+	</select>
+	<resultMap id="recomendList" type="org.xmgreat.entity.UserEntity">
+		<id property="userId" column="userId" />
+		<result property="adminName" column="adminName" />
+		<result property="pasw" column="pasw" />
+		<collection property="menuList" column="userId"
+			javaType="java.util.ArrayList" select="getAllUserList" ofType="org.xmgreat.entity.MenuEntity">
+		</collection>
+	</resultMap>
+
+
+	<!-- 获取符合择偶要的用户 -->
+	<select id="getRecomList" resultType="org.xmgreat.entity.UserEntity"
+		parameterType="org.xmgreat.entity.MateEntity">
+		select * from(select userTb.*,rownum rw from userTb
+		where brithday &gt;=#{hightAge} and
+		brithday
+		&lt;=#{lowAge} and
+		height&gt;=#{lowHeight} and
+		height&lt;=#{height} and nation=#{nation}
+		and
+		address=#{address} and
+		married=#{married} and doctor=#{doctor})
+		where rw&lt;=#{recommend}
+	</select>
+
+	<!-- 获取门户访问量 -->
+	<select id="getWebsite" resultType="java.lang.Integer">
+		select visitCount from
+		websiteTb
+	</select>
+
+	<!-- 更新门户访问量 -->
+	<update id="updateWebSite" parameterType="java.lang.Integer">
+		update websiteTb set
+		visitCount=#{visitCount}
+	</update>
+
 	<!-- 获取所有未删除用户，未牵手成功用户 -->
 	<select id="getAllUserList" resultType="org.xmgreat.entity.UserEntity">
-		select * from userTb where userId in (select userId from userTb where
-		deleteId!=16 minus select userId from showTb)
+		select * from userTb
+		where userId in (select userId from userTb where
+		deleteId!=16 minus
+		select userId from showTb)
 	</select>
 	<!-- 将刷新后的分数更新到用户列表 -->
 	<update id="updateBanking" parameterType="org.xmgreat.entity.UserEntity">
@@ -17,12 +81,12 @@
 	<!-- 获取用户一共收件数量 -->
 	<select id="getEmail" resultType="java.lang.Integer"
 		parameterType="java.lang.Integer">
-		select count(*) from emailTb where userId=#{cityId}
+		select count(*) from emailTb where userId=#{userId}
 	</select>
 	<!-- 获取用户一共有多少访问量 -->
 	<select id="getVisit" resultType="java.lang.Integer"
 		parameterType="java.lang.Integer">
-		select count(*) from visitTb where userId=#{cityId}
+		select count(*) from visitTb where userId=#{userId}
 	</select>
 	<!-- 获取用户可以享受的推荐数 -->
 	<select id="getRem" resultType="java.lang.Integer"

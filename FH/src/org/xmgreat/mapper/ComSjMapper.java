@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.MateEntity;
+import org.xmgreat.entity.RuleEntity;
 import org.xmgreat.entity.UserEntity;
 
 /*
@@ -58,4 +60,28 @@ public interface ComSjMapper
 
   /** 获取所有用户 **/
   public List<UserEntity> getAllUserList();
+
+  /** 获取门户访问量 */
+  public Integer getWebsite();
+
+  /** 更新门户访问量 */
+  public void updateWebSite(@Param("visitCount") Integer visitCount);
+
+  /** 获取用户的择偶要求 **/
+  public UserEntity getUser(@Param("userId") Integer userId);
+
+  /** 获取用户的择偶要求 **/
+  public MateEntity getMateEntity(@Param("userId") Integer userId);
+
+  /** 获取符合择偶要求的所有用户 **/
+  public List<UserEntity> getRecomList(MateEntity mateEntity);
+
+  /** 获取符合详细资料的所有用户 **/
+  public List<UserEntity> getAllList(@Param("sql") String sql);
+
+  /** 获取智能推荐的SQL语句 */
+  public String getSql(@Param("ruleId") Integer ruleId);
+
+  /** 更新智能推荐的SQL语句 */
+  public void updateSql(RuleEntity ruleEntity);
 }

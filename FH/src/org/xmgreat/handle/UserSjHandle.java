@@ -32,7 +32,10 @@ public class UserSjHandle
   public ModelAndView showWelcom()
   {
     ModelAndView mv = new ModelAndView();
-    /** springMVC会自动找到路径，然后进行页面跳转，展示欢迎页 */
+    /** springMVC会自动找到路径，然后进行页面跳转，展示欢迎页 .并且更新用户访问量 */
+    comSjBizImpl.updateWebsite();
+    /** 获取智能推荐的用户列表 */
+    /* comSjBizImpl.getRecomList(1); */
     mv.setViewName("bw/index");
     return mv;
   }

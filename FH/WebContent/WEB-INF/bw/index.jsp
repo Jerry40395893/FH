@@ -5,7 +5,7 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
-	String url = basePath + "user/index.action";
+	String url = basePath + "user/hwy/index.action";
 %>
 
 <!DOCTYPE html>
@@ -57,21 +57,7 @@ $(document).ready(function(){
 	$('#loginModal').on('hide.bs.modal', function () {
 		isModalON = false;
 	});
-<<<<<<< HEAD
-})
 
-$(document).on("click",function(){
-	if(${user == null} && isModalON == false ){
-		if(isModalClosed == true){
-			document.getElementById("modal-1").click();
-			isModalON = true;
-			isModalClosed = false;
-		}else{
-			isModalClosed = true;
-		}
-	}
-})
-=======
 });
 
 $(document).on("click",function(){
@@ -85,7 +71,6 @@ $(document).on("click",function(){
 		}
 	}
 });
->>>>>>> branch 'master' of https://github.com/Jerry40395893/FH.git
 
 function vCodeUpdate() {
 	var vCode = document.getElementById("vCode");
@@ -97,57 +82,8 @@ function ajaxLogin() {
 	var userAccount=$("#userAccount").val();
 	var pasw=$("#pasw").val();
 	
-<%-- 	$("#loginForm").ajaxSubmit({
-		url:'<%=basePath%>user/ajaxLogin.action',
-		type: 'post',
-		dateType:'json',
-		contentType:"application/json",
-		success:function(data){
-			alert('success'+data);
-		},
-		error:function(e){
-			alert('error'+e);
-		}
-	}); --%>
-	
 	$.ajax({
-		url:'<%=basePath%>user/ajaxLogin.action',
-		data:'userAccount='+userAccount+'&pasw='+pasw,
-		type: 'post',
-		success:function(data){
-			if(data == 'true'){
-			window.location.href="<%=url%>"; 
-			}else{
-				alert('账号或密码错误')
-			}
-		},
-		error:function(e){
-			alert('error'+e);
-		}
-	});
-
-}
-
-function ajaxLogin() {
-		
-	var userAccount=$("#userAccount").val();
-	var pasw=$("#pasw").val();
-	
-<%-- 	$("#loginForm").ajaxSubmit({
-		url:'<%=basePath%>user/ajaxLogin.action',
-		type: 'post',
-		dateType:'json',
-		contentType:"application/json",
-		success:function(data){
-			alert('success'+data);
-		},
-		error:function(e){
-			alert('error'+e);
-		}
-	}); --%>
-	
-	$.ajax({
-		url:'<%=basePath%>user/ajaxLogin.action',
+		url:'<%=basePath%>user/hwy/ajaxLogin.action',
 		data:'userAccount='+userAccount+'&pasw='+pasw,
 		type: 'post',
 		success:function(data){
@@ -177,7 +113,7 @@ function ajaxLogin() {
 			<c:if test="${user == null }">
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好,请 <a id="modal-1"
 					href="#loginModal" role="button" data-toggle="modal">登录</a> &nbsp;&nbsp;
-  <a href="#"> 免费注册</a>
+  <a href="<%=basePath%>user/hwy/toRegister.action"> 免费注册</a>
 			</c:if>
 			<c:if test="${user != null }">
   	欢迎您，${user.userName} <a href="#">注销</a>
@@ -193,7 +129,7 @@ function ajaxLogin() {
 						<div class="form row">
 							<div class="form-horizontal col-md-offset-3" id="login_form">
 								<h3 class="form-title">用户登录</h3>
-								<form id="loginForm" action="<%=basePath%>user/login.action"
+								<form id="loginForm" action="<%=basePath%>user/hwy/login.action"
 									method="post">
 									<div class="col-md-9">
 										<div class="form-group">
@@ -207,25 +143,14 @@ function ajaxLogin() {
 												class="form-control required" type="password"
 												placeholder="请输入密码" id="pasw" name="pasw" />
 										</div>
-										<div class="form-group">
-											<i class="fa fa-user fa-lg"></i> <input
-												class="form-control required" type="text"
-												placeholder="请输入验证码" id="vc" name="vc" size="8" />
-										</div>
-										<div class="form-group">
-											<img src="<%=basePath%>global/vCode.action" id="vCode"
-												name="vCode" onclick="vCodeUpdate()" /> <a
-												onclick="vCodeUpdate()" class="pull-right" href="#">看不清，换一张</a>
-										</div>
-										<div class="form-group" id="btn-modal">
-											<button type="submit" class="btn btn-success btn-login">登录</button>
-										</div>
 										<div class="form-group" id="btn-modal">
 											<button type="button" class="btn btn-success btn-login"
-												onclick="ajaxLogin()">Ajax登录</button>
+												onclick="ajaxLogin()">登录</button>
 										</div>
 										<div class="form-group" id="btn-modal">
-											<button type="button" class="btn btn-success btn-login">快速注册</button>
+											<a href="<%=basePath%>user/hwy/toRegister.action">
+												<button type="button" class="btn btn-success btn-login">快速注册</button>
+											</a>
 										</div>
 										<div class="form-group" id="btn-modal">
 											<button type="button" class="btn btn-success btn-login"
@@ -292,10 +217,7 @@ function ajaxLogin() {
 										href="<%=basePath%>#services">搜索</a></li>
 									<li><a href="<%=basePath%>#prices">活动</a></li>
 									<li><a href="<%=basePath%>#gallery">晒幸福</a></li>
-<<<<<<< HEAD
-=======
 									<li><a href="<%=basePath%>user/sj/showBanking.action">人气排行榜</a></li>
->>>>>>> branch 'master' of https://github.com/Jerry40395893/FH.git
 									<c:if test="${user == null}">
 										<li><a id="modal-1" href="#loginModal" role="button"
 											class="btn" data-toggle="modal">我要登录</a></li>
@@ -304,6 +226,7 @@ function ajaxLogin() {
 										<li><a id="modal-1" href="#loginModal" role="button"
 											class="btn" data-toggle="modal">注销</a></li>
 									</c:if>
+									<li><a href="<%=basePath%>user/hwy/toRegister.action">免费注册</a></li>
 								</ul>
 							</div>
 						</div>
@@ -360,21 +283,11 @@ function ajaxLogin() {
 								data-option-value=".isotope-filter4">80后</a></li>
 						</ul>
 					</div>
-
-
-
-
-
-
 				</div>
 			</div>
 
-
-
-
 			<div class="gallery_inner2">
 				<div class="">
-
 					<div class="isotope-box">
 						<div id="container" class="clearfix">
 							<ul class="thumbnails" id="isotope-items">
@@ -573,19 +486,8 @@ function ajaxLogin() {
 							</ul>
 						</div>
 					</div>
-
-
-
-
 				</div>
 			</div>
-
-
-
-
-
-
-
 		</div>
 
 		<div id="bot2" class="clearfix">

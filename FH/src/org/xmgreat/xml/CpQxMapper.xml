@@ -30,4 +30,8 @@
     update userTb set information=#{information} where userId=2
     </update>
     
+     <!-- 上传头像 -->
+    <update id="upHeadPortrait" parameterType="org.xmgreat.entity.UserEntity">
+    update userTb set headPortrait=#{headPortrait} where userId=2
+    </update>
 </mapper>

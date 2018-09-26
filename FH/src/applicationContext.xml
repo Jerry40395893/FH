@@ -14,7 +14,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd"
 	default-init-method="myinit" default-destroy-method="mydestroy"
 	default-lazy-init="true">
-
 	<!-- 配置数据库连接池 -->
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
@@ -39,6 +38,4 @@
 
 	<!-- properties配置 -->
 	<util:properties id="const" location="classpath:const.properties" />
-	<!-- 手动实例化上下文 -->
-	<bean id="applicationContextUtil" class="org.xmgreat.tools.ApplicationContextUtil"></bean>
 </beans>

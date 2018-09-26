@@ -11,7 +11,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +38,16 @@ public class CpQxHandle
 	@Resource
 	private CpQxBiz cpQxBizImpl;
 	private CityEntity city;
-	//private UserEntity userEntity;
 	
+	@Resource
+	private UserEntity user;
+	
+	@Autowired
+	private HttpServletRequest request;
+	@Autowired
+	private HttpServletResponse response;
+	@Autowired
+	private ServletContext servletContext;
 
 	/**
 	 * 我的佳缘页面
@@ -82,6 +95,17 @@ public class CpQxHandle
 		
 	}
 	
+	/**
+	 * 经济实力页面
+	 */
+	@RequestMapping("/economics.action")
+	public ModelAndView economics() {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bw/Economics");
+		return mv;
+		
+	}
 	
 	@RequestMapping("/showCity.action")
 	@ResponseBody
@@ -123,16 +147,32 @@ public class CpQxHandle
 		return mv;
 	}
 	
-	@RequestMapping(value="/fileact.action", method=RequestMethod.POST)
-	public  ModelAndView fileact(MultipartFile fileact){
-		String filename = fileact.getOriginalFilename();
+	/*
+	 * 上传头像
+	 */
+	@RequestMapping(value="/uploadHead.action", method=RequestMethod.POST)
+	public  ModelAndView fileact(MultipartFile pic){
+		String filename = pic.getOriginalFilename();
 		System.out.println("获取到的文件名:" + filename);
 		try {
-			fileact.transferTo(new File("D:/" + filename));
+			String root = request.getServletContext().getRealPath("/upload");
+			String headPortrait = root+"/"+filename;
+			
+			
+			user.setHeadPortrait(headPortrait);
+			cpQxBizImpl.upHeadPortrait(user);
+			
+//			String root = ServletActionContext.getRequest().getRealPath(
+//					"/upload"); // 设置文件上传的路径
+			//fileact.transferTo(new File("D:/" + filename));
+			pic.transferTo(new File(root+"/"+filename));
+			System.out.println("路径:" + root );
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("bw/Photo");
 		return mav;

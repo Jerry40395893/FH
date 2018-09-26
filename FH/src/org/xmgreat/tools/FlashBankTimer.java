@@ -35,9 +35,9 @@ public class FlashBankTimer implements ServletContextListener
       // 每天9:22执行 Calendar.DAY_OF_YEAR(一年中第一天的值为 1)
       // HOUR_OF_DAY( 用于 24 小时制时钟)
       // WEEK_OF_YEAR(第一个星期为1)
-      now.set(Calendar.HOUR_OF_DAY, 9);
-      now.set(Calendar.MINUTE, 58);
-      now.set(Calendar.SECOND, 0);
+      now.set(Calendar.HOUR_OF_DAY, 23);
+      now.set(Calendar.MINUTE, 59);
+      now.set(Calendar.SECOND, 59);
       timer.schedule(task, now.getTime());
 
     } catch (Exception e)

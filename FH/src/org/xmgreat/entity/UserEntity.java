@@ -39,10 +39,13 @@ public class UserEntity
   private Integer auditStage;
   private Integer popular;
   /** 年龄需要动态计算 */
-  private String age;
+  private String strAge;
   /** 城市名称 */
   private String cityName;
 
+  /**头像   */
+  private String headPortrait;
+  
   public static class Builder
   {
 
@@ -855,14 +858,21 @@ public class UserEntity
     this.popular = popular;
   }
 
-  public String getAge()
+  /**
+   * @return the strAge
+   */
+  public String getStrAge()
   {
-    return age;
+    return strAge;
   }
 
-  public void setAge(String age)
+  /**
+   * @param strAge
+   *          the strAge to set
+   */
+  public void setStrAge(String strAge)
   {
-    this.age = age;
+    this.strAge = strAge;
   }
 
   public String getCityName()
@@ -875,4 +885,13 @@ public class UserEntity
     this.cityName = cityName;
   }
 
+public String getHeadPortrait() {
+	return headPortrait;
+}
+
+public void setHeadPortrait(String headPortrait) {
+	this.headPortrait = headPortrait;
+}
+
+  
 }

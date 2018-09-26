@@ -36,4 +36,10 @@ public interface ComSjBiz
   /** 每天24点定时更新用户评分 */
   public void updateBanking();
 
+  /** 更新门口访问量 */
+  public void updateWebsite();
+
+  /** 获取智能推荐的所有用户 **/
+  public List<UserEntity> getRecomList(@Param("userId") Integer userId);
+
 }

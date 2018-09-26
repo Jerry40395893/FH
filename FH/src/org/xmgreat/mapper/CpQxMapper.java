@@ -23,4 +23,6 @@ public interface CpQxMapper {
 	public void saveData(UserEntity user);//保存我的资料
 	
 	public void saveSoliloquy(UserEntity userEntity);//保存内心独白
+	
+	public void upHeadPortrait(UserEntity userEntity);//上传头像
 }

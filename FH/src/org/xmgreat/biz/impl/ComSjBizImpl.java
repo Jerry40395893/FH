@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.xmgreat.biz.ComSjBiz;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.MateEntity;
 import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.ComSjMapper;
 import org.xmgreat.tools.ChangeAge;
@@ -21,7 +24,7 @@ import org.xmgreat.tools.ChangeAge;
  * 作者：沈杰
  * 用途：处理套餐管理业务
  */
-@Service("comBiz")
+@Service
 public class ComSjBizImpl implements ComSjBiz
 {
   @Resource
@@ -52,17 +55,80 @@ public class ComSjBizImpl implements ComSjBiz
   /** 因为样式的原因，前端页面模糊搜索的时候名字会多出一个， */
   private String comName;
 
+  /** 获取智能推荐的用户 */
+  @Override
+  public List<UserEntity> getRecomList(Integer userId)
+  {
+    userId = 1;
+    /** 总的用户列表 */
+    List<UserEntity> recomList = new ArrayList<UserEntity>();
+    /** 临时存放的用户列表 */
+    List<UserEntity> list = new ArrayList<UserEntity>();
+    /** 用来临时转换的用户 */
+    UserEntity userEntity = null;
+
+    /** 获取该用户每天可以享受的推荐人数 */
+    int recommend = 0;
+    recommend = comSjMapper.getRem(userId);
+    if (recommend <= 100)
+    {
+      recommend = 100;
+    }
+    MateEntity mateEntity = null;
+    mateEntity = comSjMapper.getMateEntity(userId);
+    mateEntity.setRecommend(recommend);
+    recomList = comSjMapper.getRecomList(mateEntity);
+    if (recomList.size() < recommend)
+    {
+      /**
+       * 符合择偶要求的人数不够的时候需要，查询符合详细资料内的用户,取出来的SQL没有userId需要重新添加条件，性别也需要取相反的，
+       * 然后用户在晒幸福中也不能找到记录
+       */
+      userEntity = comSjMapper.getUser(userId);
+      String sqlStr = comSjMapper.getSql(2);
+      list = comSjMapper.getAllList(sqlStr);
+    }
+
+    /** 将临时用户列表的内容取出到总的列表中,要判断全部放进去是否会超标 */
+    if ((recomList.size() + list.size()) < recommend)
+    {
+      for (int i = 0; i < list.size(); i++)
+      {
+        userEntity = list.get(i);
+        recomList.add(userEntity);
+      }
+      /**
+       * 因为二次搜索后还是不够匹配数，所以需要进行第三次搜索
+       * 。第三次搜索是通过用户曾经聊天过的chatTb，发送过邮件的emailTb，访问过的visitTb用户进行匹配。按照优先级依次查询
+       */
+
+    } else
+    {
+      for (int i = 0; i < (recommend - recomList.size()); i++)
+      {
+        userEntity = list.get(i);
+        recomList.add(userEntity);
+      }
+    }
+
+    return null;
+  }
+
   /** 每天定时更新用户推荐评分 */
   @Override
   public void updateBanking()
   {
+    ApplicationContext app = new ClassPathXmlApplicationContext(
+      "applicationContext.xml");
+    comSjMapper = (ComSjMapper) app.getBean("comSjMapper");
     List<UserEntity> mList = comSjMapper.getAllUserList();
     for (int i = 0; i < mList.size(); i++)
     {
       UserEntity userEntity = mList.get(i);
-      int email = comSjMapper.getEmail(userEntity.getUserId());
-      int visit = comSjMapper.getVisit(userEntity.getUserId());
-      int remend = comSjMapper.getRem(userEntity.getUserId());
+      int userId = userEntity.getUserId();
+      int email = comSjMapper.getEmail(userId);
+      int visit = comSjMapper.getVisit(userId);
+      int remend = comSjMapper.getRem(userId);
       int popular = (int) (((email * 2) + (visit * 1.5) + remend) / 4.5);
       userEntity.setPopular(popular);
       comSjMapper.updateBanking(userEntity);
@@ -81,7 +147,6 @@ public class ComSjBizImpl implements ComSjBiz
     List<UserEntity> woList = comSjMapper.getUserList("女");
     List<UserEntity> manList = new ArrayList<>();
     List<UserEntity> womenList = new ArrayList<>();
-    String brithday = null;
     String height = null;
     /** 获取到的用户在获取城市名称 ，将生日换算成年龄 */
     for (int i = 0; i < mList.size(); i++)
@@ -98,10 +163,9 @@ public class ComSjBizImpl implements ComSjBiz
       try
       {
         bithday = format.parse(userEntity.getBrithday());
-        userEntity.setAge(ChangeAge.getAgeByBirth(bithday) + "岁");
+        userEntity.setStrAge(ChangeAge.getAgeByBirth(bithday) + "岁");
       } catch (ParseException e)
       {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       manList.add(userEntity);
@@ -121,10 +185,9 @@ public class ComSjBizImpl implements ComSjBiz
       try
       {
         bithday = format.parse(userEntity.getBrithday());
-        userEntity.setAge(ChangeAge.getAgeByBirth(bithday) + "岁");
+        userEntity.setStrAge(ChangeAge.getAgeByBirth(bithday) + "岁");
       } catch (ParseException e)
       {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       womenList.add(userEntity);
@@ -280,6 +343,15 @@ public class ComSjBizImpl implements ComSjBiz
     request.setAttribute("price", conditionEntity.getPrice());
     request.setAttribute("time", conditionEntity.getTime());
     return comList;
+  }
+
+  @Override
+  public void updateWebsite()
+  {
+    int visitCount = comSjMapper.getWebsite();
+    visitCount++;
+    comSjMapper.updateWebSite(visitCount);
+
   }
 
 }

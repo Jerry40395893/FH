@@ -1,12 +1,9 @@
 package org.xmgreat.entity;
 
-import org.springframework.stereotype.Component;
-
 /**
- * WorkEntity 实体类 Wed Sep 19 18:54:50 CST 2018 沈杰---前台用户工作学习表
+ * WorkEntity 实体类 Wed Sep 26 14:14:51 CST 2018 沈杰---前台用户工作学习表
  */
 
-@Component
 public class WorkEntity
 {
   private Integer workId;
@@ -22,6 +19,11 @@ public class WorkEntity
   private String graduation;
   private String majorStyle;
   private String language;
+
+  public WorkEntity()
+  {
+    super();
+  }
 
   public WorkEntity(Integer workId, Integer userId, String postion,
     String industry, String cpanyStyle, String welfare, String workStage,
@@ -42,11 +44,6 @@ public class WorkEntity
     this.graduation = graduation;
     this.majorStyle = majorStyle;
     this.language = language;
-  }
-
-  public WorkEntity()
-  {
-    super();
   }
 
   /**

@@ -44,7 +44,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 						 <strong> &nbsp &nbsp ${womenList[0].userName} 
-						&nbsp ${womenList[0].cityName} &nbsp ${womenList[0].age} &nbsp ${womenList[0].height}</strong></a></li>
+						&nbsp ${womenList[0].cityName} &nbsp ${womenList[0].strAge} &nbsp ${womenList[0].height}</strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/second.png" alt="" /></span> 
@@ -54,7 +54,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							 <strong>&nbsp &nbsp ${womenList[1].userName}
-							&nbsp ${womenList[1].cityName} &nbsp ${womenList[1].age} &nbsp ${womenList[1].height}</strong></a></li>
+							&nbsp ${womenList[1].cityName} &nbsp ${womenList[1].strAge} &nbsp ${womenList[1].height}</strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/thrid.png" alt="" /></span> 
@@ -64,7 +64,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[2].userName}
-					&nbsp ${womenList[2].cityName} &nbsp ${womenList[2].age}  &nbsp ${womenList[2].height}</strong></a></li>
+					&nbsp ${womenList[2].cityName} &nbsp ${womenList[2].strAge}  &nbsp ${womenList[2].height}</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/four.png" alt="" /></span>
 					<%-- <c:if test="${fn:length(womenList)>=4 }"> --%>
@@ -73,7 +73,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					 <strong>&nbsp &nbsp ${womenList[3].userName}
-					 &nbsp ${womenList[3].cityName} &nbsp ${womenList[3].age} &nbsp ${womenList[3].height}
+					 &nbsp ${womenList[3].cityName} &nbsp ${womenList[3].strAge} &nbsp ${womenList[3].height}
 					 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/five.png" alt="" /></span> 
@@ -83,7 +83,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[4].userName}
-					&nbsp ${womenList[4].cityName} &nbsp ${womenList[4].age}  &nbsp ${womenList[4].height}
+					&nbsp ${womenList[4].cityName} &nbsp ${womenList[4].strAge}  &nbsp ${womenList[4].height}
 					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/six.png" alt="" /></span>
@@ -93,7 +93,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					 <strong>&nbsp &nbsp ${womenList[5].userName}
-					 &nbsp ${womenList[5].cityName} &nbsp ${womenList[5].age} &nbsp ${womenList[5].height}
+					 &nbsp ${womenList[5].cityName} &nbsp ${womenList[5].strAge} &nbsp ${womenList[5].height}
 					 
 					 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
@@ -104,7 +104,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[6].userName}
-					&nbsp ${womenList[6].cityName} &nbsp ${womenList[6].age}  &nbsp ${womenList[6].height}
+					&nbsp ${womenList[6].cityName} &nbsp ${womenList[6].strAge}  &nbsp ${womenList[6].height}
 					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/eight.png" alt="" /></span> 
@@ -114,7 +114,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[7].userName}
-					&nbsp ${womenList[7].cityName} &nbsp ${womenList[7].age}  &nbsp ${womenList[7].height}
+					&nbsp ${womenList[7].cityName} &nbsp ${womenList[7].strAge}  &nbsp ${womenList[7].height}
 					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/nine.png" alt="" /></span> 
@@ -124,7 +124,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[8].userName}
-					&nbsp ${womenList[8].cityName} &nbsp ${womenList[8].age} &nbsp ${womenList[8].height}
+					&nbsp ${womenList[8].cityName} &nbsp ${womenList[8].strAge} &nbsp ${womenList[8].height}
 					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/ten.png" alt="" /></span> 
@@ -133,7 +133,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${womenList[9].userName}
-					&nbsp ${womenList[9].cityName} &nbsp ${womenList[9].age} &nbsp ${womenList[9].height}
+					&nbsp ${womenList[9].cityName} &nbsp ${womenList[9].strAge} &nbsp ${womenList[9].height}
 					</strong></a></li>
 			</ul>
 			</section>
@@ -153,7 +153,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					 <strong> &nbsp &nbsp ${manList[0].userName}
-					 &nbsp ${manList[0].cityName} &nbsp ${manList[0].age}  &nbsp ${manList[0].height}
+					 &nbsp ${manList[0].cityName} &nbsp ${manList[0].strAge}  &nbsp ${manList[0].height}
 					  </strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
@@ -164,7 +164,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					 <strong>&nbsp &nbsp ${manList[1].userName}
-					 &nbsp ${manList[1].cityName} &nbsp ${manList[1].age}  &nbsp ${manList[1].height}
+					 &nbsp ${manList[1].cityName} &nbsp ${manList[1].strAge}  &nbsp ${manList[1].height}
 					 </strong></a></li>
 
 				<li><a href="#"><span class="icon"><img
@@ -175,7 +175,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 					<strong>&nbsp &nbsp ${manList[2].userName}
-					&nbsp ${manList[2].cityName} &nbsp ${manList[2].age}  &nbsp ${manList[2].height}
+					&nbsp ${manList[2].cityName} &nbsp ${manList[2].strAge}  &nbsp ${manList[2].height}
 					</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/four.png" alt="" /></span> 
@@ -186,7 +186,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							 <strong>&nbsp &nbsp ${manList[3].userName}
-							 &nbsp ${manList[3].cityName} &nbsp ${manList[3].age}  &nbsp ${manList[3].height}
+							 &nbsp ${manList[3].cityName} &nbsp ${manList[3].strAge}  &nbsp ${manList[3].height}
 							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/five.png" alt="" /></span> 
@@ -196,7 +196,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							 <strong>&nbsp &nbsp ${manList[4].userName}
-							 &nbsp ${manList[4].cityName} &nbsp ${manList[4].age}  &nbsp ${manList[4].height}
+							 &nbsp ${manList[4].cityName} &nbsp ${manList[4].strAge}  &nbsp ${manList[4].height}
 							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/six.png" alt="" /></span> 
@@ -208,7 +208,7 @@
 								</span> 
 								
 							<strong>&nbsp &nbsp ${manList[5].userName}
-							&nbsp ${manList[5].cityName} &nbsp ${manList[5].age} &nbsp ${manList[5].height}
+							&nbsp ${manList[5].cityName} &nbsp ${manList[5].strAge} &nbsp ${manList[5].height}
 							</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/seven.png" alt="" /></span> 
@@ -218,7 +218,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							<strong>&nbsp &nbsp ${manList[6].userName}
-							&nbsp ${manList[6].cityName} &nbsp ${manList[6].age} &nbsp ${manList[6].height}
+							&nbsp ${manList[6].cityName} &nbsp ${manList[6].strAge} &nbsp ${manList[6].height}
 							</strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/eight.png" alt="" /></span> 
@@ -230,7 +230,7 @@
 								</span> 
 								
 							 <strong>&nbsp &nbsp ${manList[7].userName}
-							 &nbsp ${manList[7].cityName} &nbsp ${manList[7].age} &nbsp ${manList[7].height}
+							 &nbsp ${manList[7].cityName} &nbsp ${manList[7].strAge} &nbsp ${manList[7].height}
 							 
 							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
@@ -242,7 +242,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							 <strong>&nbsp &nbsp ${manList[8].userName}
-							 &nbsp ${manList[8].cityName} &nbsp ${manList[8].age} &nbsp ${manList[8].height}
+							 &nbsp ${manList[8].cityName} &nbsp ${manList[8].strAge} &nbsp ${manList[8].height}
 							 </strong></a></li>
 				<li><a href="#"><span class="icon"><img
 							src="<%=path%>/images/ten.png" alt="" /></span>
@@ -252,7 +252,7 @@
 								src="<%=path%>/images/love.png" />
 								</span> 
 							 <strong>&nbsp &nbsp ${manList[9].userName}
-							 &nbsp ${manList[9].cityName} &nbsp ${manList[9].age} &nbsp ${manList[9].height}
+							 &nbsp ${manList[9].cityName} &nbsp ${manList[9].strAge} &nbsp ${manList[9].height}
 							 </strong></a></li>
 			</ul>
 			</section>

@@ -34,6 +34,7 @@ public class CpQxBizImpl implements CpQxBiz {
 	}
 	/* (non-Javadoc)
 	 * @see org.xmgreat.biz.CpQxBiz#saveData(org.xmgreat.entity.UserEntity)
+	 * 保存资料
 	 */
 	@Override
 	public void saveData(UserEntity user) {
@@ -42,11 +43,21 @@ public class CpQxBizImpl implements CpQxBiz {
 	}
 	/* (non-Javadoc)
 	 * @see org.xmgreat.biz.CpQxBiz#saveSoliloquy(org.xmgreat.entity.UserEntity)
+	 * 内心独白
 	 */
 	@Override
 	public void saveSoliloquy(UserEntity userEntity) {
 		// TODO Auto-generated method stub
 		cpQxMapper.saveSoliloquy(userEntity);
+	}
+	/* (non-Javadoc)
+	 * @see org.xmgreat.biz.CpQxBiz#upHeadPortrait(org.xmgreat.entity.UserEntity)
+	 * 上传头像
+	 */
+	@Override
+	public void upHeadPortrait(UserEntity userEntity) {
+		// TODO Auto-generated method stub
+		cpQxMapper.upHeadPortrait(userEntity);
 	}
 
 }
