@@ -18,6 +18,7 @@
 	<script type="text/javascript">
 
 	var t1 ;/* 全局变量 */
+	var requestCounts =0;//请求次数，用于解决AJAX数据库请求连接失效时重新请求的次数判断。
 	
 	$(document).ready(function(){
 		
@@ -29,6 +30,8 @@
 		    },
 		    success:function(result){
 		        //请求成功时
+		        requestCounts = 0;
+		        
 		        var sex = '性别：';
 		        var birthYearBegin = 1900;
 		        var birthYearOver = new Date().getFullYear();
@@ -112,7 +115,13 @@
 		    },
 		    error:function(){
 		        //请求失败时
-		    	window.top.location.href="<%=url%>"; 
+		    	 if(requestCounts == 0){
+			    	 	alert('数据库连接断开，尝试重新请求。');
+				         requestCounts++;
+			    	window.top.location.href="<%=url%>"; 
+			         }else{
+			        	 alert('尝试重新请求失败')
+			         }
 		    }
 		})
 	
@@ -127,7 +136,6 @@
 		
 		var data=$("#registerForm").serialize();
 		var submitData=decodeURIComponent(data,true);
-		alert(submitData);
 
  		$.ajax({
 		    url:'<%=basePath%>/user/hwy/register.action',
@@ -303,11 +311,11 @@ function getBirthday() {
 }
 		
 function getProvince() {
-	var parameterID = $("#provinceType option:checked").attr('id');
+	var parameterPID = $("#provinceType option:checked").attr('id');
 	
 	$.ajax({
 	    url:'<%=basePath%>/user/hwy/getAnyParameter.action',
-	    data:"parameterID="+parameterID,
+	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
 	        //请求成功时
@@ -346,11 +354,11 @@ function getProvince() {
 };
 
 function getCity() {
-	var parameterID = $("#province option:checked").attr('id');
+	var parameterPID = $("#province option:checked").attr('id');
 	
 	$.ajax({
 	    url:'<%=basePath%>/user/hwy/getAnyParameter.action',
-	    data:"parameterID="+parameterID,
+	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
 	        //请求成功时
@@ -501,12 +509,12 @@ function phoneVCodeAjax() {
   			<input type="hidden" name="salary" id="salary">
    		 </div>
    		 <div class="radio form-group" >
-			手机号：<input type="text" name="teleNum" id="teleNum" onchange="teleNumAjax()">
+			手机号：<input type="text" name="teleNum" id="teleNum"> <!-- onchange="teleNumAjax()"> -->
    		 </div>
-   		 <div class="radio form-group" >
+   		 <!-- <div class="radio form-group" >
 			验证码：<input type="text" name="phoneVCode" id="phoneVCode" onchange="phoneVCodeAjax()">
 			<button type="button" id="sendPhoneMsg" class="btn btn-default display" onclick="sendPhone()">发送短信</button>
-   		 </div>
+   		 </div> -->
    		 <div class="radio form-group" >
 			创建密码：<input type="password" name=pasw id="pasw" >
    		 </div>

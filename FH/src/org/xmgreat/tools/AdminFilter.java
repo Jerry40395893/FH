@@ -43,7 +43,7 @@ public class AdminFilter implements Filter
       return;
     } else
     {
-      AdminEntity admin = (AdminEntity) session.getAttribute("AdminEntity");
+      AdminEntity admin = (AdminEntity) session.getAttribute("adminB");
       /** 核心，跳出框架的方法 */
       if (null == admin)
       {

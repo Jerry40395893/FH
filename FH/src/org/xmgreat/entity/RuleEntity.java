@@ -12,6 +12,12 @@ public class RuleEntity
   private Integer ruleId;
   private String ruleName;
   private String sqlStr;
+  private Integer figureId;
+  private Integer lifeId;
+  private Integer workId;
+  private Integer marriedId;
+  private Integer salaryId;
+  private Integer hobbyId;
 
   public RuleEntity()
   {
@@ -75,6 +81,108 @@ public class RuleEntity
   public void setSqlStr(String sqlStr)
   {
     this.sqlStr = sqlStr;
+  }
+
+  /**
+   * @return the figureId
+   */
+  public Integer getFigureId()
+  {
+    return figureId;
+  }
+
+  /**
+   * @return the lifeId
+   */
+  public Integer getLifeId()
+  {
+    return lifeId;
+  }
+
+  /**
+   * @return the workId
+   */
+  public Integer getWorkId()
+  {
+    return workId;
+  }
+
+  /**
+   * @return the marriedId
+   */
+  public Integer getMarriedId()
+  {
+    return marriedId;
+  }
+
+  /**
+   * @return the salaryId
+   */
+  public Integer getSalaryId()
+  {
+    return salaryId;
+  }
+
+  /**
+   * @return the hobbyId
+   */
+  public Integer getHobbyId()
+  {
+    return hobbyId;
+  }
+
+  /**
+   * @param figureId
+   *          the figureId to set
+   */
+  public void setFigureId(Integer figureId)
+  {
+    this.figureId = figureId;
+  }
+
+  /**
+   * @param lifeId
+   *          the lifeId to set
+   */
+  public void setLifeId(Integer lifeId)
+  {
+    this.lifeId = lifeId;
+  }
+
+  /**
+   * @param workId
+   *          the workId to set
+   */
+  public void setWorkId(Integer workId)
+  {
+    this.workId = workId;
+  }
+
+  /**
+   * @param marriedId
+   *          the marriedId to set
+   */
+  public void setMarriedId(Integer marriedId)
+  {
+    this.marriedId = marriedId;
+  }
+
+  /**
+   * @param salaryId
+   *          the salaryId to set
+   */
+  public void setSalaryId(Integer salaryId)
+  {
+    this.salaryId = salaryId;
+  }
+
+  /**
+   * @param hobbyId
+   *          the hobbyId to set
+   */
+  public void setHobbyId(Integer hobbyId)
+  {
+    this.hobbyId = hobbyId;
   }
 
 }

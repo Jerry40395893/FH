@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.xmgreat.biz.impl.ComSjBizImpl;
+import org.xmgreat.biz.ComSjBiz;
 
 /*
  * 作者：沈杰
@@ -15,7 +15,7 @@ import org.xmgreat.biz.impl.ComSjBizImpl;
 public class UserSjHandle
 {
   @Resource
-  private ComSjBizImpl comSjBizImpl;
+  private ComSjBiz comSjBizImpl;
 
   @RequestMapping("/showBanking.action")
   public ModelAndView showBanking()
@@ -35,7 +35,9 @@ public class UserSjHandle
     /** springMVC会自动找到路径，然后进行页面跳转，展示欢迎页 .并且更新用户访问量 */
     comSjBizImpl.updateWebsite();
     /** 获取智能推荐的用户列表 */
-    /* comSjBizImpl.getRecomList(1); */
+    /*
+     * comSjBizImpl.getRecomList(1);
+     */
     mv.setViewName("bw/index");
     return mv;
   }

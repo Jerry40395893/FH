@@ -16,9 +16,12 @@ import org.xmgreat.biz.ComSjBiz;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MateEntity;
+import org.xmgreat.entity.RmCdEntity;
+import org.xmgreat.entity.RuleEntity;
 import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.ComSjMapper;
 import org.xmgreat.tools.ChangeAge;
+import org.xmgreat.tools.DateUtils;
 
 /*
  * 作者：沈杰
@@ -62,55 +65,128 @@ public class ComSjBizImpl implements ComSjBiz
     userId = 1;
     /** 总的用户列表 */
     List<UserEntity> recomList = new ArrayList<UserEntity>();
-    /** 临时存放的用户列表 */
-    List<UserEntity> list = new ArrayList<UserEntity>();
     /** 用来临时转换的用户 */
     UserEntity userEntity = null;
 
     /** 获取该用户每天可以享受的推荐人数 */
     int recommend = 0;
-    recommend = comSjMapper.getRem(userId);
+    /** 没有购买套餐的人，套餐推荐查询出来的是null。所以需要进行转换 */
+    Object object = null;
+    object = comSjMapper.getRem(userId);
+    if (object != null)
+    {
+      recommend = (Integer) object;
+    }
     if (recommend <= 100)
     {
       recommend = 100;
     }
-    MateEntity mateEntity = null;
-    mateEntity = comSjMapper.getMateEntity(userId);
-    mateEntity.setRecommend(recommend);
-    recomList = comSjMapper.getRecomList(mateEntity);
-    if (recomList.size() < recommend)
+
+    MateEntity mateEntity = comSjMapper.getMateEntity(userId);
+    /** 如果有填写择偶条件 */
+    if (mateEntity != null)
     {
+      /** 性别要处理过 */
+      userEntity = comSjMapper.getUser(userId);
+      mateEntity.setRecommend(recommend);
+      if (userEntity.getSex().equals("女"))
+      {
+        mateEntity.setSex("男");
+      } else
+      {
+        mateEntity.setSex("女");
+      }
       /**
        * 符合择偶要求的人数不够的时候需要，查询符合详细资料内的用户,取出来的SQL没有userId需要重新添加条件，性别也需要取相反的，
        * 然后用户在晒幸福中也不能找到记录
        */
-      userEntity = comSjMapper.getUser(userId);
-      String sqlStr = comSjMapper.getSql(2);
-      list = comSjMapper.getAllList(sqlStr);
-    }
+      /** 获取所有详细资料的信息 */
+      RmCdEntity rmCdEntity = new RmCdEntity();
 
-    /** 将临时用户列表的内容取出到总的列表中,要判断全部放进去是否会超标 */
-    if ((recomList.size() + list.size()) < recommend)
-    {
-      for (int i = 0; i < list.size(); i++)
-      {
-        userEntity = list.get(i);
-        recomList.add(userEntity);
-      }
+      /** 匹配的时候选择最近三个月有登录的用户 */
+      List lDate = DateUtils.getMouthStartAndEnd(-2);
+      mateEntity.setMonth((String) lDate.get(0));
+      rmCdEntity.setMateEntity(mateEntity);
+      /** 核心，根据规则里面的属性状态，分别进行不同程度的匹配 */
+      RuleEntity ruleEntity = comSjMapper.getRuleEntity(2);
+      rmCdEntity.setRuleEntity(ruleEntity);
+      recomList = comSjMapper.getAllList(rmCdEntity);
       /**
-       * 因为二次搜索后还是不够匹配数，所以需要进行第三次搜索
-       * 。第三次搜索是通过用户曾经聊天过的chatTb，发送过邮件的emailTb，访问过的visitTb用户进行匹配。按照优先级依次查询
+       * 若果按照详细资料查找到的数量不够，那么久需要执行第三种情况，跟着增加聊天过的getChatList，发过邮件的getEamilList，
+       * 访问过的getVisitList进行参考匹配在这种情况就需要一个装userList的中间表
        */
+      if (recomList.size() < recommend)
+      {/** 临时用户列表，用来接收三次查询返回值 */
+        List<UserEntity> list = new ArrayList<UserEntity>();
+        userEntity = new UserEntity();
+        /** 匹配的时候选择最近三个月有登录的用户 */
+        userEntity.setLgTime((String) lDate.get(0));
+        userEntity.setUserId(userId);
+        /** 根据获取到的聊天记录里面的择偶条件等7个条件再次查询 */
+        List<UserEntity> getVisitList = comSjMapper.getChatList(userEntity);
+        recomList = getRemainList(recomList, ruleEntity, getVisitList, lDate,
+          recommend);
+        if (recomList.size() < recommend)
+        {
+          /** 根据获取到的聊天记录里面的择偶条件等7个条件再次查询 */
+          getVisitList = comSjMapper.getEamilList(userEntity);
+          recomList = getRemainList(recomList, ruleEntity, getVisitList, lDate,
+            recommend);
+
+          if (recomList.size() < recommend)
+          {
+            /** 根据获取到的聊天记录里面的择偶条件等7个条件再次查询 */
+            getVisitList = comSjMapper.getVisitList(userEntity);
+            recomList = getRemainList(recomList, ruleEntity, getVisitList,
+              lDate, recommend);
+          }
+        }
+      }
 
     } else
     {
-      for (int i = 0; i < (recommend - recomList.size()); i++)
+      /** 还有中情况就是只是单纯注册，然后什么信息都没有填写的，那么需要用欢迎度来推送 */
+      ConditionEntity conditionEntity = new ConditionEntity();
+      userEntity = comSjMapper.getUser(userId);
+      if (userEntity.getSex().equals("女"))
       {
-        userEntity = list.get(i);
-        recomList.add(userEntity);
+        conditionEntity.setSex("男");
+      } else
+      {
+        conditionEntity.setSex("女");
       }
-    }
 
+      conditionEntity.setCurrentPage(recommend);
+      recomList = comSjMapper.getUserList(conditionEntity);
+    }
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+      .getRequestAttributes()).getRequest();
+
+    /** 获取到的所有用户需要转换年龄 */
+    List<UserEntity> userList = new ArrayList<UserEntity>();
+    for (int i = 0; i < recomList.size(); i++)
+    {
+      userEntity = recomList.get(i);
+      String cityName = comSjMapper.getCityName(userEntity.getCityId());
+      userEntity.setCityName(cityName);
+      String height = userEntity.getHeight();
+      userEntity.setHeight(height);
+
+      /** 将出生日期转换成年龄 */
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+      Date bithday;
+      try
+      {
+        bithday = format.parse(userEntity.getBrithday());
+        userEntity.setStrAge(ChangeAge.getAgeByBirth(bithday) + "岁");
+      } catch (ParseException e)
+      {
+        e.printStackTrace();
+      }
+
+      userList.add(userEntity);
+    }
+    request.setAttribute("recomList", userList);
     return null;
   }
 
@@ -143,8 +219,12 @@ public class ComSjBizImpl implements ComSjBiz
   {
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
       .getRequestAttributes()).getRequest();
-    List<UserEntity> mList = comSjMapper.getUserList("男");
-    List<UserEntity> woList = comSjMapper.getUserList("女");
+    ConditionEntity conditionEntity = new ConditionEntity();
+    conditionEntity.setSex("男");
+    conditionEntity.setCurrentPage(10);
+    List<UserEntity> mList = comSjMapper.getUserList(conditionEntity);
+    conditionEntity.setSex("女");
+    List<UserEntity> woList = comSjMapper.getUserList(conditionEntity);
     List<UserEntity> manList = new ArrayList<>();
     List<UserEntity> womenList = new ArrayList<>();
     String height = null;
@@ -354,4 +434,59 @@ public class ComSjBizImpl implements ComSjBiz
 
   }
 
+  /** 根据参考用户的聊天，邮件，访问进行二次查询 */
+  public List<UserEntity> getRemainList(List<UserEntity> recomList,
+    RuleEntity ruleEntity, List<UserEntity> getVisitList, List lDate,
+    Integer recommend)
+  {
+    UserEntity userEntity = null;
+    for (int i = 0; i < getVisitList.size(); i++)
+    {
+      /** 获取所有详细资料的信息 */
+      RmCdEntity rmCdEntity = new RmCdEntity();
+      MateEntity mateEntity = new MateEntity();
+      mateEntity.setUserId(getVisitList.get(i).getUserId());
+      /** 通过获取到的userId,需要查找这个用户的完整信息 */
+      userEntity = comSjMapper.getUser(getVisitList.get(i).getUserId());
+      if (userEntity.getSex().equals("女"))
+      {
+        mateEntity.setSex("男");
+      } else
+      {
+        mateEntity.setSex("女");
+      }
+      /** 匹配的时候选择最近三个月有登录的用户 */
+      mateEntity.setMonth((String) lDate.get(0));
+      rmCdEntity.setMateEntity(mateEntity);
+      /** 核心，根据规则里面的属性状态，分别进行不同程度的匹配 */
+      rmCdEntity.setRuleEntity(ruleEntity);
+      recomList = comSjMapper.getAllList(rmCdEntity);
+    }
+
+    if (recomList.size() + getVisitList.size() < recommend)
+    {
+      /** 如果查出的数目仍然不够，那就全部往里面添加 */
+      for (int i = 0; i < getVisitList.size(); i++)
+      {
+        userEntity = comSjMapper.getUser(getVisitList.get(i).getUserId());
+        /** 添加到推荐列表之前要进行筛选，如果重复就不放进去 */
+        for (UserEntity user : recomList)
+        {
+          if (user.getUserId() == userEntity.getUserId())
+          {
+            break;
+          }
+        }
+        recomList.add(userEntity);
+      }
+    } else
+    {
+      for (int i = 0; i < recommend - recomList.size(); i++)
+      {
+        userEntity = comSjMapper.getUser(getVisitList.get(i).getUserId());
+        recomList.add(userEntity);
+      }
+    }
+    return recomList;
+  }
 }

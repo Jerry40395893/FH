@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
  */
 /*
 * 更改者：zzh
-* 用途：添加了   搜索会员名称 、状态条件
-* 更改时间：2018-9-22
+* 用途：添加了   搜索会员名称 、状态条件+添加账单的查询起始时间 结束时间
+* 更改时间：2018-9-27
 */
 @Component
 public class ConditionEntity
@@ -49,7 +49,12 @@ public class ConditionEntity
   private Long teleNum;
   /**会员邮箱*/
   private String email;
-
+  /**账单搜索的起始时间*/
+  private String hapTimeS;
+  /**账单搜索结束时间*/
+  private String hapTimeE;
+  /**账单余额*/
+  private int styleId;
   public ConditionEntity()
   {
     super();
@@ -229,6 +234,30 @@ public String getEmail() {
 
 public void setEmail(String email) {
 	this.email = email;
+}
+
+public String getHapTimeS() {
+	return hapTimeS;
+}
+
+public void setHapTimeS(String hapTimeS) {
+	this.hapTimeS = hapTimeS;
+}
+
+public String getHapTimeE() {
+	return hapTimeE;
+}
+
+public void setHapTimeE(String hapTimeE) {
+	this.hapTimeE = hapTimeE;
+}
+
+public int getStyleId() {
+	return styleId;
+}
+
+public void setStyleId(int styleId) {
+	this.styleId = styleId;
 }
 
 }

@@ -1,9 +1,11 @@
 package org.xmgreat.entity;
 
+import org.springframework.stereotype.Component;
+
 /**
  * WorkEntity 实体类 Wed Sep 26 14:14:51 CST 2018 沈杰---前台用户工作学习表
  */
-
+@Component
 public class WorkEntity
 {
   private Integer workId;

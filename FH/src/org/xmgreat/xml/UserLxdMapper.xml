@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.UserLxdMapper">
+	
+	<!-- 获取用户本身信息 -->
+	<select id="getUser" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.UserEntity">
+		select * from userTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的择偶要求 -->
+	<select id="getMateEntity" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.MateEntity">
+		select * from mateTb where userId=#{userId}
+	</select>
+   <!-- 获取用户的外貌体型 -->
+	<select id="getFigureEntity" resultType="org.xmgreat.entity.FigureEntity"
+		parameterType="java.lang.Integer">
+		select * from figureTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的生活方式 -->
+	<select id="getLifeEntity" resultType="org.xmgreat.entity.LifeEntity"
+		parameterType="java.lang.Integer">
+		select * from lifeStyleTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的工作学习 -->
+	<select id="getWorkEntity" resultType="org.xmgreat.entity.WorkEntity"
+		parameterType="java.lang.Integer">
+		select * from workTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的婚姻状态 -->
+	<select id="getMarriedEntity" resultType="org.xmgreat.entity.MarriedEntity"
+		parameterType="java.lang.Integer">
+		select * from marriedTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的经济实力 -->
+	<select id="getSalaryEntity" resultType="org.xmgreat.entity.SalaryEntity"
+		parameterType="java.lang.Integer">
+		select * from salaryTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的兴趣爱好 -->
+	<select id="getHobbyEntity" resultType="org.xmgreat.entity.HobbyEntity"
+		parameterType="java.lang.Integer">
+		select * from hobbyTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的个性标签 -->
+	<select id="getLabelEntity" resultType="org.xmgreat.entity.LabelEntity"
+		parameterType="java.lang.Integer">
+		select * from labeltb where labelid in(select labelid from lbmidtb where userid=#{userId})
+	</select>
+	
+	<!-- 获取用户的个性标签 -->
+	<select id="getPhoto" resultType="org.xmgreat.entity.PhotoEntity"
+		parameterType="java.lang.Integer">
+		select * from phototb where userid=#{userId} and parameter =1
+	</select>
+
+</mapper>
+	

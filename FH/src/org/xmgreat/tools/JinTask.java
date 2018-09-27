@@ -9,21 +9,14 @@ import org.xmgreat.biz.impl.ComSjBizImpl;
  * @param <ClassPathApplicationContext>
  * 
  **/
+/*@Repository*/
 public class JinTask extends TimerTask
 {
-  private ComSjBizImpl comSjBizImpl = new ComSjBizImpl();
 
-  public JinTask()
-  {
-    super();
-  }
-
-  /** web监听实际操作类，根据需求定时的启动这个定时器进行评分刷新 */
-  @Override
-  public void run()
-  {
-    /** 每天24点定时刷新排行榜 */
-    /* comSjBizImpl.updateBanking(); */
-  }
-
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

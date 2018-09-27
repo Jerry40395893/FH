@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.AccZzhMapper">
+
+   <!--显示我的账单列表-->
+	<select id="selecAcc"
+	parameterType="org.xmgreat.entity.ConditionEntity"	
+	resultType="org.xmgreat.entity.WeathEntity"
+	>
+	select * from(select t.*,rownum rn
+    from
+	(select * from weathTb where userId = 2
+	<if test="hapTimeS !=null and hapTimeS != ''">
+	  and happenTime &gt;= '%${hapTimeS}%' 
+     </if>
+     <if test="hapTimeE != null and hapTimeE !=''">
+	  and happenTime &lt;= '%${hapTimeE}%' 
+        </if> 
+    <if test="styleId != null and  styleId != ''">
+	  and styleId = #{styleId}
+     </if> 
+     
+		) t where rownum &lt;= 1*5) where rn &gt; (1-1)*5
+	</select>
+
+<!--查询会员的个数-->
+	<select id="getAccCount"
+	parameterType="org.xmgreat.entity.ConditionEntity"
+	resultType="org.xmgreat.entity.WeathEntity"
+	>
+	select * from weathTb where userId = 2
+	 <if test="hapTimeS !=null and hapTimeS != ''">
+	  and happenTime &gt;= '%${hapTimeS}%' 
+     </if>
+     <if test="hapTimeE != null and hapTimeE !=''">
+	  and happenTime &lt;= '%${hapTimeE}%' 
+        </if> 
+    <if test="styleId != null and  styleId != ''">
+	  and styleId = #{styleId}
+     </if> 
+	</select>
+<!-- 查询余额 -->
+  <select id="selecBal"
+	parameterType="org.xmgreat.entity.ConditionEntity"	
+	resultType="org.xmgreat.entity.WeathEntity"
+	>
+	select leftmoney,MONEYID 
+	from weathTb 
+	where moneyid=(select max(moneyId) 
+	from weathTb where userid=2)
+	</select>
+</mapper>
+	

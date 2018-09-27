@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.AdminMapper">
+
+	<select id="login"
+		parameterType="org.xmgreat.entity.AdminEntity"
+		resultType="org.xmgreat.entity.AdminEntity">
+		select * from admintb where admin=#{admin} and pasw
+		=#{pasw}
+	</select>
+
+	<!--查询管理员 -->
+ <!-- 	<select id="selecAdmin"
+		parameterType="org.xmgreat.entity.AdminEntity" resultMap="empMap">
+		select * from(select t.*,rownum rn
+		from (select u.adminid,m.middleId,r.roleid,u.admin,r.rolename
+		from admintb u,roleMiddleTb m,roleTb r
+		where u.adminid=m.adminid
+		and m.roleid = r.roleid
+		and r.roleid=2
+		<if test="filename !=null and filename != ''"> and u.filename like 
+			'%${filename}%' </if>
+		) t where rownum &lt;= #{page}*5) where rn &gt; (#{page}-1)*5
+	</select>  -->
+<!-- 
+	<resultMap type="org.xmgreat.entity.AdminEntity" id="empMap">
+		<id property="adminid" column="amdinid" />
+		<result property="admin" column="admin" />
+		<result property="roleid" column="roleid" />
+
+		<association property="roleMiddleEntity" javaType="org.xmgreat.entity.RoleMiddleEntity"> 
+			<id property="middleId" column="middleId" /> <result property="roleid" column="roleid" 
+			/> <result property="adminid" column="amdinid" /> 
+		</association>
+
+		<association property="roleEntity"
+			javaType="org.xmgreat.entity.RoleEntity">
+			<id property="roleid" column="role_id" />
+			<result property="rolename" column="rolename" />
+		</association>
+	</resultMap>
+	
+  对管理员账户进行删除
+	<update id="delAdmin"
+		parameterType="org.xmgreat.entity.AdminEntity">
+		update admintb set   stype=2 where adminid=#{adminid}
+	</update>
+
+  添加管理员
+    <insert id="addAdmin" parameterType="org.xmgreat.entity.AdminEntity">
+       insert into admintb (adminid, admin, pasw, stype)
+       values(#序列号,#{admin},#{pasw},1)
+     </insert>
+  
+  重置密码
+  <update id="delAdmin"
+		parameterType="org.xmgreat.entity.AdminEntity">
+		update admintb set   pasw=2 where adminid=#{adminid}
+	</update> -->
+  
+	<!-- <select id="getAllMenuList" parameterType="org.xmgreat.entity.AdminEntity" 
+		resultType="org.xmgreat.entity.AdminEntity"> select * from menu order by 
+		menuId asc </select> <select id="getSql" parameterType="java.lang.Integer" 
+		resultType="org.xmgreat.entity.RuleEntity"> select * from rule where ruleId=#{ruleId} 
+		</select> <select id="getAllList" parameterType="java.lang.String" resultType="org.xmgreat.entity.UserEntity"> 
+		${sql} </select> -->
+
+</mapper>
+	

@@ -1,9 +1,11 @@
 package org.xmgreat.entity;
 
+import org.springframework.stereotype.Component;
+
 /**
  * MateEntity 实体类 Wed Sep 26 14:15:36 CST 2018 沈杰---前台择偶条件表
  */
-
+@Component
 public class MateEntity
 {
   private Integer mateId;
@@ -18,6 +20,8 @@ public class MateEntity
   private String doctor;
   private Integer stage;
   private Integer recommend;
+  private String sex;
+  private String month;
 
   public MateEntity(Integer mateId, Integer userId, Integer lowAge,
     Integer hightAge, Integer lowHeight, Integer height, String nation,
@@ -237,6 +241,26 @@ public class MateEntity
   public void setRecommend(Integer recommend)
   {
     this.recommend = recommend;
+  }
+
+  public String getSex()
+  {
+    return sex;
+  }
+
+  public void setSex(String sex)
+  {
+    this.sex = sex;
+  }
+
+  public String getMonth()
+  {
+    return month;
+  }
+
+  public void setMonth(String month)
+  {
+    this.month = month;
   }
 
 }

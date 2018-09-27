@@ -26,14 +26,13 @@ public interface VisitLxdMapper
 	// 添加关注
 	public int addFocus(FocusEntity focusEntity);
 
-	// 查询所有记录
-	public List<VisitEntity> selectAllFocaus(FocusEntity focusEntity);
+	// 查询所有关注记录
+	public List<FocusEntity> selectAllFocus(FocusEntity focusEntity);
 
-	// 查询所有记录
+	// 更新关注记录
 	public int updateFocusState(FocusEntity focusEntity);
 
 	// 查询关注单页记录
-	public List<VisitEntity> selectPageFocus(@Param(value = "fe") FocusEntity focusEntity,
+	public List<FocusEntity> selectPageFocus(@Param(value = "fe") FocusEntity focusEntity,
 			@Param(value = "min") int min, @Param(value = "max") int max);
 }
-

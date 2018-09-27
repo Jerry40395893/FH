@@ -9,6 +9,7 @@ package org.xmgreat.mapper;
 
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.SalaryEntity;
 import org.xmgreat.entity.UserEntity;
 
 /**
@@ -25,4 +26,10 @@ public interface CpQxMapper {
 	public void saveSoliloquy(UserEntity userEntity);//保存内心独白
 	
 	public void upHeadPortrait(UserEntity userEntity);//上传头像
+	
+	public void savaFinance(SalaryEntity salaryEntity);//添加经济实力
+	
+	public SalaryEntity selectEconomics(SalaryEntity salaryEntity);//查询经济实力
+	
+	public void savaEconomics(SalaryEntity salaryEntity);//保存经济实力
 }

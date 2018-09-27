@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.xmgreat.biz.CpQxBiz;
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.SalaryEntity;
 import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.CpQxMapper;
 
@@ -24,6 +25,8 @@ public class CpQxBizImpl implements CpQxBiz {
 
 	@Resource
 	private CpQxMapper cpQxMapper;
+	
+	private SalaryEntity salary;
 	/* (non-Javadoc)
 	 * @see org.xmgreat.biz.CpQxBiz#selectCity()
 	 */
@@ -58,6 +61,48 @@ public class CpQxBizImpl implements CpQxBiz {
 	public void upHeadPortrait(UserEntity userEntity) {
 		// TODO Auto-generated method stub
 		cpQxMapper.upHeadPortrait(userEntity);
+	}
+	/* (non-Javadoc)
+	 * @see org.xmgreat.biz.CpQxBiz#Economics(java.lang.String, java.lang.String, org.xmgreat.entity.SalaryEntity)
+	 */
+	@Override
+	public void Economics(String finance, String debt, SalaryEntity salaryEntity) {
+		// TODO Auto-generated method stub
+		
+//		String[] str = finance.split(",");
+//		for(int i = 0;i<str.length;i++) {
+//			System.out.println("实力"+str[i]);
+//			String st = str[i];
+//			salaryEntity.setFinance(st);
+		
+		salary = cpQxMapper.selectEconomics(salaryEntity);
+		
+		if(salary==null) {
+			
+			cpQxMapper.savaFinance(salaryEntity);
+		}else {
+			cpQxMapper.savaEconomics(salaryEntity);
+		}
+		
+		
+			
+			
+//		}
+		
+		
+		
+	}
+	/* (non-Javadoc)
+	 * @see org.xmgreat.biz.CpQxBiz#selectEconomics(org.xmgreat.entity.SalaryEntity)
+	 */
+	@Override
+	public SalaryEntity selectEconomics(SalaryEntity salaryEntity) {
+		// TODO Auto-generated method stub
+		
+		salary = cpQxMapper.selectEconomics(salaryEntity);
+		
+		
+		return salary;
 	}
 
 }

@@ -53,6 +53,70 @@
   <script type = "text/javascript" src="<%=basePath%>js/jquery.min.js"></script>
   <!-- Theme styles END -->
   
+  <script type="text/javascript">
+  
+    $(document).ready(function(){
+  //当页面加载完成的时候，自动调用该方法
+  
+  console.log("888")
+    //获得所要回显的值
+     
+    var checkeds = "${salary.finance}";
+    //拆分为字符串数组
+   
+    console.log(checkeds)
+    var checkArray =checkeds.split(",");
+    //获得所有的复选框对象
+    var checkBoxAll = $("input[name='finance']");
+     //alert("获取到的value：" + checkBoxAll); 
+    //alert("获取到的value：" + checkValue); 
+    //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
+    for(var i=0;i<checkArray.length;i++){
+    //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
+     
+    $.each(checkBoxAll,function(j,checkbox){
+    //获取复选框的value属性
+    var checkValue=$(checkbox).val();
+   
+    if(checkArray[i]==checkValue){
+    $(checkbox).attr("checked",true);
+    }
+    })
+    }
+    
+    
+    
+    var checkeds1 = "${salary.debt}";
+    //拆分为字符串数组
+   
+    console.log(checkeds1)
+    var checkArray1 =checkeds1.split(",");
+    //获得所有的复选框对象
+    var checkBoxAll1 = $("input[name='debt']");
+     //alert("获取到的value：" + checkBoxAll); 
+    //alert("获取到的value：" + checkValue); 
+    //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
+    for(var i=0;i<checkArray1.length;i++){
+    //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
+     
+    $.each(checkBoxAll1,function(j,checkbox){
+    //获取复选框的value属性
+    var checkValue=$(checkbox).val();
+   
+    if(checkArray1[i]==checkValue){
+    $(checkbox).attr("checked",true);
+    }
+    })
+    }
+    
+   
+    });
+</script>
+  
+  
+  
+  
+  
   
   <style type="text/css">
 dl,dt,dd,h5,p{
@@ -320,64 +384,98 @@ function ShowFLT(i) {
                   <h1>&nbsp;</h1>
                   
                   
-                  <form id="form_base" name="form_base" action="profile_postdo_new.php?action=economy" method="post" onsubmit="return cal();">
-			
+                <form id="form_base" name="form_base" action="<%=basePath%>user/qx/finance.action" method="post" >
+			<table width="100%"  border="0">
+  <tr>
+    <th width="124" scope="row">投资理财：</th>
+    <td width="141">
+      <input type="checkbox" name="finance" id="finance" value="银行存款" />
+      <label for="checkbox"></label>
+    银行存款
+    </td>
+    <td width="166">    <input type="checkbox" name="finance" id="finance" value="购买基金"/>
+      <label for="checkbox"></label>
+    购买基金</td>
+    <td width="95">    <input type="checkbox" name="finance" id="finance" value="证券投资"/>
+      <label for="checkbox"></label>
+    证券投资</td>
+  </tr>
+  <tr>
+    <th scope="row" align="center">(可多选)</th>
+    <td>    <input type="checkbox" name="finance" id="finance" value="购买保险"/>
+      <label for="checkbox"></label>
+    购买保险</td>
+    <td>    <input type="checkbox" name="finance" id="finance" value="理财产品投资"/>
+      <label for="checkbox"></label>
+    理财产品投资</td>
+    <td>    <input type="checkbox" name="finance" id="finance" value="外汇投资"/>
+      <label for="checkbox"></label>外汇投资
+    </td>
+  </tr>
+  <tr>
+    <th scope="row">&nbsp;</th>
+    <td><input type="checkbox" name="finance" id="finance" value="期货投资"/>
+      <label for="checkbox"></label>期货投资
+    </td>
+    <td><input type="checkbox" name="finance" id="finance" value="贵金属投资" />
+     贵金属投资</td>
+    <td><input type="checkbox" name="finance" id="finance" value=" 房产投资"/>
+     房产投资</td>
+  </tr>
+
+  <tr>
+    <th scope="row">&nbsp;</th>
+    <td><input type="checkbox" name="finance" id="finance" value="收藏品投资"/>
+     收藏品投资</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  
+     <tr>
+    <th scope="row">&nbsp;</th>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <th scope="row">外债贷款：</th>
+    <td><input type="checkbox" name="debt" id="debt" value="无外债贷款"/>
+     无外债贷款</td>
+    <td><input type="checkbox" name="debt" id="debt" value="房贷"/>房贷</td>
+    <td><input type="checkbox" name="debt" id="debt" value="车贷"/>车贷</td>
+  </tr>
+  <tr>
+    <th scope="row">(可多选)</th>
+    <td><input type="checkbox" name="debt" id="debt" value="留学贷款"/>留学贷款</td>
+    <td><input type="checkbox" name="debt" id="debt" value="助学贷款"/>助学贷款</td>
+    <td><input type="checkbox" name="debt" id="debt" value="个人生产经营性贷款"/>个人生产经营性贷款</td>
+  </tr>
+ 
+</table>
 			
 			
 			
 	
 			
-		<input type="hidden" value="7" name="part">
-			<!-- 投资理财开始 -->
+		
 			<div >
-				<dl ><span  >投资理财：</span><p >（可多选）</p></dl>
+				<dl><span  >经济观念：</span></dl>
 				</dl>
 				<dl >
-				   <dd ><label><input type="checkbox"  value="1" name="invest[]" />银行存款</label></dd>
-				   <dd ><label><input type="checkbox"  value="2" name="invest[]" />购买基金</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="3" name="invest[]" >证券投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="4" name="invest[]" >购买保险</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="5" name="invest[]" >理财产品投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="6" name="invest[]" >外汇投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="7" name="invest[]" >期货投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="8" name="invest[]" >贵金属投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="9" name="invest[]" >房产投资</label></dd>
-					<dd class="cols4"  ><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="10" name="invest[]" >收藏品投资</label></dd>
-									</dl>		
-			</div>
-			<!-- 投资理财结束 -->
-			<!-- 外债贷款开始 -->
-			<div class="financial clearfix">
-				<dl class="economic_dl"><span >外债贷款：</span><p class="f_red">（可多选）</p></dl>
-				</dl>
-				<dl class="checkbox clearfix we_dl2"  >
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="1" name="loan[]" >无外债贷款</label></dd>
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="2" name="loan[]" >房贷</label></dd>
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="3" name="loan[]" >车贷</label></dd>
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="4" name="loan[]" >留学贷款</label></dd>
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="5" name="loan[]" >助学贷款</label></dd>
-											<dd class="cols4"><label><input type="checkbox" onchange="change(7)" onclick="check_count(this, 5)" value="6" name="loan[]" >个人生产经营性贷款</label></dd>
-									
-				</dl>		
-			</div>
-			<!-- 外债贷款结束 -->
-			<div class="financial clearfix economic_d">
-				<dl class="economic_dl"><span  >经济观念：</span></dl>
-				</dl>
-				<dl class="checkbox">
-					<select onchange="select_changed()" name="consumption_concept" id="economic_concept" >
+					<select  name="salaryPoint" id="salaryPoint" >
 						<option value="0" selected="selected" >--请选择--</option>
-						<option label="基本是月光族，及时享乐主义" value="1">基本是月光族，及时享乐主义</option>
-<option label="每月会存点钱，但是也要享受生活" value="2">每月会存点钱，但是也要享受生活</option>
-<option label="每月有固定存款，剩余自由分配" value="3">每月有固定存款，剩余自由分配</option>
-<option label="为了未来努力攒钱，勤俭节约过日子" value="4">为了未来努力攒钱，勤俭节约过日子</option>
+						<option label="基本是月光族，及时享乐主义" value="基本是月光族，及时享乐主义">基本是月光族，及时享乐主义</option>
+<option label="每月会存点钱，但是也要享受生活" value="每月会存点钱，但是也要享受生活">每月会存点钱，但是也要享受生活</option>
+<option label="每月有固定存款，剩余自由分配" value="每月有固定存款，剩余自由分配">每月有固定存款，剩余自由分配</option>
+<option label="为了未来努力攒钱，勤俭节约过日子" value="为了未来努力攒钱，勤俭节约过日子">为了未来努力攒钱，勤俭节约过日子</option>
 
 					</select>
 				</dl>
 			</div>
 			<div class="economic_button">
-				<input type="submit" onmousedown="send_jy_pv2('editprofile|save_economy|m|182580144');" value="保存并继续" class="save">
-				<input type="button" onmousedown="send_jy_pv2('editprofile|skip_economy|m|182580144');" onclick="skip()" class="skip" value="跳过此页">
+				<input type="submit" value="保存" class="save">
+				<input type="button"  value="返回">
 			</div>
 			
 		</form>

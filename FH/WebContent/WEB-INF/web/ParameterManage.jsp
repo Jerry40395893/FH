@@ -21,26 +21,95 @@
 <script src="<%=basePath %>js/pintuer.js"></script>
 <script type="text/javascript">
 
-//搜索
-function changesearch(){	
-		
-}
+//全局参数
+var pageNow = 1;//当前页码
+var requestCounts =0;//请求次数，用于解决AJAX数据库请求连接失效时重新请求的次数判断。
 
 //单个删除
-function del(id,mid,iscid){
+function delParameter(parameterID){
 	if(confirm("您确定要删除吗?")){
-		
+		$.ajax({
+		    url:'<%=basePath%>/admin/hwy/delAnyParameter.action',
+		    data:"parameterID="+parameterID,
+		    async:false,//true为异步，false为同步
+		    success:function(result){
+		    	//删除成功
+		    	getParameter("");
+		    },
+		    error:function(){
+		        //请求失败时
+		    }
+		})
 	}
 }
 
+//单个修改
+function updateParameter(parameterID,trNum)
+{
+	var value = prompt("请输入您的要修改的参数值");
+	if (value!=null && value!=""){
+			$.ajax({
+			    url:'<%=basePath%>/admin/hwy/updateAnyParameter.action',
+			    data:"parameterID="+parameterID+"&value="+value+"&trNum="+trNum,
+			    async:false,//true为异步，false为同步
+			    success:function(result){
+			    	if(result){
+				    	//修改成功
+				    	getParameter("");
+			    	}else{
+						//修改失败
+						alert('修改失败');
+			    	}
+			    },
+			    error:function(){
+			        //请求失败时
+			    }
+			})
+  		}else{
+  			alert('修改失败，输入值不符标准。')
+  		}
+}
+
+//单个增加
+function addParameter(parameterPID)
+{
+	var value = prompt("请输入您的要添加的参数名称");
+	if (value!=null && value!=""){
+			$.ajax({
+			    url:'<%=basePath%>/admin/hwy/addAnyParameter.action',
+			    data:"value="+value+"&parameterPID="+parameterPID,
+			    async:false,//true为异步，false为同步
+			    success:function(result){
+			    	if(result){
+				    	//添加成功
+				    	getParameter("");
+			    	}else{
+						//添加失败
+						alert('添加失败');
+			    	}
+			    },
+			    error:function(){
+			        //请求失败时
+			    }
+			})
+  		}else{
+  			alert('添加失败，输入值不符标准。')
+  		}
+}
+
 $(document).ready(function(){
-var parameterID = 0
+	readyForManage();
+});
+
+function readyForManage() {
+var parameterPID = 0
 	
 	$.ajax({
 	    url:'<%=basePath%>/admin/hwy/getAnyParameter.action',
-	    data:"parameterID="+parameterID,
+	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
+	    	requestCounts = 0;
 	    	var allParameters =document.getElementById("allParameters");
 	    	
 	    	 for (var i = 0,len = result.length; i < len; i++) {
@@ -59,43 +128,60 @@ var parameterID = 0
 			}
 	    },
 	    error:function(){
-	        //请求失败时
-	    	 alert('error');
+	         //请求失败时
+	         //重新请求
+	         if(requestCounts ==0){
+	    	 	alert('数据库连接断开，尝试重新请求。');
+		         requestCounts++;
+		    	 readyForManage();
+	         }else{
+	        	 alert('尝试重新请求失败')
+	         }
 	    }
 	})
-});
+}
 
-function getParameter() {
-	var parameterID = $("#allParameters option:checked").attr('id');
+//搜索
+function searchParameter(){	
+	var keywords = $("#keywords").val();
+ 	pageNow = 1;
+	getParameter(keywords); 
+}
+
+function changeAllParameters() {
+	pageNow = 1;
+	getParameter("");
+}
+
+function getParameter(value) {
+	var parameterPID = $("#allParameters option:checked").attr('id');
+	var pageTotal = getPageTotal(parameterPID,value);
+	//用于解决最后一页最后一条记录被删除时页面无数据问题。
+	if(pageNow > pageTotal){
+		pageNow = pageTotal;
+	}
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/getAnyParameter.action',
-	    data:"parameterID="+parameterID,
+	    url:'<%=basePath%>/admin/hwy/getAnyParameterWithPaging.action',
+	    data:"parameterPID="+parameterPID+"&pageNow="+pageNow+"&value="+value,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
 	    	var table =document.getElementById("table");
 	    	table.innerHTML = '';
-	    	switch(parameterID)
+	    	switch(parameterPID)
 			{
-			case '101':
-				normalTable(result,parameterID,3);
-			  break;
 			case '102':
-				normalTable(result,parameterID,4);
-			  break;
-			case '103':
-				normalTable(result,parameterID,3);
+				getTableBody(result,parameterPID,pageTotal,4);
 			  break;
 			case '104':
-				normalTable(result,parameterID,4);
+				getTableBody(result,parameterPID,pageTotal,4);
 			  break;
-			case '105':
-				normalTable(result,parameterID,3);
-			  break;
-			case '106':
-				normalTable(result,parameterID,3);
+			case '111':
+				getTableBody(result,parameterPID,pageTotal,4);
 			  break;
 			default:
+				getTableBody(result,parameterPID,pageTotal,3);
 			}
+	    	
 	    },
 	    error:function(){
 	        //请求失败时
@@ -103,7 +189,8 @@ function getParameter() {
 	})
 }
 
-function normalTable(result,parameterID,trNum) {
+function getTableBody(result,parameterPID,pageTotal,trNum) {
+	getAddButton(parameterPID,trNum);
 	getTableHead(trNum);
 	for (var i = 0,len = result.length; i < len; i++) {
 		var parameters = result[i];
@@ -115,7 +202,7 @@ function normalTable(result,parameterID,trNum) {
 			//设置td1标签体
 			td1.innerHTML=i+1;
 			td2.innerHTML=parameters.parameter;
-			td4.innerHTML='<div class="button-group"> <a class="button border-main" href="<%=basePath %>admin/hwy/addParameter.action?id='+parameters.id+'"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="<%=basePath %>admin/hwy/delParameter.action?id='+parameters.id+'"><span class="icon-trash-o"></span> 删除</a> </div>'
+			td4.innerHTML='<div class="button-group"> <a class="button border-main" href="javascript:void(0)" onclick="updateParameter('+parameters.id+','+trNum+')"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="delParameter('+parameters.id+')"><span class="icon-trash-o"></span> 删除</a> </div>'
 			//添加节点
 			table.appendChild(tr);
 			tr.appendChild(td1);
@@ -127,11 +214,16 @@ function normalTable(result,parameterID,trNum) {
 			}
 			tr.appendChild(td4);
 	}
-	getPageNum(parameterID,trNum);
+	getPageBottom(parameterPID,pageTotal,trNum);
 }
 
-function hasSecondTable() {
-	
+function getAddButton(parameterPID,trNum) {
+	var addButton =document.getElementById("addButton");
+	if(trNum == 4){
+		addButton.innerHTML='';
+	}else{
+		addButton.innerHTML='<a class="button border-main icon-plus-square-o" href="javascript:void(0)" onclick="addParameter('+parameterPID+')"> 添加内容</a>';
+	}
 }
 
 function getTableHead(thNum) {
@@ -144,44 +236,126 @@ function getTableHead(thNum) {
 	th1.setAttribute("width", "100");
 	th1.setAttribute("style", "text-align:left; padding-left:20px;");
 	th1.innerHTML='序号';
-	th2.innerHTML='参数名称';
 	th4.width='310';
 	th4.innerHTML='操作';
 	table.appendChild(tr);
 	tr.appendChild(th1);
-	tr.appendChild(th2);
 	if(thNum == 4){
 		var th3 = document.createElement("th");
+		th2.innerHTML='参数名称';
 		th3.innerHTML='参数值';
+		tr.appendChild(th2);
 		tr.appendChild(th3);
+	}else{
+		th2.innerHTML='参数值';
+		tr.appendChild(th2);
 	}
 	tr.appendChild(th4);
 }
 
-function getPageNum(parameterID,trNum) {
-
-	var pageNow = 1;
-	var pageTotal = 6;
-	var tdHTML = '';
+function getPageTotal(parameterPID,value) {
+	var pageTotal;
 	
+	$.ajax({
+	    url:'<%=basePath%>/admin/hwy/getAnyParameterWithPageTotal.action',
+	    data:"parameterPID="+parameterPID+"&value="+value,
+	    async:false,//true为异步，false为同步
+	    success:function(result){
+	    	if(result == 'false'){
+	    		alert('error');
+	    	}else{
+		    	pageTotal = result;
+	    	}
+	    },
+	    error:function(){
+	        //请求失败时
+	    }
+	})
+	return pageTotal;
+}
+
+function getPageBottom(parameterPID,pageTotal,trNum) {
+	
+	var tdHTML = '';
 	var table =document.getElementById("table");
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
 	td.setAttribute("colspan", trNum);
-	tdHTML += '<div class="pagelist"><a href="">首页</a><a href="">上一页</a>'
-	for(var i = 1 ;i <= pageTotal; i++ ){
+	tdHTML += '<div class="pagelist">共'+pageTotal+'页<a href="javascript:void(0)" onclick="firstPage()">首页</a><a href="javascript:void(0)" onclick="prevPage()">上一页</a>'
+	if(pageNow > 1 && pageTotal > 5){
+		tdHTML += '···';
+	}
+	for(var i = pageNow,j = 1 ;i <= pageTotal && j <= 5 && pageTotal-pageNow > 4; i++,j++ ){
 		if(i == pageNow){
-			tdHTML +=	'<span class="current">'+i+'</span>';
+			tdHTML += '<span class="current">'+i+'</span>';
 		}else{
-			tdHTML += '<a href="">'+i+'</a>';
+			tdHTML += '<a href="javascript:void(0)" onclick="toPage('+i+')">'+i+'</a>';
 		}
 	}
-	tdHTML += ' <a href="">下一页</a><a href="">尾页</a></div>'
+	if(pageTotal-pageNow > 4){
+		tdHTML += '···';
+	}else{
+		for(var i = pageTotal-4 ;i <= pageTotal ; i++ ){
+			if(i == pageNow){
+				tdHTML += '<span class="current">'+i+'</span>';
+			}else if(i > 0){
+				tdHTML += '<a href="javascript:void(0)" onclick="toPage('+i+')">'+i+'</a>';
+			}
+		}
+	}
+	tdHTML += ' <a href="javascript:void(0)" onclick="nextPage('+pageTotal+')">下一页</a><a href="javascript:void(0)" onclick="finalPage('+pageTotal+')">尾页</a><select id="pageSelect" onchange="toPageBySelect()">'
+	for(var i = 1 ;i <= pageTotal ; i++ ){
+		if(i == pageNow){
+			tdHTML += '<option selected="selected" id="'+i+'">第'+i+'页</option>';
+		}else{
+			tdHTML += '<option id="'+i+'">第'+i+'页</option>';
+		}
+	}
+	tdHTML += '	</select></div>';
 	td.innerHTML = tdHTML;
 	table.appendChild(tr);
 	tr.appendChild(td);
 }
 
+function toPage(page) {
+	pageNow = page;
+	getParameter("");
+}
+
+function toPageBySelect() {
+	pageNow = $("#pageSelect option:checked").attr('id');
+	getParameter("");
+}
+
+function firstPage() {
+	pageNow = 1;
+	getParameter("");
+}
+
+function prevPage() {
+	pageNow--;
+	if(pageNow == 0){
+		pageNow++;
+		return;
+	}else{
+		getParameter("");
+	}
+}
+
+function nextPage(pageTotal) {
+	pageNow++;
+	if(pageNow == pageTotal+1){
+		pageNow--;
+		return;
+	}else{
+		getParameter("");
+	}
+}
+
+function finalPage(pageTotal) {
+	pageNow = pageTotal;
+	getParameter("");
+}
 </script>
 </head>
 <body>
@@ -190,15 +364,16 @@ function getPageNum(parameterID,trNum) {
     <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong></div>
     <div class="padding border-bottom">
       <ul class="search" style="padding-left:10px;">
-        <li> <a class="button border-main icon-plus-square-o" href="<%=basePath %>add.html"> 添加内容</a> </li>
         <li>参数选择
-          <select name="allParameters" id="allParameters" class="input" onchange="getParameter()" style="width:160px; line-height:17px; display:inline-block">
+          <select name="allParameters" id="allParameters" class="input" onchange="changeAllParameters()" style="width:160px; line-height:17px; display:inline-block">
             <option>选择您要管理的参数</option>
           </select>
         </li>
+	    <li id="addButton" ></li>
         <li>
-          <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          <a href="<%=basePath %>javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
+          <input type="text" placeholder="请输入搜索关键字" name="keywords" id="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          <a href="javascript:void(0)" class="button border-main icon-search" onclick="searchParameter()" > 搜索</a>
+        </li>
       </ul>
     </div>
     <table class="table table-hover text-center" id="table"></table>

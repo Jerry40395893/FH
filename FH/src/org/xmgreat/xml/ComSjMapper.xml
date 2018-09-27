@@ -19,38 +19,154 @@
 		select * from mateTb where userId=#{userId}
 	</select>
 	<!-- 获取智能推荐的SQL语句 -->
-	<select id="getSql" parameterType="java.lang.Integer"
-		resultType="java.lang.String">
-		select sqlStr from ruleTb where ruleId=#{ruleId}
+	<select id="getRuleEntity" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.RuleEntity">
+		select * from ruleTb where ruleId=#{ruleId}
 	</select>
-	<!-- 通过查找出来的SQL语句获取智能推荐获取用户列表,联查所有条件表 -->
-	<select id="getAllList" resultMap="recomendList" parameterType="java.lang.String"
+	<!-- 通过查找出来的SQL语句获取智能推荐获取用户列表,联查所有条件表 根据判断rule表里面的字段，用union all取并集 -->
+	<select id="getAllList" parameterType="org.xmgreat.entity.RmCdEntity"
 		resultType="org.xmgreat.entity.UserEntity">
-		${sql}
-	</select>
-	<resultMap id="recomendList" type="org.xmgreat.entity.UserEntity">
-		<id property="userId" column="userId" />
-		<result property="adminName" column="adminName" />
-		<result property="pasw" column="pasw" />
-		<collection property="menuList" column="userId"
-			javaType="java.util.ArrayList" select="getAllUserList" ofType="org.xmgreat.entity.MenuEntity">
-		</collection>
-	</resultMap>
-
-
-	<!-- 获取符合择偶要的用户 -->
-	<select id="getRecomList" resultType="org.xmgreat.entity.UserEntity"
-		parameterType="org.xmgreat.entity.MateEntity">
-		select * from(select userTb.*,rownum rw from userTb
-		where brithday &gt;=#{hightAge} and
-		brithday
-		&lt;=#{lowAge} and
-		height&gt;=#{lowHeight} and
-		height&lt;=#{height} and nation=#{nation}
+		<!-- 第一个根据择偶条件来进行旋转，其他的根据ruleTb里面的状态进行拼接 -->
+		select distinct c.* from mateTb a ,mateTb b ,userTb c,showTb d where
+		a.userId=#{mateEntity.userId} and c.userId=b.userId
 		and
-		address=#{address} and
-		married=#{married} and doctor=#{doctor})
-		where rw&lt;=#{recommend}
+		a.lowAge=b.lowAge and a.hightAge=b.hightAge and a.height=b.height and
+		a.nation=b.nation and a.address=b.address
+		and a.married=b.married and
+		a.doctor=b.doctor
+		and c.sex=#{mateEntity.sex} and c.userId!=d.userId
+		and to_char(c.lgTime)>=#{mateEntity.month}
+		<if test="ruleEntity.figureId==1">
+			Union select distinct c.* from figureTb a ,figureTb b
+			,userTb c,showTb d where a.userId=#{mateEntity.userId} and
+			c.userId=b.userId
+			and a.weight=b.weight and a.figure=b.figure and
+			a.feature=b.feature and
+			a.eyes=b.eyes and a.hair=b.hair
+			and
+			a.skin=b.skin and a.skinColor=b.skinColor and a.muscle=b.muscle and
+			a.healthy=b.healthy
+			and a.wearStyle=b.wearStyle and
+			c.sex=#{mateEntity.sex} and c.userId!=d.userId and
+			to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+		<if test="ruleEntity.lifeId==1">
+			Union select distinct c.* from lifeStyleTb a ,lifeStyleTb
+			b ,userTb c,showTb d where a.userId=#{mateEntity.userId} and
+			c.userId=b.userId
+			and a.smoke=b.smoke and a.drink=b.drink and
+			a.exercise=b.exercise and
+			a.shopping=b.shopping and a.church=b.church
+			and a.rest=b.rest and a.friend=b.friend and a.maxCost=b.maxCost and
+			a.homeWork=b.homeWork and a.dohomeWork=b.dohomeWork
+			and
+			a.dietary=b.dietary and a.likeLevel=b.likeLevel and
+			a.aboutPet=b.aboutPet and c.sex=#{mateEntity.sex} and
+			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+		<if test="ruleEntity.workId==1">
+			Union select distinct c.* from workTb a ,workTb b ,userTb
+			c,showTb d where a.userId=#{mateEntity.userId} and c.userId=b.userId
+			and a.postion=b.postion and a.industry=b.industry and
+			a.cpanyStyle=b.cpanyStyle and a.welfare=b.welfare and
+			a.workStage=b.workStage
+			and a.wortSea=b.wortSea and
+			a.workHome=b.workHome and
+			a.graduation=b.graduation and
+			a.majorStyle=b.majorStyle and
+			a.language=b.language
+			and
+			a.changeWork=b.changeWork and c.sex=#{mateEntity.sex} and
+			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+		<if test="ruleEntity.marriedId==1">
+			Union select distinct c.* from marriedTb a ,marriedTb b
+			,userTb c,showTb d where a.userId=#{mateEntity.userId} and
+			c.userId=b.userId
+			and a.nation=b.nation and a.character=b.character
+			and a.humor=b.humor
+			and a.temper=b.temper and a.feeling=b.feeling
+			and
+			a.chriden=b.chriden and a.marryTime=b.marryTime and
+			a.relationShip=b.relationShip and a.marryMsg=b.marryMsg and
+			a.liveParent=b.liveParent
+			and a.ranking=b.ranking and
+			a.brother=b.brother and
+			a.parentMsg=b.parentMsg and
+			a.parentWork=b.parentWork
+			and a.parentSalary=b.parentSalary and
+			a.parentInsurance=b.parentInsurance and c.sex=#{mateEntity.sex} and
+			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+		<if test="ruleEntity.salaryId==1">
+			Union select distinct c.* from salaryTb a ,salaryTb b
+			,userTb c,showTb d where a.userId=#{mateEntity.userId} and
+			c.userId=b.userId
+			and a.finance=b.finance and a.debt=b.debt and
+			a.salaryPoint=b.salaryPoint and c.sex=#{mateEntity.sex} and
+			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+		<if test="ruleEntity.hobbyId==1">
+			Union select distinct c.* from hobbyTb a ,hobbyTb b
+			,userTb c,showTb d where a.userId=#{mateEntity.userId} and
+			c.userId=b.userId
+			and a.sport=b.sport and a.food=b.food and
+			a.book=b.book and
+			a.movie=b.movie and a.chanel=b.chanel
+			and
+			a.joke=b.joke and a.hobby=b.hobby and a.travle=b.travle and
+			c.sex=#{mateEntity.sex} and c.userId!=d.userId and
+			to_char(c.lgTime)>=#{mateEntity.month}
+		</if>
+	</select>
+
+	<!-- 获取曾经聊天过的用户 -->
+	<select id="getChatList" parameterType="org.xmgreat.entity.UserEntity"
+		resultType="org.xmgreat.entity.UserEntity">
+		select distinct toUserId userId from chatTb where userId=#{userId}  and to_char(msgTime)>=#{lgTime}
+	</select>
+	
+	<!-- 获取曾经发送过邮件 -->
+	<select id="getEamilList" parameterType="org.xmgreat.entity.UserEntity"
+		resultType="org.xmgreat.entity.UserEntity">
+		select distinct toUserId userId from emailTb where userId=#{userId}  and to_char(Time)>=#{lgTime}
+	</select>
+	
+	<!-- 获取曾经访问过的用户 -->
+	<select id="getVisitList" parameterType="org.xmgreat.entity.UserEntity"
+		resultType="org.xmgreat.entity.UserEntity">
+		select distinct toUserId userId from visitTb where userId=#{userId}  and to_char(Time)>=#{lgTime}
+	</select>
+	
+	<!-- 获取用户的外貌体型 -->
+	<select id="getFigureEntity" resultType="org.xmgreat.entity.FigureEntity"
+		parameterType="java.lang.Integer">
+		select * from figureTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的生活方式 -->
+	<select id="getLifeEntity" resultType="org.xmgreat.entity.LifeEntity"
+		parameterType="java.lang.Integer">
+		select * from lifeStyleTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的工作学习 -->
+	<select id="getWorkEntity" resultType="org.xmgreat.entity.WorkEntity"
+		parameterType="java.lang.Integer">
+		select * from workTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的婚姻状态 -->
+	<select id="getMarriedEntity" resultType="org.xmgreat.entity.MarriedEntity"
+		parameterType="java.lang.Integer">
+		select * from marriedTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的经济实力 -->
+	<select id="getSalaryEntity" resultType="org.xmgreat.entity.SalaryEntity"
+		parameterType="java.lang.Integer">
+		select * from salaryTb where userId=#{userId}
+	</select>
+	<!-- 获取用户的兴趣爱好 -->
+	<select id="getHobbyEntity" resultType="org.xmgreat.entity.HobbyEntity"
+		parameterType="java.lang.Integer">
+		select * from hobbyTb where userId=#{userId}
 	</select>
 
 	<!-- 获取门户访问量 -->
@@ -58,7 +174,6 @@
 		select visitCount from
 		websiteTb
 	</select>
-
 	<!-- 更新门户访问量 -->
 	<update id="updateWebSite" parameterType="java.lang.Integer">
 		update websiteTb set
@@ -102,11 +217,12 @@
 	</select>
 	<!-- 根据性别获取受欢迎程度前十的用户 -->
 	<select id="getUserList" resultType="org.xmgreat.entity.UserEntity"
-		parameterType="java.lang.String">
+		parameterType="org.xmgreat.entity.ConditionEntity">
 		select *from ( select userTb.*,rownum rw from userTb
 		where userId in(select userId from userTb where sex=#{sex} minus
 		select
-		userId from showTb) order by popular desc) where rw &lt;=10
+		userId from showTb) order by popular desc) where rw
+		&lt;=#{currentPage}
 	</select>
 
 	<!-- 服务器后台套餐管理分页查询加模糊搜索 -->

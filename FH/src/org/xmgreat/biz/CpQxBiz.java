@@ -8,6 +8,7 @@
 package org.xmgreat.biz;
 
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.SalaryEntity;
 import org.xmgreat.entity.UserEntity;
 
 /**
@@ -23,4 +24,8 @@ public interface CpQxBiz {
 	public void saveSoliloquy(UserEntity userEntity);//保存内心独白
 	
 	public void upHeadPortrait(UserEntity userEntity);//上传头像
+	
+	public void Economics(String finance,String debt,SalaryEntity salaryEntity);//保存经济实力
+	
+	public SalaryEntity selectEconomics(SalaryEntity salaryEntity);//查询经济实力
 }

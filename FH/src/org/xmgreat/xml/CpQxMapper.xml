@@ -34,4 +34,23 @@
     <update id="upHeadPortrait" parameterType="org.xmgreat.entity.UserEntity">
     update userTb set headPortrait=#{headPortrait} where userId=2
     </update>
+    
+      <!-- 添加经济实力 -->
+    <insert id="savaFinance" parameterType="org.xmgreat.entity.SalaryEntity">
+    insert into salaryTb values(SALARYID.NEXTVAL,2,#{finance},#{debt},#{salaryPoint})
+    </insert>
+    
+    	<!--查询经济实力  -->
+	<select id="selectEconomics"  parameterType="org.xmgreat.entity.SalaryEntity"  resultType="org.xmgreat.entity.SalaryEntity">
+	
+	select * from salaryTb where userId=2
+	
+	</select>
+    
+      <!-- 修改经济实力 -->
+    <update id="savaEconomics" parameterType="org.xmgreat.entity.SalaryEntity">
+    update salaryTb set finance=#{finance},debt = #{debt},salaryPoint=#{salaryPoint}  where userId=2
+    </update>
+    
+    
 </mapper>

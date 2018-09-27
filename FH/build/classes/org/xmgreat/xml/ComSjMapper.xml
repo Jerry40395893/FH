@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.ComSjMapper">
+
+	<!-- 服务器后台套餐管理分页查询加模糊搜索 -->
+	<select id="geComboEntity" resultType="org.xmgreat.entity.ComboEntity"
+		parameterType="org.xmgreat.entity.ConditionEntity">
+		select *from (select rownum rw ,comboTb.* from comboTb
+		where
+		deleteId!=16
+		<if test='name!=null and name!=""'>
+			and name like #{name}
+		</if>
+		<if test='price!=null and price!=""'>
+			and fare like #{price}
+		</if>
+		<if test='time!=null and time!=""'>
+			and month like #{time}
+		</if>
+		order by comboId desc) where rw &gt;=#{fromNum} and
+		rw &lt;=#{toNum}
+
+	</select>
+
+	<!-- 服务器后台套餐管理不带分页查询加模糊搜索 -->
+	<select id="geComboCount" resultType="org.xmgreat.entity.ComboEntity">
+		select rownum rw ,comboTb.* from comboTb
+		where
+		deleteId!=16
+		<if test='name!=null and name!=""'>
+			and name like #{name}
+		</if>
+		<if test='price!=null and price!=""'>
+			and fare like #{price}
+		</if>
+		<if test='time!=null and time!=""'>
+			and month like #{time}
+		</if>
+		order by comboId desc
+	</select>
+
+</mapper>
+	

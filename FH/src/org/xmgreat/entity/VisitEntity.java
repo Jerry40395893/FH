@@ -14,7 +14,7 @@ public class VisitEntity
 	/** 谁访问或赞的用户Id */
 	private Integer userId;
 	/** 被访问或赞的用户Id */
-	private Integer touserId;
+	private Integer toUserId;
 	/** 访问或赞的时间 */
 	private String time;
 	/** 1为访问，2为赞 */
@@ -47,13 +47,13 @@ public class VisitEntity
 		super();
 	}
 
-	public VisitEntity(Integer visitId, Integer userId, Integer touserId, String time, Integer style,
+	public VisitEntity(Integer visitId, Integer userId, Integer toUserId, String time, Integer style,
 			PhotoEntity photoEntity)
 	{
 		super();
 		this.visitId = visitId;
 		this.userId = userId;
-		this.touserId = touserId;
+		this.toUserId = toUserId;
 		this.time = time;
 		this.style = style;
 		this.photoEntity = photoEntity;
@@ -78,9 +78,9 @@ public class VisitEntity
 	/**
 	 * @return the touserId
 	 */
-	public Integer getTouserId()
+	public Integer getToUserId()
 	{
-		return touserId;
+		return toUserId;
 	}
 
 	/**
@@ -105,9 +105,9 @@ public class VisitEntity
 	 * @param touserId
 	 *            the touserId to set
 	 */
-	public void setTouserId(Integer touserId)
+	public void setToUserId(Integer toUserId)
 	{
-		this.touserId = touserId;
+		this.toUserId = toUserId;
 	}
 
 	public PhotoEntity getPhotoEntity()

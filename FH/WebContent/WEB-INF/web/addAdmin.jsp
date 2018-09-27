@@ -33,7 +33,7 @@ $(function(){$("#admin").blur(function(){
     dataType:"text", //返回类型 TEXT字符串 JSON XML
     success:function(data){
    //开始之前要去空格，用trim() 
-   if(data.equals("已存在")){
+   if(data=="已存在"){
 	alert(data);
    $("#admin").val("");
    }

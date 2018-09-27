@@ -43,6 +43,37 @@
 			<result property="roleName" column="roleName" />
 		</association>
 	  </resultMap>
+<!--查询管理员 -->
+  	<select id="selecAdminP"
+		parameterType="java.lang.Integer" resultMap="empMap1">
+		select * from(select t.*,rownum rn
+		from (select u.adminId,m.middleId,r.roleid,u.admin,r.rolename
+		from admintb u,roleMiddleTb m,roleTb r
+		where u.adminId=m.adminid
+		and m.roleId = r.roleId
+		and r.roleId=2
+		and u.stype=1
+		
+		) t where rownum &lt;= #{page}*5) where rn &gt; (#{page}-1)*5
+	</select>  
+ 
+	<resultMap type="org.xmgreat.entity.AdminEntity" id="empMap1">
+		<id property="adminId" column="adminId" />
+		<result property="admin" column="admin" />
+		
+
+		<association property="roleMiddleEntity" javaType="org.xmgreat.entity.RoleMiddleEntity"> 
+			<id property="middleId" column="middleId" /> 
+			<result property="roleid" column="roleid" 
+			/> <result property="adminid" column="amdinid" /> 
+		</association>
+
+		<association property="roleEntity"
+			javaType="org.xmgreat.entity.RoleEntity">
+			<id property="roleId" column="roleId" />
+			<result property="roleName" column="roleName" />
+		</association>
+	  </resultMap>	 
 	
   <!--  对管理员账户进行删除-->
 	<update id="delAdmin"
@@ -166,7 +197,6 @@
 		parameterType="org.xmgreat.entity.ConditionEntity"
 		resultType="org.xmgreat.entity.UserEntity">
 		select * from userTb  where userId=#{userId}
-	</select>
-		
+	</select>	
 </mapper>
 	

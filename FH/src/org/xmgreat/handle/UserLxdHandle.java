@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.xmgreat.biz.UserLxdBiz;
 import org.xmgreat.biz.VisitLxdBiz;
+import org.xmgreat.entity.FocusEntity;
 import org.xmgreat.entity.VisitEntity;
-
 
 /*
  * 作者：林小东
@@ -23,24 +24,63 @@ public class UserLxdHandle
 {
 	@Resource
 	private VisitLxdBiz VisitLxdBizImpl;
+	@Resource
+	private UserLxdBiz userLxdBizImpl;
 	
-	 /** 赞添加记录*/
+
+	/** 赞添加记录 */
 	@RequestMapping("/addVisit.action")
-	  public void addVisit( VisitEntity visitEntity)
-	  {	
-		 VisitLxdBizImpl.addVisit(visitEntity);	
-	  }
+	public void addVisit(VisitEntity visitEntity)
+	{
+		System.out.println("添加赞");
+		visitEntity.setStyle(20);
+		System.out.println("to"+visitEntity.getToUserId());
+		System.out.println("user"+visitEntity.getUserId());
+		VisitLxdBizImpl.addVisit(visitEntity);
+		System.out.println("添加结束");
+	}
 	
-	 /** 显示访问或赞的记录*/
-	 // localhost:8080/FH/user/showWelcom.action
-	  @RequestMapping("/showVisit.action")
-	  public ModelAndView showWelcom(HttpServletRequest request,VisitEntity visitEntity,int page)
-	  {
-		  VisitLxdBizImpl.selectPageVisit(request,visitEntity, page);
-	    ModelAndView mv = new ModelAndView();
-	    mv.setViewName("bw/visit");
-	    return mv;
-	  }
+	/** 添加关注 */
+	@RequestMapping(value="/addFocus.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+	public @ResponseBody String addFocus(FocusEntity focusEntity)
+	{
+		System.out.println("添加关注");
+		
+		String flag=VisitLxdBizImpl.addFocus(focusEntity);
+		System.out.println(flag);
+		System.out.println("添加结束");
+		return  flag;
+	}
 	
-	
+
+
+	/** 显示访问或赞的记录 */
+	// localhost:8080/FH/user/showWelcom.action
+	@RequestMapping("/showVisit.action")
+	public ModelAndView showWelcom(HttpServletRequest request, VisitEntity visitEntity, int page)
+	{
+		VisitLxdBizImpl.selectPageVisit(request, visitEntity, page);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bw/visit");
+		return mv;
+	}
+
+	/** 显示对方信息 */
+	// localhost:8080/FH/user/lxd/toUserInfo.action
+	@RequestMapping("/toUserInfo.action")
+	public ModelAndView showToUserInfo(HttpServletRequest request,VisitEntity visitEntity)
+	{
+
+		ModelAndView mv = new ModelAndView();
+		
+		visitEntity.setStyle(19);
+		//添加访问记录
+		VisitLxdBizImpl.addVisit(visitEntity);
+		//获取信息
+		userLxdBizImpl.getUserInfo(visitEntity.getToUserId(), request);
+		//返回页面
+		mv.setViewName("bw/toUserInfo");
+		return mv;
+	}
+
 }

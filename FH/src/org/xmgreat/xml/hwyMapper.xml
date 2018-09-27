@@ -11,16 +11,89 @@
 		select * from userTb where email=#{email} and pasw=#{pasw}
 	</select>
 	
-	<select id="getParameterByPIds" parameterType="java.lang.Integer" resultType="org.xmgreat.entity.ParameterEntity">
+	<update id="update_LoginTime" >  
+        update userTb  
+            set lgtime = to_char(sysdate,'YYYY-MM-DD')
+         where userid = #{userId}   
+	</update>
+	
+	<select id="getParameterByPIds" parameterType="java.util.List" resultType="org.xmgreat.entity.ParameterEntity">
         select
         *
         from
-        parameterTB
+        ParameterTB
         where pid in
         <foreach collection="pids" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
+    
+    <insert id="insert_register" parameterType="org.xmgreat.entity.UserEntity">
+ 		 insert into userTb(userID,userName,pasw,sex,brithday,address,height,doctor,salary,teleNum) 
+ 		 values(SEQ_USER.Nextval,#{user.userName},#{user.pasw},#{user.sex},#{user.brithday},#{user.address},#{user.height},#{user.doctor},#{user.salary},#{user.teleNum})
+	</insert>
+	
+	<select id="getParameterById" resultType="org.xmgreat.entity.ParameterEntity">
+        select * from ParameterTB where id = #{id}
+    </select>
 
+	<select id="getAnyParameterWithPaging" parameterType="java.util.List" resultType="org.xmgreat.entity.ParameterEntity">
+        select * from(select t.*,rownum rn
+        from (
+        select
+        *
+        from
+        ParameterTB
+        where pid in
+        <foreach collection="pids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+		<if test="value !=null and value != ''">
+	  		and ( parameter like '%${value}%' or value like '%${value}%' )
+     	</if> 
+         ) t where rownum &lt;= #{pageNow}*#{pageNum} )where rn &gt; (#{pageNow}-1)*#{pageNum}
+    </select>
+    
+    <select id="getAnyParameterWithPageTotal" parameterType="java.util.List" resultType="org.xmgreat.entity.ParameterEntity">
+        select
+        *
+        from
+        ParameterTB
+        where pid in
+        <foreach collection="pids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="value !=null and value != ''">
+	  		and ( parameter like '%${value}%' or value like '%${value}%' )
+     	</if> 
+    </select>
+    
+    <delete id="delAnyParameter">  
+    	delete from parameterTB where id = #{id}
+	</delete>
+	
+	<update id="updateAnyParameter_TrNum3" >  
+        update parameterTB  
+            set Parameter = #{value},
+            	value = #{value}
+         where id = #{id}   
+	</update>
+	
+	<update id="updateAnyParameter_TrNum4" >  
+        update parameterTB
+            set value = #{value}
+         where id = #{id}
+	</update>
+
+	<insert id="insertAnyParameter">
+		insert into parameterTB 
+		values( 
+		(select nvl(max(to_number(id)),0)+1 from parameterTB where pid = #{pid}),
+		#{value},
+		#{value},
+		#{pid}
+		)
+	</insert> 
+	
 </mapper>
 	

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.xmgreat.biz.UserLxdBiz;
 import org.xmgreat.biz.VisitLxdBiz;
 import org.xmgreat.entity.VisitEntity;
 
@@ -15,15 +16,19 @@ public class TestLxd
 
   @Resource
   private VisitLxdBiz visitLxdBizImpl;
+  @Resource 
+  private UserLxdBiz userLxdBizImpl;
 
   @Test
   public void test1()
   {
-    VisitEntity visitEntity = new VisitEntity();
-    visitEntity.setUserId(1);
-    visitEntity.setTouserId(9);
-    visitEntity.setStyle(19);// 1表示看了谁2表示赞了谁
-    visitLxdBizImpl.addVisit(visitEntity);
+//    VisitEntity visitEntity = new VisitEntity();
+//    visitEntity.setUserId(1);
+//    visitEntity.setTouserId(9);
+//    visitEntity.setStyle(19);// 1表示看了谁2表示赞了谁
+//    visitLxdBizImpl.addVisit(visitEntity);
+
+	  
   }
 
 }

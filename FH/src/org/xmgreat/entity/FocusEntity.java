@@ -11,7 +11,7 @@ public class FocusEntity
 {
   private Integer focusId;
   private Integer userId;
-  private Integer touserId;
+  private Integer toUserId;
   private Integer deleteId;
   private String time;
   private UserEntity UserEntity;
@@ -51,10 +51,7 @@ public class FocusEntity
   /**
    * @return the touserId
    */
-  public Integer getTouserId()
-  {
-    return touserId;
-  }
+ 
 
   /**
    * @return the deleteId
@@ -64,7 +61,9 @@ public class FocusEntity
     return deleteId;
   }
 
-  /**
+
+
+/**
    * @param focusId
    *          the focusId to set
    */
@@ -86,10 +85,7 @@ public class FocusEntity
    * @param touserId
    *          the touserId to set
    */
-  public void setTouserId(Integer touserId)
-  {
-    this.touserId = touserId;
-  }
+  
 
   /**
    * @param deleteId
@@ -100,13 +96,23 @@ public class FocusEntity
     this.deleteId = deleteId;
   }
 
-  public FocusEntity(Integer focusId, Integer userId, Integer touserId,
+  public Integer getToUserId()
+{
+	return toUserId;
+}
+
+public void setToUserId(Integer toUserId)
+{
+	this.toUserId = toUserId;
+}
+
+public FocusEntity(Integer focusId, Integer userId, Integer toUserId,
     Integer deleteId, String time,UserEntity UserEntity,PhotoEntity photoEntity)
   {
     super();
     this.focusId = focusId;
     this.userId = userId;
-    this.touserId = touserId;
+    this.toUserId = toUserId;
     this.deleteId = deleteId;
     this.time = time;
     this.UserEntity=UserEntity;

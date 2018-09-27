@@ -20,11 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.xmgreat.biz.CpQxBiz;
 import org.xmgreat.entity.CityEntity;
+import org.xmgreat.entity.SalaryEntity;
 import org.xmgreat.entity.UserEntity;
 
 /**
@@ -38,7 +40,7 @@ public class CpQxHandle
 	@Resource
 	private CpQxBiz cpQxBizImpl;
 	private CityEntity city;
-	
+	private SalaryEntity salary;
 	@Resource
 	private UserEntity user;
 	
@@ -99,10 +101,49 @@ public class CpQxHandle
 	 * 经济实力页面
 	 */
 	@RequestMapping("/economics.action")
-	public ModelAndView economics() {
+	public ModelAndView economics(SalaryEntity salaryEntity) {
 		
+		
+		salary = cpQxBizImpl.selectEconomics(salaryEntity);
+		
+		request.setAttribute("salary", salary);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bw/Economics");
+		return mv;
+		
+	}
+	
+	/**
+	 * 生活方式页面
+	 */
+	@RequestMapping("/life.action")
+	public ModelAndView life() {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bw/LifeStyle");
+		return mv;
+		
+	}
+	
+	/**
+	 * 工作学习页面
+	 */
+	@RequestMapping("/job.action")
+	public ModelAndView job() {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bw/Job");
+		return mv;
+		
+	}
+	/**
+	 * 外贸体型页面
+	 */
+	@RequestMapping("/appearance.action")
+	public ModelAndView Appearance() {
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bw/Appearance");
 		return mv;
 		
 	}
@@ -178,6 +219,20 @@ public class CpQxHandle
 		return mav;
 	}
 	
+	/*
+	 * 经济实力
+	 */
+	@RequestMapping(value="/finance.action")
+	public ModelAndView finance(@RequestParam(value="finance") String finance,@RequestParam(value="debt") String debt,SalaryEntity salaryEntity) {
+		
+		cpQxBizImpl.Economics(finance, debt, salaryEntity);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("bw/MyCompany");
+		
+		
+		return mav;
+
+	}
 	
 	
 }

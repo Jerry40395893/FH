@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.xmgreat.biz.VisitLxdBiz;
+import org.xmgreat.entity.FocusEntity;
 import org.xmgreat.entity.ParaEntity;
 import org.xmgreat.entity.VisitEntity;
 import org.xmgreat.mapper.PageNumLxdMapper;
@@ -76,6 +77,45 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 		request.setAttribute("visitCurrentPage", page);
 		request.setAttribute("visitList", visitList);
 		return visitList;
+	}
+
+	@Override
+	public String addFocus(FocusEntity focusEntity)
+	{
+		int rs = 0;
+		String flag=null;
+		//不查状态
+		focusEntity.setDeleteId(0);
+		List<FocusEntity> focusList = visitLxdMapper.selectAllFocus(focusEntity);
+		if (focusList.size() == 0)
+		{
+			rs = visitLxdMapper.addFocus(focusEntity);
+
+		} else if (focusList.get(0).getDeleteId() == 22)
+		{
+			focusEntity.setDeleteId(21);
+			visitLxdMapper.updateFocusState(focusEntity);
+			rs=1;
+		}
+		if(rs<=0) {
+			flag="已经关注，请在我的关注中查看";
+		}
+		return flag;
+		
+	}
+
+	@Override
+	public int cancelFocus(FocusEntity focusEntity)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<FocusEntity> selectPageFocus(HttpServletRequest request, FocusEntity focusEntity, int page)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

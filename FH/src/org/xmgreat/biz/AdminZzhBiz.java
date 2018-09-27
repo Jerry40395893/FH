@@ -9,9 +9,9 @@ import org.xmgreat.entity.UserEntity;
 public interface AdminZzhBiz
 {
 
+
   public AdminEntity login(AdminEntity adminEntity);// 后台管理员登录
 
-  // github.com/Jerry40395893/FH.git
   public List<AdminEntity> selecAdmin(AdminEntity adminEntity);// 后台管理员表显示。
 
   public List<AdminEntity> selecAdminP(int page);// 后台管理员表显示
@@ -41,4 +41,5 @@ public interface AdminZzhBiz
   public String checkAdmin(AdminEntity adminEntity);// 判断账户是否存在
 
   public List<UserEntity> userInfo(ConditionEntity conditionEntity);// 显示会员管理列表
+ 
 }

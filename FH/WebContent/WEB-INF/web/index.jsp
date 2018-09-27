@@ -24,26 +24,30 @@
   <div class="logo margin-big-left fadein-top">
     <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />后台管理中心</h1>
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp;<a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> &nbsp;&nbsp;<a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span> 退出登录</a> </div>
-</div>
-<div class="leftnav">
+  <div class="head-l">
+  <a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> 
+  &nbsp;&nbsp;
+  <a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a>
+   &nbsp;&nbsp;
+  <a class="button button-little bg-red" href="<%=basePath %>admin/zzh/loginout.action"><span class="icon-power-off"></span> 退出登录</a> 
+ </div>
+ </div>
+<div  class="leftnav"  >
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
-
- 
- 
-    <c:forEach items="${menulist}" var="Power">
+  <div style=" overflow:scroll; width:180px; height:80%;">
+    <c:forEach items="${menulist}" var="Power" >
      <c:if test="${Power.pId==0}">
       <h2><span class="icon-user">${Power.menuname}</span></h2>
-       <ul style="display:block">
+       <ul>
         <c:forEach items="${menulist}" var="Power1">
 	     	<c:if test="${Power1.pId==Power.menuId }">
             <li><a href="<%=basePath %>${Power1.URL}" target="right"><span class="icon-caret-right">${Power1.menuname}</span></a></li>
-            </c:if> 
+          </c:if> 
        </c:forEach>
      </ul> 
   	</c:if>
   </c:forEach>
-
+</div>
 </div>
 <script type="text/javascript">
 $(function(){
@@ -67,7 +71,12 @@ $(function(){
   <li><b>当前语言：</b><span style="color:red;">中文</php></span>
 
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="<%=basePath %>##">英文</a> </li>
+ 
+ <%
+        HttpSession s = request.getSession();     
+  %>
 
+<span>欢迎：<%=s.getAttribute("adminB")%></span>
 </ul>
 <div class="admin">
   <iframe scrolling="auto" rameborder="0" src="info.html" name="right" width="100%" height="100%"></iframe>

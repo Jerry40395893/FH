@@ -5,9 +5,16 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.FigureEntity;
+import org.xmgreat.entity.HobbyEntity;
+import org.xmgreat.entity.LifeEntity;
+import org.xmgreat.entity.MarriedEntity;
 import org.xmgreat.entity.MateEntity;
+import org.xmgreat.entity.RmCdEntity;
 import org.xmgreat.entity.RuleEntity;
+import org.xmgreat.entity.SalaryEntity;
 import org.xmgreat.entity.UserEntity;
+import org.xmgreat.entity.WorkEntity;
 
 /*
  * 作者：沈杰
@@ -41,7 +48,7 @@ public interface ComSjMapper
   public ComboEntity getCombo(@Param("name") String name);
 
   /** 人气排行榜获取用户List根据性别各取前十位 **/
-  public List<UserEntity> getUserList(@Param("sex") String sex);
+  public List<UserEntity> getUserList(ConditionEntity conditionEntity);
 
   /** 通过id获取城市名称 */
   public String getCityName(@Param("cityId") Integer cityId);
@@ -73,15 +80,40 @@ public interface ComSjMapper
   /** 获取用户的择偶要求 **/
   public MateEntity getMateEntity(@Param("userId") Integer userId);
 
-  /** 获取符合择偶要求的所有用户 **/
-  public List<UserEntity> getRecomList(MateEntity mateEntity);
+  /** 获取用户的外貌体型 **/
+  public FigureEntity getFigureEntity(@Param("userId") Integer userId);
+
+  /** 获取用户的生活方式 **/
+  public LifeEntity getLifeEntity(@Param("userId") Integer userId);
+
+  /** 获取用户的工作学习 **/
+  public WorkEntity getWorkEntity(@Param("userId") Integer userId);
+
+  /** 获取用户的经济实力 **/
+  public SalaryEntity getSalaryEntity(@Param("userId") Integer userId);
+
+  /** 获取用户的婚姻观念 **/
+  public MarriedEntity getMarriedEntity(@Param("userId") Integer userId);
+
+  /** 获取用户的兴趣爱好 **/
+  public HobbyEntity getHobbyEntity(@Param("userId") Integer userId);
 
   /** 获取符合详细资料的所有用户 **/
-  public List<UserEntity> getAllList(@Param("sql") String sql);
+  public List<UserEntity> getAllList(RmCdEntity rmCdEntity);
 
   /** 获取智能推荐的SQL语句 */
-  public String getSql(@Param("ruleId") Integer ruleId);
+  public RuleEntity getRuleEntity(@Param("ruleId") Integer ruleId);
 
   /** 更新智能推荐的SQL语句 */
   public void updateSql(RuleEntity ruleEntity);
+
+  /** 获取曾经聊天过的用户 **/
+  public List<UserEntity> getChatList(UserEntity userEntity);
+
+  /** 获取曾经发送过邮件 **/
+  public List<UserEntity> getEamilList(UserEntity userEntity);
+
+  /** 获取曾经访问过的用户 **/
+  public List<UserEntity> getVisitList(UserEntity userEntity);
+
 }
