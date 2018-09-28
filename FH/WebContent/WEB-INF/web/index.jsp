@@ -47,8 +47,11 @@
      </ul> 
   	</c:if>
   </c:forEach>
+
 </div>
+
 </div>
+
 <script type="text/javascript">
 $(function(){
   $(".leftnav h2").click(function(){
@@ -75,6 +78,7 @@ $(function(){
  <%
         HttpSession s = request.getSession();     
   %>
+
 
 <span>欢迎：<%=s.getAttribute("adminB")%></span>
 </ul>

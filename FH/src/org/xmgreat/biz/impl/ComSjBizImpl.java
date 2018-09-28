@@ -162,7 +162,7 @@ public class ComSjBizImpl implements ComSjBiz
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
       .getRequestAttributes()).getRequest();
 
-    /** 获取到的所有用户需要转换年龄 */
+    /** 获取到的所有用户需要转换年龄,用于默认展示的6条数据 */
     List<UserEntity> userList = new ArrayList<UserEntity>();
     for (int i = 0; i < recomList.size(); i++)
     {
@@ -186,7 +186,29 @@ public class ComSjBizImpl implements ComSjBiz
 
       userList.add(userEntity);
     }
+
+    /** 因为涉及到append，所有"\"的转义字符没法识别需要进行转换。用于展示所有数据 */
+    List<UserEntity> allList = new ArrayList<UserEntity>();
+    for (int i = 0; i < recomList.size(); i++)
+    {
+      userEntity = recomList.get(i);
+      String objPath = userEntity.getHeadPortrait();
+      if (objPath != null)
+      {
+        String[] path = userEntity.getHeadPortrait().split("\\\\");
+        String head = "";
+        for (int j = 0; j < path.length - 1; j++)
+        {
+          head += path[j] + "%2F";
+        }
+        userEntity.setHeadPortrait(head + path[path.length - 1]);
+      }
+
+      allList.add(userEntity);
+    }
     request.setAttribute("recomList", userList);
+    request.setAttribute("allList", allList);
+
     return null;
   }
 

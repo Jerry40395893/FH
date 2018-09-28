@@ -31,4 +31,6 @@ public interface hwyBiz
 	public int updateAnyParameter_TrNum4(Integer id,String value);
 	
 	public int insertAnyParameter(String value,Integer pid);
+
+	public int update_ResetPasw(Long teleNum,String pasw);
 }

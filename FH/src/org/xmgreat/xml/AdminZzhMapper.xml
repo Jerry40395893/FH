@@ -198,5 +198,27 @@
 		resultType="org.xmgreat.entity.UserEntity">
 		select * from userTb  where userId=#{userId}
 	</select>	
+	
+<!-- 查询已分配菜单 -->	
+    <select id="alloMenu"
+		parameterType="org.xmgreat.entity.RoleEntity"
+		resultType="org.xmgreat.entity.MenuEntity">
+		select distinct p.* from menutb p,rolemunetb r where r.roleid=#{roleId} and r.menuid = p.menuid order by p.menuid
+	</select>	
+<!-- 查询为分配的菜单 -->	
+    <select id="unaMenu"
+		parameterType="org.xmgreat.entity.RoleEntity"
+		resultType="org.xmgreat.entity.MenuEntity">
+		select  P.* from menutb p where p.menuid not in(select menuid from rolemunetb where roleid=#{roleId}) order by p.menuid
+	</select>
+<!-- 找到这个角色的菜单 -->
+	<select id="roleMenu"
+	    parameterType="org.xmgreat.entity.RoleEntity"
+		resultType="org.xmgreat.entity.RoleMiddleEntity">
+	    select * from rolemunetb where roleid=#{roleId}
+	</select>	
+<!-- 添加选择菜单 -->
+
+<!-- 添加菜单的父节点 -->
 </mapper>
 	

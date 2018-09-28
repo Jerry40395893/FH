@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -37,6 +38,7 @@ public class AdminZzhBizImpl implements AdminZzhBiz
   private Integer currentPage;
   /** 管理员列表 */
   private List<AdminEntity> adminList;
+
 
   /*
    * 管理员登录

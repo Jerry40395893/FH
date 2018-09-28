@@ -22,31 +22,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </head>
 <body>
-<form method="post" action="<%=basePath %>admin/zzh/userList.action?currentPage=${currentPage-1}" id="listform">
+<form method="post" action="<%=basePath %>user/zzh/accList.action?currentPage=1" id="listform">
   <div class="panel admin-panel">
     <div class="panel-head"><strong class="icon-reorder">内容列表</strong> 
     </div>
-     <div class="panel-head"><strong class="icon-reorder">余额：</strong> 
+     <c:forEach  items="${balalist}"  var="user" varStatus="vs" >
+    
+     <div class="panel-head"><strong class="icon-reorder">余额：${user.leftMoney}</strong> 
+      
     </div>
+     </c:forEach>
     <div class="padding border-bottom">
       <ul class="search" style="padding-left:10px;">
        
         <li>搜索：</li>
         <li>交易类型
-          <select name="styleId" id="styleId" class="input" onchange="changesearch()"  style="width:60px; line-height:17px;display:inline-block">
-            <option value="">选择交易类型</option>
+          <select name="styleId" id="styleId" class="input" onchange="changesearch()"  style="width:120px; line-height:17px;display:inline-block">
+            <option value="0">选择交易类型</option>
             <option value="1">充值</option>
             <option value="2">套餐购买</option>
             <option value="3">读取信息</option>
             <option value="4">发送信息</option>
           </select>
+                               时间：
          <input type="text" placeholder="请选择查询的起始时间" name="hapTimeS"
-						id="hapTimeS" class="input"
+						id="hapTimeS" class="input" onFocus="setday(this);"
 						style="width: 160px; line-height: 17px; display: inline-block" />
-						&nbsp;&nbsp;<input type="text" placeholder="请选择查询的结束时间" id="hapTimeE"
-						name="hapTimeE" class="input"
+						&nbsp;&nbsp;
+		 <input type="text" placeholder="请选择查询的结束时间" name="hapTimeE" id="hapTimeE" onFocus="setday(this);"
+						class="input"
 						style="width: 160px; line-height: 17px; display: inline-block" />
-						&nbsp;&nbsp;<input type="submit"
+						&nbsp;&nbsp;
+	     <input type="submit"
 						class="button border-main icon-search" value="搜索"
 						style="width: 60px;"></li>
       </ul>
@@ -58,25 +65,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <th>资金去向</th>
         <th>单次交易金额</th>
         <th>交易时间</th>
-        <th width="310">操作</th>
+        
       </tr>
       <volist name="list" id="vo">
       <c:forEach  items="${userList}"  var="user" varStatus="vs" >
         <tr> 
-          <td>${(conditionEntity.currentPage-1)*5+vs.index+1}</td>
-          <c:if test="${user.styleId==1}">
+           <td>${vs.index+1}</td>
+           <c:if test="${user.styleId==1}">
            <td>充值</td>
-          </c:if>
-          
+           </c:if>
            <c:if test="${user.styleId==2}">
            <td>套餐购买</td>
-          </c:if>
-          <c:if test="${user.styleId==3}">
+           </c:if>
+           <c:if test="${user.styleId==3}">
            <td>读取信息</td>
-          </c:if>
-          <c:if test="${user.styleId==4}">
+           </c:if>
+           <c:if test="${user.styleId==4}">
            <td>发送信息</td>
-          </c:if>
+           </c:if>
           <td>${user.thing}</td> 
           <td>${user.money}</td> 
           <td>${user.happenTime}</td>

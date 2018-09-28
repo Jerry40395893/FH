@@ -88,4 +88,10 @@ public class hwyBizImpl implements hwyBiz {
 		return userMapper.insertAnyParameter( value, pid);
 	}
 
+	@Override
+	public int update_ResetPasw(Long teleNum,String pasw) {
+		// TODO Auto-generated method stub
+		return userMapper.update_ResetPasw(teleNum,pasw);
+	}
+
 }

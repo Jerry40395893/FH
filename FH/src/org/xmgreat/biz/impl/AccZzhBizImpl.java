@@ -85,7 +85,7 @@ public class AccZzhBizImpl implements AccZzhBiz
     request.setAttribute("userList", accList);
     request.setAttribute("list", list);
     /** 每次过去带模糊搜索的条件回去，分页的时候在带回来 */
-    request.setAttribute("styleId", conditionEntity.getStyleId());
+    request.setAttribute("styleId",  conditionEntity.getStyleId());
     request.setAttribute("hapTimeS", conditionEntity.getHapTimeS());
     request.setAttribute("hapTimeE", conditionEntity.getHapTimeE());
     
@@ -97,7 +97,7 @@ public List<WeathEntity> selecBala(ConditionEntity conditionEntity) {
 	request = ((ServletRequestAttributes) RequestContextHolder
 		      .getRequestAttributes()).getRequest();
 	balaList=accZzhMapper.selecBal(conditionEntity);
-	 request.setAttribute("balalist", balaList);
+	request.setAttribute("balalist", balaList);
 	return null;
 }
 

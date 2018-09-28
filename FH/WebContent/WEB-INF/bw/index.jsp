@@ -100,6 +100,19 @@ function ajaxLogin() {
 
 }
 
+function logOFF() {
+	$.ajax({
+		url:'<%=basePath%>user/hwy/logOFF.action',
+		type: 'post',
+		success:function(data){
+			window.top.location.href="<%=basePath%>/user/hwy/index.action"; 
+		},
+		error:function(){
+			alert('error');
+		}
+	});
+}
+
 </script>
 
 </head>
@@ -116,7 +129,7 @@ function ajaxLogin() {
   <a href="<%=basePath%>user/hwy/toRegister.action"> 免费注册</a>
 			</c:if>
 			<c:if test="${user != null }">
-  	欢迎您，${user.userName} <a href="#">注销</a>
+  	欢迎您，${user.userName} &nbsp;&nbsp; <a href="#" onclick="logOFF()">注销</a>
 			</c:if>
 		</div>
 
@@ -150,6 +163,11 @@ function ajaxLogin() {
 										<div class="form-group" id="btn-modal">
 											<a href="<%=basePath%>user/hwy/toRegister.action">
 												<button type="button" class="btn btn-success btn-login">快速注册</button>
+											</a>
+										</div>
+										<div class="form-group" id="btn-modal">
+											<a href="<%=basePath%>user/hwy/toResetPasw.action">
+												<button type="button" class="btn btn-success btn-login">忘记密码</button>
 											</a>
 										</div>
 										<div class="form-group" id="btn-modal">

@@ -14,10 +14,12 @@
 	<link rel="stylesheet" href="<%=basePath%>css/hwy_css.css">  
 	<script src="<%=basePath%>js/jquery.min.js"></script>
 	<script src="<%=basePath%>js/bootstrap.min.js"></script>
+	<script src="<%=basePath%>function/hwyValidate.js"></script>
 	
 	<script type="text/javascript">
 
 	var t1 ;/* 全局变量 */
+	var checkPhoneVCode = false;
 	var requestCounts =0;//请求次数，用于解决AJAX数据库请求连接失效时重新请求的次数判断。
 	
 	$(document).ready(function(){
@@ -114,23 +116,52 @@
 		        //请求结束时
 		    },
 		    error:function(){
-		        //请求失败时
-		    	 if(requestCounts == 0){
-			    	 	alert('数据库连接断开，尝试重新请求。');
+		    	 //请求失败时
+		         //重新请求
+		         if(requestCounts ==0){
+		    	 	if (confirm('数据库连接断开，是否尝试重新请求。')){
 				         requestCounts++;
-			    	window.top.location.href="<%=url%>"; 
-			         }else{
-			        	 alert('尝试重新请求失败')
-			         }
+				    	 readyForManage();
+		    	 	}
+		         }else{
+		        	 alert('尝试重新请求失败，请检查网络。如无法解决请联系管理员。')
+		         }
 		    }
 		})
 	
 	});
 	
-	
 	function registerAjax() {
 		if(!$("#regCheckbox").prop("checked")){
 			alert('请勾选同意注册条款');
+			return;
+		}
+/* 		if(!checkPhoneVCode){
+			alert('请先完成手机验证')
+			return;
+		} */
+		if(!radioValidate('sex','性别')){
+			return;
+		}
+		if(!selectValidate('day','生日')){
+			return;
+		}
+		if(!radioValidate('married','婚姻状况')){
+			return;
+		}
+		if(!selectValidate('heightSelect','身高')){
+			return;
+		}
+		if(!selectValidate('doctorSelect','学历')){
+			return;
+		}
+		if(!selectValidate('salarySelect','薪资')){
+			return;
+		}
+		if(!phoneValidate(document.getElementById("teleNum"))){
+			return;
+		}
+		if(!textValidate(document.getElementById("userName"),'昵称',20)){
 			return;
 		}
 		
@@ -156,7 +187,7 @@
 		    },
 		    error:function(){
 		        //请求失败时
-		        alert('error');
+		        alert('提交失败，请检查填写内容');
 		    }
 		}) 
 		
@@ -403,6 +434,7 @@ function getAddress() {
 }
 
 function teleNumAjax() {
+	checkPhoneVCode = false;
 	var teleNum = $("#teleNum").val();
 	if(teleNum == '' ){
 		$("#sendPhoneMsg").addClass("display"); 
@@ -413,7 +445,9 @@ function teleNumAjax() {
 
 function sendPhone() {
 	var teleNum = $("#teleNum").val();
-	
+	if(!phoneValidate(document.getElementById("teleNum"))){
+		return;
+	}
 	$.ajax({
 	    url:'<%=basePath%>/user/hwy/getRegPhoneVCode.action',
 	    data:"teleNum="+teleNum,
@@ -448,6 +482,7 @@ function sendPhoneButton() {
 }
 
 function phoneVCodeAjax() {
+	checkPhoneVCode = false;
 	var phoneVCode = $("#phoneVCode").val();
 	
 	$.ajax({
@@ -457,6 +492,7 @@ function phoneVCodeAjax() {
 	    success:function(result){
 	    	if(result){
 				alert('验证码正确');
+				checkPhoneVCode = true;
 	    	}else{
 	    		alert('验证码错误')
 	    	}
@@ -519,7 +555,7 @@ function phoneVCodeAjax() {
 			创建密码：<input type="password" name=pasw id="pasw" >
    		 </div>
    		 <div class="radio form-group" >
-			昵称：<input type="text" name="userName" id="userName" >
+			昵称：<input type="text" name="userName" id="userName">
    		 </div>
    		 <div class="radio form-group">
  		    <button type="button" class="btn btn-default" onclick="registerAjax()" >免费注册</button>

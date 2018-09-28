@@ -38,4 +38,6 @@
 
 	<!-- properties配置 -->
 	<util:properties id="const" location="classpath:const.properties" />
+	<!-- 手动实例化上下文 -->
+	<!-- <bean id="applicationContextUtil" class="org.xmgreat.tools.ApplicationContextUtil"></bean> -->
 </beans>

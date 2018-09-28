@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="<%=basePath %>css/admin.css">
 <script src="<%=basePath %>js/jquery.js"></script>
 <script src="<%=basePath %>js/pintuer.js"></script>
+<script src="<%=basePath%>function/hwyValidate.js"></script>
 <script type="text/javascript">
 
 //全局参数
@@ -44,57 +45,83 @@ function delParameter(parameterID){
 }
 
 //单个修改
-function updateParameter(parameterID,trNum)
+function updateParameter(parameterID,parameterPID,trNum)
 {
 	var value = prompt("请输入您的要修改的参数值");
-	if (value!=null && value!=""){
-			$.ajax({
-			    url:'<%=basePath%>/admin/hwy/updateAnyParameter.action',
-			    data:"parameterID="+parameterID+"&value="+value+"&trNum="+trNum,
-			    async:false,//true为异步，false为同步
-			    success:function(result){
-			    	if(result){
-				    	//修改成功
-				    	getParameter("");
-			    	}else{
-						//修改失败
-						alert('修改失败');
-			    	}
-			    },
-			    error:function(){
-			        //请求失败时
-			    }
-			})
-  		}else{
-  			alert('修改失败，输入值不符标准。')
-  		}
+	var isNum ;
+	switch (parameterPID){
+		case 102:
+			isNum = true;
+			break;
+		case 104:
+			isNum = true;
+			break;
+		case 111:
+			isNum = true;
+			break;
+		default:
+			isNum = false;
+		}
+	if(!promptValidate(value,'修改失败',10,isNum)){
+		return;
+	}
+	$.ajax({
+	    url:'<%=basePath%>/admin/hwy/updateAnyParameter.action',
+	    data:"parameterID="+parameterID+"&value="+value+"&trNum="+trNum,
+	    async:false,//true为异步，false为同步
+	    success:function(result){
+	    	if(result){
+		    	//修改成功
+		    	getParameter("");
+	    	}else{
+				//修改失败
+				alert('修改失败');
+	    	}
+	    },
+	    error:function(){
+	        //请求失败时
+	    }
+	})
 }
 
 //单个增加
 function addParameter(parameterPID)
 {
 	var value = prompt("请输入您的要添加的参数名称");
-	if (value!=null && value!=""){
-			$.ajax({
-			    url:'<%=basePath%>/admin/hwy/addAnyParameter.action',
-			    data:"value="+value+"&parameterPID="+parameterPID,
-			    async:false,//true为异步，false为同步
-			    success:function(result){
-			    	if(result){
-				    	//添加成功
-				    	getParameter("");
-			    	}else{
-						//添加失败
-						alert('添加失败');
-			    	}
-			    },
-			    error:function(){
-			        //请求失败时
-			    }
-			})
-  		}else{
-  			alert('添加失败，输入值不符标准。')
-  		}
+	var isNum ;
+	switch (parameterPID){
+		case 102:
+			isNum = true;
+			break;
+		case 104:
+			isNum = true;
+			break;
+		case 111:
+			isNum = true;
+			break;
+		default:
+			isNum = false;
+		}
+	if(promptValidate(value,'添加失败',10,isNum)){
+		return;
+	}
+	$.ajax({
+	    url:'<%=basePath%>/admin/hwy/addAnyParameter.action',
+	    data:"value="+value+"&parameterPID="+parameterPID,
+	    async:false,//true为异步，false为同步
+	    success:function(result){
+	    	if(result){
+		    	//添加成功
+		    	getParameter("");
+	    	}else{
+				//添加失败
+				alert('添加失败');
+	    	}
+	    },
+	    error:function(){
+	        //请求失败时
+	    }
+	})
 }
 
 $(document).ready(function(){
@@ -131,11 +158,12 @@ var parameterPID = 0
 	         //请求失败时
 	         //重新请求
 	         if(requestCounts ==0){
-	    	 	alert('数据库连接断开，尝试重新请求。');
-		         requestCounts++;
-		    	 readyForManage();
+	    	 	if (confirm('数据库连接断开，是否尝试重新请求。')){
+			         requestCounts++;
+			    	 readyForManage();
+	    	 	}
 	         }else{
-	        	 alert('尝试重新请求失败')
+	        	 alert('尝试重新请求失败，请检查网络。如无法解决请联系管理员。')
 	         }
 	    }
 	})
@@ -202,7 +230,7 @@ function getTableBody(result,parameterPID,pageTotal,trNum) {
 			//设置td1标签体
 			td1.innerHTML=i+1;
 			td2.innerHTML=parameters.parameter;
-			td4.innerHTML='<div class="button-group"> <a class="button border-main" href="javascript:void(0)" onclick="updateParameter('+parameters.id+','+trNum+')"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="delParameter('+parameters.id+')"><span class="icon-trash-o"></span> 删除</a> </div>'
+			td4.innerHTML='<div class="button-group"> <a class="button border-main" href="javascript:void(0)" onclick="updateParameter('+parameters.id+','+parameterPID+','+trNum+')"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="javascript:void(0)" onclick="delParameter('+parameters.id+')"><span class="icon-trash-o"></span> 删除</a> </div>'
 			//添加节点
 			table.appendChild(tr);
 			tr.appendChild(td1);

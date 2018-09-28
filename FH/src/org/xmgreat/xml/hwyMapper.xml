@@ -95,5 +95,11 @@
 		)
 	</insert> 
 	
+	<update id="update_ResetPasw" >  
+        update userTB
+            set pasw = #{pasw}
+         where teleNum = #{teleNum}
+	</update>
+	
 </mapper>
 	

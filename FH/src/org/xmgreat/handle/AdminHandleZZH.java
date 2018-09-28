@@ -140,6 +140,7 @@ public class AdminHandleZZH
 	  uList = adminBizImpl.selecAdmin(udf);
 	  mav.addObject("ulist", uList);
 	  return mav;
+
   }
 //会员管理列表显示
   @RequestMapping(value = "/userList.action")  
@@ -216,7 +217,9 @@ public class AdminHandleZZH
 	  ModelAndView mav = new ModelAndView("web/userInfo");
 	  adminBizImpl.userInfo(uet);
 	  return mav; 
+
   }
+
   
   @RequestMapping(value = "/loginout.action")
   public ModelAndView loginout(HttpServletRequest request) 

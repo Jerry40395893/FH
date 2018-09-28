@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
 <title>我的佳缘</title>
 
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -18,7 +18,6 @@
 <meta content=" description" name="description">
 <meta content=" keywords" name="keywords">
 <meta content="keenthemes" name="author">
-
 <meta property="og:site_name" content="-CUSTOMER VALUE-">
 <meta property="og:title" content="-CUSTOMER VALUE-">
 <meta property="og:description" content="-CUSTOMER VALUE-">
@@ -242,7 +241,7 @@
 											<div>
 												<a href="assets/pages/img/products/model1.jpg"
 													class="btn btn-default fancybox-button">打招呼</a> <a
-													href="#product-pop-up"
+													href="<%=basePath%>user/lxd/toUserInfo.action?userId=${user.userId}"
 													class="btn btn-default fancybox-fast-view">查看资料</a>
 											</div>
 										</div>
@@ -251,7 +250,8 @@
 										</h3>
 										<div class="pi-price">${user.strAge}
 											&nbsp;${user.cityName}&nbsp;${user.height}cm</div>
-										<a href="javascript:;" class="btn btn-default add2cart">添加关注</a>
+										<a onclick="addVisit(${user.userId})"
+											class="btn btn-default add2cart">添加关注</a>
 									</div>
 								</div>
 							</c:if>
@@ -267,6 +267,22 @@
 		<div class="container"></div>
 	</div>
 	<input type="hidden" id="pageNum" name="pageNum" />
+	<script type="text/javascript">
+		function lookMore() {
+			var str = "";
+			<c:forEach items='${allList}' var='user' varStatus='vs'>
+			str += "<div class='col-md-4 col-sm-6 col-xs-12'> <div class='product-item'> <div class='pi-img-wrapper'>"
+					+ "<img src='${user.headPortrait}'class='img-responsive'/> <div> <a href='assets/pages/img/products/model1.jpg' class='btn btn-default fancybox-button'>"
+					+ "打招呼</a> <a href='<%=basePath%>user/lxd/toUserInfo.action?userId=${user.userId}'class='btn btn-default fancybox-fast-view'>查看资料</a>"
+					+ "</div> </div> <h3> <a href='shop-item.html'>${user.userName}</a> </h3> <div class='pi-price'>"
+					+"${user.strAge}&nbsp;${user.cityName}&nbsp;${user.height}cm </div> <a  onclick='addVisit(${user.userId})' class='btn btn-default add2cart'>添加关注</a>"
+					+ "</div> </div>";
+			</c:forEach>
+			$("#changePage").empty();
+			$("#changePage").append(str);
+
+		}
+	</script>
 	<script src="<%=basePath%>assets/plugins/jquery.min.js"
 		type="text/javascript"></script>
 	<script src="<%=basePath%>assets/plugins/jquery-migrate.min.js"
@@ -302,6 +318,7 @@
 		type="text/javascript"></script>
 
 
+
 	<script src="<%=basePath%>assets/corporate/scripts/layout.js"
 		type="text/javascript"></script>
 	<script type="text/javascript">
@@ -314,21 +331,23 @@
 			Layout.initUniform();
 			Layout.initSliderRange();
 		});
-	</script>
-	<script type="text/javascript">
-		function lookMore() {
-			var str="<c:forEach items='${recomList}' var='user' varStatus='vs'>"+
-			"<div class='col-md-4 col-sm-6 col-xs-12'> <div class='product-item'> <div class='pi-img-wrapper'><img src="
-			+"'${user.headPortrait}'  class='img-responsive'> <div> <a href='assets/pages/img/products/model1.jpg'"
-			+"class='btn btn-default fancybox-button'>打招呼</a> <a href='#product-pop-up'class='btn btn-default fancybox-fast-view'>查看资料</a>"
-			+"</div> </div> <h3> <a href='shop-item.html'>${user.userName}</a> </h3><div class='pi-price'>${user.strAge}"
-			+"&nbsp;${user.cityName}&nbsp;${user.height}cm</div><a href='javascript:;' class='btn btn-default add2cart'>添加关注</a>"
-			+"</div> </div>  </c:forEach>";
-			 $("#changePage").empty();
-			$("#changePage").append(str);
-			alert(111);
+		function addVisit(obj){
+			$.ajax({
+				url:"<%=basePath%>user/lxd/addFocus.action",
+				data:{"toUserId":obj},
+				dataType:"text",
+				type:"post",
+				success:function(redata){
+					if (redata="") {
+						alert("关注成功");
+					} else if(redata!=null){
+						alert(redata);
+					}
+				}
+			});
 		}
 	</script>
+
 	<!-- END PAGE LEVEL JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

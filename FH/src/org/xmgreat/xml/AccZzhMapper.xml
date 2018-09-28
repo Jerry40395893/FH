@@ -11,13 +11,14 @@
 	select * from(select t.*,rownum rn
     from
 	(select * from weathTb where userId = 2
-	<if test="hapTimeS !=null and hapTimeS != ''">
-	  and happenTime &gt;= '%${hapTimeS}%' 
+	
+	 <if test="hapTimeS !=null and hapTimeS != ''">
+	  and happenTime &gt;= #{hapTimeS}
      </if>
      <if test="hapTimeE != null and hapTimeE !=''">
-	  and happenTime &lt;= '%${hapTimeE}%' 
+	  and happenTime &lt;= #{hapTimeE} 
         </if> 
-    <if test="styleId != null and  styleId != ''">
+      <if test="styleId != null and  styleId != ''">
 	  and styleId = #{styleId}
      </if> 
      
@@ -31,12 +32,12 @@
 	>
 	select * from weathTb where userId = 2
 	 <if test="hapTimeS !=null and hapTimeS != ''">
-	  and happenTime &gt;= '%${hapTimeS}%' 
+	  and happenTime &gt;= #{hapTimeS} 
      </if>
      <if test="hapTimeE != null and hapTimeE !=''">
-	  and happenTime &lt;= '%${hapTimeE}%' 
-        </if> 
-    <if test="styleId != null and  styleId != ''">
+	  and happenTime &lt;= #{hapTimeE} 
+     </if> 
+     <if test="styleId != null and  styleId != ''">
 	  and styleId = #{styleId}
      </if> 
 	</select>

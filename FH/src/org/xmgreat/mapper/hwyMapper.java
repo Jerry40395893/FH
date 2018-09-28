@@ -33,4 +33,6 @@ public interface hwyMapper
 	public int updateAnyParameter_TrNum4(@Param("id")Integer id,@Param("value")String value);
 
 	public int insertAnyParameter(@Param("value")String value,@Param("pid")Integer pid);
+
+	public int update_ResetPasw(@Param("teleNum")Long teleNum, @Param("pasw")String pasw);
 }

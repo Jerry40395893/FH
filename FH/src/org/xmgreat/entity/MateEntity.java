@@ -22,6 +22,8 @@ public class MateEntity
   private Integer recommend;
   private String sex;
   private String month;
+  private String photo;
+  private String honesty;
 
   public MateEntity(Integer mateId, Integer userId, Integer lowAge,
     Integer hightAge, Integer lowHeight, Integer height, String nation,
@@ -261,6 +263,26 @@ public class MateEntity
   public void setMonth(String month)
   {
     this.month = month;
+  }
+
+  public String getPhoto()
+  {
+    return photo;
+  }
+
+  public void setPhoto(String photo)
+  {
+    this.photo = photo;
+  }
+
+  public String getHonesty()
+  {
+    return honesty;
+  }
+
+  public void setHonesty(String honesty)
+  {
+    this.honesty = honesty;
   }
 
 }

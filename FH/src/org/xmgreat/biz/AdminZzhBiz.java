@@ -1,6 +1,7 @@
 package org.xmgreat.biz;
 
 import java.util.List;
+
 import org.xmgreat.entity.AdminEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MenuEntity;
