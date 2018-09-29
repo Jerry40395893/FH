@@ -25,7 +25,7 @@
 	$(document).ready(function(){
 		
 		$.ajax({
-		    url:'<%=basePath%>/user/hwy/getRegParameter.action',
+		    url:'<%=basePath%>user/hwy/getRegParameter.action',
 		    async:false,//true为异步，false为同步
 		    beforeSend:function(){
 		        //请求前
@@ -146,6 +146,9 @@
 		if(!selectValidate('day','生日')){
 			return;
 		}
+		if(!selectValidate('city','居住地')){
+			return;
+		}
 		if(!radioValidate('married','婚姻状况')){
 			return;
 		}
@@ -161,15 +164,19 @@
 		if(!phoneValidate(document.getElementById("teleNum"))){
 			return;
 		}
+		if(!textValidate(document.getElementById("pasw"),'密码',20)){
+			return;
+		}
 		if(!textValidate(document.getElementById("userName"),'昵称',20)){
 			return;
 		}
 		
 		var data=$("#registerForm").serialize();
 		var submitData=decodeURIComponent(data,true);
-
+		alert(submitData);
+		
  		$.ajax({
-		    url:'<%=basePath%>/user/hwy/register.action',
+		    url:'<%=basePath%>user/hwy/register.action',
 		    data:submitData,
 		    cache:false,//false是不缓存，true为缓存
 		    async:true,//true为异步，false为同步
@@ -179,7 +186,7 @@
 		    success:function(result){
 		        //请求成功时
 		        if(result){
-		      	  window.top.location.href="<%=basePath%>/user/hwy/index.action"; 
+		      	  window.top.location.href="<%=basePath%>user/hwy/index.action"; 
 		        }
 		    },
 		    complete:function(){
@@ -345,7 +352,7 @@ function getProvince() {
 	var parameterPID = $("#provinceType option:checked").attr('id');
 	
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/getAnyParameter.action',
+	    url:'<%=basePath%>user/hwy/getAnyParameter.action',
 	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -388,7 +395,7 @@ function getCity() {
 	var parameterPID = $("#province option:checked").attr('id');
 	
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/getAnyParameter.action',
+	    url:'<%=basePath%>user/hwy/getAnyParameter.action',
 	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -431,6 +438,8 @@ function getAddress() {
 		return;
 	}
 	$("#address").val(province+" "+city);
+	var cityId = $("#city option:checked").attr('id')-110000;
+	$("#cityId").val(cityId);
 }
 
 function teleNumAjax() {
@@ -449,7 +458,7 @@ function sendPhone() {
 		return;
 	}
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/getRegPhoneVCode.action',
+	    url:'<%=basePath%>user/hwy/getRegPhoneVCode.action',
 	    data:"teleNum="+teleNum,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -486,7 +495,7 @@ function phoneVCodeAjax() {
 	var phoneVCode = $("#phoneVCode").val();
 	
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/checkRegPhoneVCode.action',
+	    url:'<%=basePath%>user/hwy/checkRegPhoneVCode.action',
 	    data:"phoneVCode="+phoneVCode,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -527,6 +536,7 @@ function phoneVCodeAjax() {
 			<select id ="province" onchange="getCity(),getAddress()"><option >请选择 省</option></select>
  		 	<select id="city" onchange="getAddress()"><option >请选择 市</option></select>
  		 	<input type="hidden" name="address" id="address">
+ 		 	<input type="hidden" name="cityId" id="cityId">
    		 </div>
    		 <div class="radio form-group" id="married"></div>
    		 <div class="radio form-group" >
@@ -545,12 +555,12 @@ function phoneVCodeAjax() {
   			<input type="hidden" name="salary" id="salary">
    		 </div>
    		 <div class="radio form-group" >
-			手机号：<input type="text" name="teleNum" id="teleNum"> <!-- onchange="teleNumAjax()"> -->
+			手机号：<input type="text" name="teleNum" id="teleNum" onchange="teleNumAjax()"> 
    		 </div>
-   		 <!-- <div class="radio form-group" >
+   		 <div class="radio form-group" >
 			验证码：<input type="text" name="phoneVCode" id="phoneVCode" onchange="phoneVCodeAjax()">
 			<button type="button" id="sendPhoneMsg" class="btn btn-default display" onclick="sendPhone()">发送短信</button>
-   		 </div> -->
+   		 </div> 
    		 <div class="radio form-group" >
 			创建密码：<input type="password" name=pasw id="pasw" >
    		 </div>

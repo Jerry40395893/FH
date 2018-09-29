@@ -19,11 +19,11 @@ public class ConditionEntity
 {
   /** 为了biz层能够将数据展示在前端jsp页面 */
   private HttpServletRequest request;
-  /** 搜索条件，套餐名称 */
+  /** 搜索条件，套餐名称，线下活动名称 */
   private String comName;
   /** 搜索时间，套餐持续时间 */
   private Integer time;
-  /** 搜索价格，套餐价格 */
+  /** 搜索价格，套餐价格 ，线下活动费用 */
   private Integer price;
   /** 条件分页参数，大于当前页数 */
   private Integer forNum;
@@ -38,23 +38,28 @@ public class ConditionEntity
   /** 跳页类型 */
   private Integer turnPage;
   /** 搜索会员名称 */
-  private String  userName;
+  private String userName;
   /** 状态（启用和禁用） */
   private Integer onStage;
   /** 会员id */
   private int userId;
-  /**会员性别*/
+  /** 会员性别 */
   private String sex;
-  /**会员电话*/
+  /** 会员电话 */
   private Long teleNum;
-  /**会员邮箱*/
+  /** 会员邮箱 */
   private String email;
-  /**账单搜索的起始时间*/
+  /** 账单搜索的起始时间，线下活动开始时间 */
   private String hapTimeS;
-  /**账单搜索结束时间*/
+  /** 账单搜索结束时间,线下活动结束时间 */
   private String hapTimeE;
-  /**账单余额*/
-  private int styleId;
+  /** 账单余额 */
+  private Integer styleId;
+  /** 线下活动参与人数 */
+  private Integer count;
+  /** 线下活动地点 */
+  private String position;
+
   public ConditionEntity()
   {
     super();
@@ -188,76 +193,114 @@ public class ConditionEntity
     this.turnPage = turnPage;
   }
 
-public String getUserName() {
-	return userName;
-}
+  public String getUserName()
+  {
+    return userName;
+  }
 
-public void setUserName(String userName) {
-	this.userName = userName;
-}
+  public void setUserName(String userName)
+  {
+    this.userName = userName;
+  }
 
-public Integer getOnStage() {
-	return onStage;
-}
+  public Integer getOnStage()
+  {
+    return onStage;
+  }
 
-public void setOnStage(Integer onStage) {
-	this.onStage = onStage;
-}
+  public void setOnStage(Integer onStage)
+  {
+    this.onStage = onStage;
+  }
 
-public int getUserId() {
-	return userId;
-}
+  public int getUserId()
+  {
+    return userId;
+  }
 
-public void setUserId(int userId) {
-	this.userId = userId;
-}
+  public void setUserId(int userId)
+  {
+    this.userId = userId;
+  }
 
-public String getSex() {
-	return sex;
-}
+  public String getSex()
+  {
+    return sex;
+  }
 
-public void setSex(String sex) {
-	this.sex = sex;
-}
+  public void setSex(String sex)
+  {
+    this.sex = sex;
+  }
 
-public Long getTeleNum() {
-	return teleNum;
-}
+  public Long getTeleNum()
+  {
+    return teleNum;
+  }
 
-public void setTeleNum(Long teleNum) {
-	this.teleNum = teleNum;
-}
+  public void setTeleNum(Long teleNum)
+  {
+    this.teleNum = teleNum;
+  }
 
-public String getEmail() {
-	return email;
-}
+  public String getEmail()
+  {
+    return email;
+  }
 
-public void setEmail(String email) {
-	this.email = email;
-}
+  public void setEmail(String email)
+  {
+    this.email = email;
+  }
 
-public String getHapTimeS() {
-	return hapTimeS;
-}
+  public String getHapTimeS()
+  {
+    return hapTimeS;
+  }
 
-public void setHapTimeS(String hapTimeS) {
-	this.hapTimeS = hapTimeS;
-}
+  public void setHapTimeS(String hapTimeS)
+  {
+    this.hapTimeS = hapTimeS;
+  }
 
-public String getHapTimeE() {
-	return hapTimeE;
-}
+  public String getHapTimeE()
+  {
+    return hapTimeE;
+  }
 
-public void setHapTimeE(String hapTimeE) {
-	this.hapTimeE = hapTimeE;
-}
+  public void setHapTimeE(String hapTimeE)
+  {
+    this.hapTimeE = hapTimeE;
+  }
 
-public int getStyleId() {
-	return styleId;
-}
+  public Integer getStyleId()
+  {
+    return styleId;
+  }
 
-public void setStyleId(int styleId) {
-	this.styleId = styleId;
-}
+  public void setStyleId(Integer styleId)
+  {
+    this.styleId = styleId;
+  }
+
+  public Integer getCount()
+  {
+    return count;
+  }
+
+  public void setCount(Integer count)
+  {
+    this.count = count;
+  }
+
+  public String getPosition()
+  {
+    return position;
+  }
+
+  public void setPosition(String position)
+  {
+    this.position = position;
+  }
 
 }

@@ -54,6 +54,55 @@
   <!-- Theme styles END -->
   
   
+   <script type="text/javascript">
+
+    $(document).ready(function(){
+    
+    	 var smoke="${life.smoke}";
+    	 $("select[name='smoke']").find("option[value='"+smoke+"']").attr("selected",true);
+    	
+      	 var drink="${life.drink}";
+    	 $("select[name='drink']").find("option[value='"+drink+"']").attr("selected",true);
+    	
+    	 var exercise="${life.exercise}";
+    	 $("select[name='exercise']").find("option[value='"+exercise+"']").attr("selected",true);
+    	 
+    	 var dietary="${life.dietary}";
+    	 $("select[name='dietary']").find("option[value='"+dietary+"']").attr("selected",true);
+    	 
+    	 var shopping="${life.shopping}";
+    	 $("select[name='shopping']").find("option[value='"+shopping+"']").attr("selected",true);
+    	 
+    	 var church="${life.church}";
+    	 $("select[name='church']").find("option[value='"+church+"']").attr("selected",true);
+    	 
+    	 var rest="${life.rest}";
+    	 $("select[name='rest']").find("option[value='"+rest+"']").attr("selected",true);
+    	 
+    	 var friend="${life.friend}";
+    	 $("select[name='friend']").find("option[value='"+friend+"']").attr("selected",true);
+    	 
+    	 var maxcost="${life.maxcost}";
+    	 $("select[name='maxcost']").find("option[value='"+maxcost+"']").attr("selected",true);
+    	 
+    	 var homework="${life.homework}";
+    	 $("select[name='homework']").find("option[value='"+homework+"']").attr("selected",true);
+    	 
+    	 var dohomework="${life.dohomework}";
+    	 $("select[name='dohomework']").find("option[value='"+dohomework+"']").attr("selected",true);
+    	 
+    	 var likeLevel="${life.likeLevel}";
+    	 $("select[name='likeLevel']").find("option[value='"+likeLevel+"']").attr("selected",true);
+    	 
+    	 var aboutPet="${life.aboutPet}";
+    	 $("select[name='aboutPet']").find("option[value='"+aboutPet+"']").attr("selected",true);
+    	
+    });
+    
+    
+    
+    </script>
+  
   <style type="text/css">
 dl,dt,dd,h5,p{
 padding:0px;
@@ -109,6 +158,7 @@ function ShowFLT(i) {
 }
 </script>
   
+ 
  
   
   
@@ -311,7 +361,7 @@ function ShowFLT(i) {
                     <div class="content-search margin-bottom-20">
                       <div class="row">
                         <div class="col-md-6">
-                          <h1>经济<em>实力</em></h1>
+                          <h1>生活<em>方式</em></h1>
                         </div>
                       </div>
                     </div>
@@ -320,202 +370,218 @@ function ShowFLT(i) {
                   <h1>&nbsp;</h1>
                   
                   
-                  <form id="form_base" name="form_base" action="profile_postdo_new.php?action=economy" method="post" onsubmit="return cal();">
-			
-			<table width="480" cellpadding="0" cellspacing="0">
-					<tr>
-						<td class="item m_select105"><span class="ico_stars">*</span><span style="color:#666;">吸烟：</span></td>
-						<td><select id="smoke_type" name="smoke_type" onChange="select_changed()" style="color:#666;"><option value="0">--请选择--</option><option label="不吸，很反感吸烟" value="1">不吸，很反感吸烟</option>
-<option label="不吸，但不反感" value="2" selected="selected">不吸，但不反感</option>
-<option label="社交时偶尔吸" value="3">社交时偶尔吸</option>
-<option label="每周吸几次" value="4">每周吸几次</option>
-<option label="每天都吸" value="5">每天都吸</option>
-<option label="有烟瘾" value="6">有烟瘾</option>
-</select></td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span class="ico_stars">*</span><span style="color:#666;">饮酒：</span></td>
-						<td><select id="drink_type" name="drink_type" onChange="select_changed()" style="color:#666;"><option value="0">--请选择--</option><option label="不喝" value="1">不喝</option>
-<option label="社交需要时喝" value="2">社交需要时喝</option>
-<option label="有兴致时喝" value="3" selected="selected">有兴致时喝</option>
-<option label="每天都离不开酒" value="4">每天都离不开酒</option>
-</select></td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span class="ico_stars">*</span><span style="color:#666;">锻炼习惯：</span></td>
-						<td><select id="sport_type" name="sport_type" onChange="select_changed()" style="color:#666;"><option value="0">--请选择--</option><option label="每天锻炼" value="1">每天锻炼</option>
-<option label="每周至少一次" value="2">每周至少一次</option>
-<option label="每月几次" value="3" selected="selected">每月几次</option>
-<option label="没时间锻炼" value="4">没时间锻炼</option>
-<option label="集中时间锻炼" value="5">集中时间锻炼</option>
-<option label="不喜欢锻炼" value="6">不喜欢锻炼</option>
-</select></td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span style="color:#666;">饮食习惯：</span></td>
-						<td>
-							<select id="eating-habits" name="eating_habits" style="color:#666;" onchange="select_changed()">
-								<option value="0">--请选择--</option>
-								<option label="无特殊习惯" value="1" selected="selected">无特殊习惯</option>
-<option label="口味清淡" value="2">口味清淡</option>
-<option label="无辣不欢" value="3">无辣不欢</option>
-<option label="口味偏重" value="4">口味偏重</option>
-<option label="无肉不欢" value="5">无肉不欢</option>
-<option label="习惯吃素" value="6">习惯吃素</option>
-								
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span style="color:#666;">逛街购物：</span></td>
-						<td>
-							<select id="shopping" name="shopping" onchange="select_changed()" style="color:#666;">
-								<option value="0">--请选择--</option>
-								<option label="从来不去" value="1">从来不去</option>
-<option label="没办法才去" value="2">没办法才去</option>
-<option label="偶尔逛逛" value="3" selected="selected">偶尔逛逛</option>
-<option label="经常逛街" value="4">经常逛街</option>
-<option label="非常爱逛街" value="5">非常爱逛街</option>
-<option label="不逛就难受" value="6">不逛就难受</option>
+                  <form id="form_base" name="form_base" action="<%=basePath%>user/qx/lifeStyle.action" method="post">
 
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span class="ico_stars">*</span><span  style="color:#666;">宗教信仰：</span></td>
-						<td><select id="belief" name="belief" onChange="select_changed()" style="color:#666;"><option value="0">--请选择--</option><option label="无宗教信仰" value="1" selected="selected">无宗教信仰</option>
-<option label="大乘佛教显宗" value="2">大乘佛教显宗</option>
-<option label="大乘佛教密宗" value="3">大乘佛教密宗</option>
-<option label="大乘佛教净宗" value="17">大乘佛教净宗</option>
-<option label="小乘佛教" value="4">小乘佛教</option>
-<option label="道教" value="5">道教</option>
-<option label="儒教" value="6">儒教</option>
-<option label="基督教天主教派" value="7">基督教天主教派</option>
-<option label="基督教东正教派" value="8">基督教东正教派</option>
-<option label="基督教新教派" value="9">基督教新教派</option>
-<option label="犹太教" value="10">犹太教</option>
-<option label="伊斯兰教什叶派" value="11">伊斯兰教什叶派</option>
-<option label="伊斯兰教逊尼派" value="12">伊斯兰教逊尼派</option>
-<option label="印度教" value="13">印度教</option>
-<option label="神道教" value="14">神道教</option>
-<option label="萨满教" value="15">萨满教</option>
-<option label="其它宗教信仰" value="16">其它宗教信仰</option>
-</select></td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span class="ico_stars">*</span><span  style="color:#666;" >作息时间：</span></td>
-						<td><select id="live_cust" name="live_cust" onChange="select_changed()" style="color:#666;"}>><option value="0">--请选择--</option><option label="早睡早起很规律" value="1">早睡早起很规律</option>
-<option label="经常夜猫子" value="2">经常夜猫子</option>
-<option label="总是早起鸟" value="3">总是早起鸟</option>
-<option label="偶尔懒散一下" value="4" selected="selected">偶尔懒散一下</option>
-<option label="没有规律" value="5">没有规律</option>
-</select></td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span  style="color:#666;">交际圈子：</span></td>
-						<td>
-							<select id="communication" name="communication" onchange="select_changed()" style="color:#666;">
-								<option value="0">--请选择--</option>
-								<option label="同学朋友都逐渐疏远了" value="1">同学朋友都逐渐疏远了</option>
-<option label="平时通过互联网和电话联系" value="2">平时通过互联网和电话联系</option>
-<option label="每年参加几次聚会" value="3">每年参加几次聚会</option>
-<option label="偶尔主动约会朋友" value="4">偶尔主动约会朋友</option>
-<option label="经常和朋友见面" value="5" selected="selected">经常和朋友见面</option>
-<option label="朋友越来越多" value="6">朋友越来越多</option>
-<option label="每天呼朋唤友" value="7">每天呼朋唤友</option>
+									<table width="480" cellpadding="0" cellspacing="0">
+										<tr>
+											<td class="item m_select105"><span class="ico_stars">*</span><span
+												style="color: #666;">吸烟：</span></td>
+											<td><select id="smoke" name="smoke" style="color: #666;">
 
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="item m_select105"><span  style="color:#666;">最大消费：</span></td>
-						<td>
-							<select id="most_cost" name="most_cost" onChange="select_changed()" style="color:#666;">
-								<option value="0">--请选择--</option>
-								<option label="享受美食" value="1">享受美食</option>
-<option label="购置服装" value="2">购置服装</option>
-<option label="购置包包" value="9">购置包包</option>
-<option label="购置美鞋" value="10">购置美鞋</option>
-<option label="美容护肤" value="11">美容护肤</option>
-<option label="健身锻炼" value="12">健身锻炼</option>
-<option label="休闲娱乐" value="3">休闲娱乐</option>
-<option label="旅游度假" value="13" selected="selected">旅游度假</option>
-<option label="出行交通" value="4">出行交通</option>
-<option label="电子产品" value="14">电子产品</option>
-<option label="书本杂志" value="15">书本杂志</option>
-<option label="教育培训" value="7">教育培训</option>
-<option label="社交交友" value="5">社交交友</option>
-<option label="文化活动" value="6">文化活动</option>
-<option label="电动游戏" value="17">电动游戏</option>
-<option label="其他" value="8">其他</option>
+													<option value="无">--请选择--</option>
+													<option label="不吸，很反感吸烟" value="不吸，很反感吸烟">不吸，很反感吸烟</option>
+													<option label="不吸，但不反感" value="不吸，但不反感">不吸，但不反感</option>
+													<option label="社交时偶尔吸" value="社交时偶尔吸">社交时偶尔吸</option>
+													<option label="每周吸几次" value="每周吸几次">每周吸几次</option>
+													<option label="每天都吸" value="每天都吸">每天都吸</option>
+													<option label="有烟瘾" value="有烟瘾">有烟瘾</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span class="ico_stars">*</span><span
+												style="color: #666;">饮酒：</span></td>
+											<td><select id="drink" name="drink" style="color: #666;"><option
+														value="0">--请选择--</option>
+													<option label="不喝" value="不喝">不喝</option>
+													<option label="社交需要时喝" value="社交需要时喝">社交需要时喝</option>
+													<option label="有兴致时喝" value="有兴致时喝">有兴致时喝</option>
+													<option label="每天都离不开酒" value="每天都离不开酒">每天都离不开酒</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span class="ico_stars">*</span><span
+												style="color: #666;">锻炼习惯：</span></td>
+											<td><select id="exercise" name="exercise"
+												style="color: #666;"><option value="无">--请选择--</option>
+													<option label="每天锻炼" value="每天锻炼">每天锻炼</option>
+													<option label="每周至少一次" value="每周至少一次">每周至少一次</option>
+													<option label="每月几次" value="每月几次">每月几次</option>
+													<option label="没时间锻炼" value="没时间锻炼">没时间锻炼</option>
+													<option label="集中时间锻炼" value="集中时间锻炼">集中时间锻炼</option>
+													<option label="不喜欢锻炼" value="不喜欢锻炼">不喜欢锻炼</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">饮食习惯：</span></td>
+											<td><select id="dietary" name="dietary"
+												style="color: #666;" onchange="select_changed()">
+													<option value="无">--请选择--</option>
+													<option label="无特殊习惯" value="无特殊习惯">无特殊习惯</option>
+													<option label="口味清淡" value="口味清淡">口味清淡</option>
+													<option label="无辣不欢" value="无辣不欢">无辣不欢</option>
+													<option label="口味偏重" value="口味偏重">口味偏重</option>
+													<option label="无肉不欢" value="无肉不欢">无肉不欢</option>
+													<option label="习惯吃素" value="习惯吃素">习惯吃素</option>
 
-							</select>
-						</td>
-					</tr>
-				</table>
-				<h3 class="ws_title">家务</h3>
-				<table>
-					<tr>
-						<td class="item m_select105"><span  style="color:#666;">家务水平等级：</span></td>
-						<td>
-                    		<select onchange="select_changed()" name="housework_level" id="housework_level"  style="color:#666;">
-                    			<option selected="selected" value="1">--请选择--</option>
-                    			<option label="精通" value="2">精通</option>
-<option label="会一些" value="3" selected="selected">会一些</option>
-<option label="不会" value="4">不会</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">逛街购物：</span></td>
+											<td><select id="shopping" name="shopping"
+												style="color: #666;">
+													<option value="无">--请选择--</option>
+													<option label="从来不去" value="从来不去">从来不去</option>
+													<option label="没办法才去" value="没办法才去">没办法才去</option>
+													<option label="偶尔逛逛" value="偶尔逛逛">偶尔逛逛</option>
+													<option label="经常逛街" value="经常逛街">经常逛街</option>
+													<option label="非常爱逛街" value="非常爱逛街">非常爱逛街</option>
+													<option label="不逛就难受" value="不逛就难受">不逛就难受</option>
 
-					    	</select>
-					    </td>
-				  	</tr>
-					<tr>
-						<td class="item m_select105"><span style="color:#666;">家务分配情况：</span></td>
-						<td>
-							<select onchange="select_changed()" name="housework_distribution" id="housework" style="color:#666;">
-								<option selected="selected" value="0">--请选择--</option>
-								<option label="家务全部都我做" value="1">家务全部都我做</option>
-<option label="夫妻平均分配" value="2">夫妻平均分配</option>
-<option label="谁有时间谁做" value="3" selected="selected">谁有时间谁做</option>
-<option label="夫妻各自承担自己擅长的家务" value="4">夫妻各自承担自己擅长的家务</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span class="ico_stars">*</span><span
+												style="color: #666;">宗教信仰：</span></td>
+											<td><select id="church" name="church"
+												style="color: #666;"><option value="无宗教信仰">--请选择--</option>
+													<option label="无宗教信仰" value="无宗教信仰">无宗教信仰</option>
+													<option label="大乘佛教显宗" value="大乘佛教显宗">大乘佛教显宗</option>
+													<option label="大乘佛教密宗" value="大乘佛教密宗">大乘佛教密宗</option>
+													<option label="大乘佛教净宗" value="大乘佛教净宗">大乘佛教净宗</option>
+													<option label="小乘佛教" value="小乘佛教">小乘佛教</option>
+													<option label="道教" value="道教">道教</option>
+													<option label="儒教" value="儒教">儒教</option>
+													<option label="基督教天主教派" value="基督教天主教派">基督教天主教派</option>
+													<option label="基督教东正教派" value="基督教东正教派">基督教东正教派</option>
+													<option label="基督教新教派" value="基督教新教派">基督教新教派</option>
+													<option label="犹太教" value="犹太教">犹太教</option>
+													<option label="伊斯兰教什叶派" value="伊斯兰教什叶派">伊斯兰教什叶派</option>
+													<option label="伊斯兰教逊尼派" value="伊斯兰教逊尼派">伊斯兰教逊尼派</option>
+													<option label="印度教" value="印度教">印度教</option>
+													<option label="神道教" value="神道教">神道教</option>
+													<option label="萨满教" value="萨满教">萨满教</option>
+													<option label="其它宗教信仰" value="其它宗教信仰">其它宗教信仰</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span class="ico_stars">*</span><span
+												style="color: #666;">作息时间：</span></td>
+											<td><select id="rest" name="rest"
+												onChange="select_changed()" style="color: #666;"}>>
+													<option value="0">--请选择--</option>
+													<option label="早睡早起很规律" value="早睡早起很规律">早睡早起很规律</option>
+													<option label="经常夜猫子" value="经常夜猫子">经常夜猫子</option>
+													<option label="总是早起鸟" value="总是早起鸟">总是早起鸟</option>
+													<option label="偶尔懒散一下" value="偶尔懒散一下">偶尔懒散一下</option>
+													<option label="没有规律" value="没有规律">没有规律</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">交际圈子：</span></td>
+											<td><select id="friend" name="friend"
+												style="color: #666;">
+													<option value="0">--请选择--</option>
+													<option label="同学朋友都逐渐疏远了" value="同学朋友都逐渐疏远了">同学朋友都逐渐疏远了</option>
+													<option label="平时通过互联网和电话联系" value="平时通过互联网和电话联系">平时通过互联网和电话联系</option>
+													<option label="每年参加几次聚会" value="每年参加几次聚会">每年参加几次聚会</option>
+													<option label="偶尔主动约会朋友" value="偶尔主动约会朋友">偶尔主动约会朋友</option>
+													<option label="经常和朋友见面" value="经常和朋友见面">经常和朋友见面</option>
+													<option label="朋友越来越多" value="朋友越来越多">朋友越来越多</option>
+													<option label="每天呼朋唤友" value="每天呼朋唤友">每天呼朋唤友</option>
 
-							</select>
-						</td>
-					</tr>
-				</table>
-				<h3 class="ws_title">宠物</h3>
-				<table>	
-					<tr>
-					  	<td class="item m_select105"><span style="color:#666;">宠物喜欢程度：</span></td>
-					  	<td>
-                      		<select onchange="select_changed()" name="love_pets_level" id="love_pets" style="color:#666;">
-		                        <option selected="selected" value="1">--请选择--</option>	
-		                        <option label="很喜欢" value="2">很喜欢</option>
-<option label="还可以" value="3" selected="selected">还可以</option>
-<option label="不喜欢" value="4">不喜欢</option>
-                     
-                      		</select>
-                      	</td>
-				  	</tr>
-					<tr>
-						<td class="item m_select105"><span style="color:#666;">关于宠物：</span></td>
-						<td>
-							<select onchange="select_changed()" name="about_pet" id="about_pets" style="color:#666;">
-								<option selected="selected" value="0">--请选择--</option>
-								<option label="我没有养宠物，也不接受对方养" value="1">我没有养宠物，也不接受对方养</option>
-<option label="暂时没有养宠物，如果你喜欢我们一起养" value="2" selected="selected">暂时没有养宠物，如果你喜欢我们一起养</option>
-<option label="喜欢宠物，家里有养小狗" value="3">喜欢宠物，家里有养小狗</option>
-<option label="喜欢宠物，家里有养猫咪" value="4">喜欢宠物，家里有养猫咪</option>
-<option label="喜欢宠物，我养的宠物很特别，好奇的话，来信问问我吧" value="5">喜欢宠物，我养的宠物很特别，好奇的话，来信问问我吧</option>
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">最大消费：</span></td>
+											<td><select id="maxcost" name="maxcost"
+												style="color: #666;">
+													<option value="0">--请选择--</option>
+													<option label="享受美食" value="享受美食">享受美食</option>
+													<option label="购置服装" value="购置服装">购置服装</option>
+													<option label="购置包包" value="购置包包">购置包包</option>
+													<option label="购置美鞋" value="购置美鞋">购置美鞋</option>
+													<option label="美容护肤" value="美容护肤">美容护肤</option>
+													<option label="健身锻炼" value="健身锻炼">健身锻炼</option>
+													<option label="休闲娱乐" value="休闲娱乐">休闲娱乐</option>
+													<option label="旅游度假" value="旅游度假">旅游度假</option>
+													<option label="出行交通" value="出行交通">出行交通</option>
+													<option label="电子产品" value="电子产品">电子产品</option>
+													<option label="书本杂志" value="书本杂志">书本杂志</option>
+													<option label="教育培训" value="教育培训">教育培训</option>
+													<option label="社交交友" value="社交交友">社交交友</option>
+													<option label="文化活动" value="文化活动">文化活动</option>
+													<option label="电动游戏" value="电动游戏">电动游戏</option>
+													<option label="其他" value="其他">其他</option>
 
-							</select>
-						</td>
-					</tr>
-					<tr><td>&nbsp;</td><td><input type="submit" class="save" value="保存并继续" onmousedown="send_jy_pv2('editprofile|save_life|m|182580144');" /><input type="button" value="跳过此页" class="skip" onClick="skip()" onmousedown="send_jy_pv2('editprofile|skip_life|m|182580144');" /></td></tr>
-				</table>
-			
-			
-                  
-                  
-                  </form>
+											</select></td>
+										</tr>
+									</table>
+									<h3 class="ws_title">家务</h3>
+									
+									<table>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">家务水平等级：</span></td>
+											<td><select name="homework" id="homework"
+												style="color: #666;">
+													<option selected="selected" value="无">--请选择--</option>
+													<option label="精通" value="精通">精通</option>
+													<option label="会一些" value="会一些">会一些</option>
+													<option label="不会" value="不会">不会</option>
+
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">家务分配情况：</span></td>
+											<td><select name="dohomework" id="dohomework"
+												style="color: #666;">
+													<option selected="selected" value="0">--请选择--</option>
+													<option label="家务全部都我做" value="家务全部都我做">家务全部都我做</option>
+													<option label="夫妻平均分配" value="夫妻平均分配">夫妻平均分配</option>
+													<option label="谁有时间谁做" value="谁有时间谁做">谁有时间谁做</option>
+													<option label="夫妻各自承担自己擅长的家务" value="夫妻各自承担自己擅长的家务">夫妻各自承担自己擅长的家务</option>
+
+											</select></td>
+										</tr>
+									</table>
+									<h3 class="ws_title">宠物</h3>
+									<table>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">宠物喜欢程度：</span></td>
+											<td><select name="likeLevel" id="likeLevel"
+												style="color: #666;">
+													<option selected="selected" value="无">--请选择--</option>
+													<option label="很喜欢" value="很喜欢">很喜欢</option>
+													<option label="还可以" value="还可以">还可以</option>
+													<option label="不喜欢" value="不喜欢">不喜欢</option>
+
+											</select></td>
+										</tr>
+										<tr>
+											<td class="item m_select105"><span style="color: #666;">关于宠物：</span></td>
+											<td><select name="aboutPet" id="aboutPet"
+												style="color: #666;">
+													<option selected="selected" value="0">--请选择--</option>
+													<option label="我没有养宠物，也不接受对方养" value="我没有养宠物，也不接受对方养">我没有养宠物，也不接受对方养</option>
+													<option label="暂时没有养宠物，如果你喜欢我们一起养"
+														value="暂时没有养宠物，如果你喜欢我们一起养">暂时没有养宠物，如果你喜欢我们一起养</option>
+													<option label="喜欢宠物，家里有养小狗" value="喜欢宠物，家里有养小狗">喜欢宠物，家里有养小狗</option>
+													<option label="喜欢宠物，家里有养猫咪" value="喜欢宠物，家里有养猫咪">喜欢宠物，家里有养猫咪</option>
+													<option label="喜欢宠物，我养的宠物很特别，好奇的话，来信问问我吧"
+														value="喜欢宠物，我养的宠物很特别，好奇的话，来信问问我吧">喜欢宠物，我养的宠物很特别，好奇的话，来信问问我吧</option>
+
+											</select></td>
+										</tr>
+										<tr>
+											<td>&nbsp;</td>
+											<td><input type="submit" class="save" value="保存" /><input
+												type="button" value="跳过此页" /></td>
+										</tr>
+									</table>
+
+
+
+
+								</form>
                 </div>
               </div>
             </div>

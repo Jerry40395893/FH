@@ -13,11 +13,13 @@ public class EmailEntity
   private Integer userId;
   private String emailName;
   private String msg;
-  private Integer touserId;
+  private Integer toUserId;
   private String time;
   private Integer stage;
   private String deleteTime;
   private Integer deleteId;
+  private UserEntity userEntity;
+  private PhotoEntity photoEntity;
 
   public void setMsg(String msg)
   {
@@ -55,19 +57,21 @@ public class EmailEntity
   }
 
   public EmailEntity(Integer emailId, Integer userId, String emailName,
-    String msg, Integer touserId, String time, Integer stage, String deleteTime,
-    Integer deleteId)
+    String msg, Integer toUserId, String time, Integer stage, String deleteTime,
+    Integer deleteId,UserEntity userEntity,PhotoEntity photoEntity)
   {
     super();
     this.emailId = emailId;
     this.userId = userId;
     this.emailName = emailName;
     this.msg = msg;
-    this.touserId = touserId;
+    this.toUserId = toUserId;
     this.time = time;
     this.stage = stage;
     this.deleteTime = deleteTime;
     this.deleteId = deleteId;
+    this.userEntity=userEntity;
+    this.photoEntity=photoEntity;
   }
 
   /**
@@ -94,13 +98,7 @@ public class EmailEntity
     return emailName;
   }
 
-  /**
-   * @return the touserId
-   */
-  public Integer getTouserId()
-  {
-    return touserId;
-  }
+
 
   /**
    * @return the deleteTime
@@ -145,14 +143,6 @@ public class EmailEntity
     this.emailName = emailName;
   }
 
-  /**
-   * @param touserId
-   *          the touserId to set
-   */
-  public void setTouserId(Integer touserId)
-  {
-    this.touserId = touserId;
-  }
 
   /**
    * @param deleteTime
@@ -171,5 +161,35 @@ public class EmailEntity
   {
     this.deleteId = deleteId;
   }
+
+public Integer getToUserId()
+{
+	return toUserId;
+}
+
+public void setToUserId(Integer toUserId)
+{
+	this.toUserId = toUserId;
+}
+
+public UserEntity getUserEntity()
+{
+	return userEntity;
+}
+
+public void setUserEntity(UserEntity userEntity)
+{
+	this.userEntity = userEntity;
+}
+
+public PhotoEntity getPhotoEntity()
+{
+	return photoEntity;
+}
+
+public void setPhotoEntity(PhotoEntity photoEntity)
+{
+	this.photoEntity = photoEntity;
+}
 
 }

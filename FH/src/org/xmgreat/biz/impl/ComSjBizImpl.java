@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.xmgreat.biz.ComSjBiz;
+import org.xmgreat.entity.ActivityEntity;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MateEntity;
@@ -57,6 +58,51 @@ public class ComSjBizImpl implements ComSjBiz
 
   /** 因为样式的原因，前端页面模糊搜索的时候名字会多出一个， */
   private String comName;
+
+  /** 获取智能推荐规则信息 **/
+  @Override
+  public void getRuleEntity()
+  {
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+      .getRequestAttributes()).getRequest();
+
+    RuleEntity ruleEntity = comSjMapper.getRuleEntity(2);
+
+    request.setAttribute("ruleEntity", ruleEntity);
+  }
+
+  /** 修改规则 */
+  @Override
+  public void alertRule(RuleEntity ruleEntity)
+  {
+    HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+      .getRequestAttributes()).getRequest();
+    if (ruleEntity.getFigureId() == null)
+    {
+      ruleEntity.setFigureId(0);
+    }
+    if (ruleEntity.getLifeId() == null)
+    {
+      ruleEntity.setLifeId(0);
+    }
+    if (ruleEntity.getWorkId() == null)
+    {
+      ruleEntity.setWorkId(0);
+    }
+    if (ruleEntity.getMarriedId() == null)
+    {
+      ruleEntity.setMarriedId(0);
+    }
+    if (ruleEntity.getSalaryId() == null)
+    {
+      ruleEntity.setSalaryId(0);
+    }
+    if (ruleEntity.getHobbyId() == null)
+    {
+      ruleEntity.setHobbyId(0);
+    }
+    comSjMapper.alertRule(ruleEntity);
+  }
 
   /** 获取智能推荐的用户 */
   @Override
@@ -511,4 +557,125 @@ public class ComSjBizImpl implements ComSjBiz
     }
     return recomList;
   }
+
+  /** 获取线下活动信息，展示活动界面 */
+  @Override
+  public List<ActivityEntity> getActivityEntity(ConditionEntity conditionEntity)
+  {
+    List<ActivityEntity> comList = new ArrayList<ActivityEntity>();
+    List<ActivityEntity> counList = new ArrayList<ActivityEntity>();
+    request = conditionEntity.getRequest();
+    /** 只带模糊搜索的条件，计算总页数 */
+    comName = conditionEntity.getComName();
+    if (comName != null)
+    {
+      comName = conditionEntity.getComName().replace(",", "");
+      conditionEntity.setComName(comName);
+    }
+
+    counList = comSjMapper.getActivityCount(conditionEntity);
+
+    if (baseNum != null)
+    {
+      if (baseNum != 1)
+      {
+        /** 判断并计算总页数 */
+        if ((counList.size() % 2) == 0)
+        {
+          listSize = (counList.size() / 2);
+        } else
+        {
+          listSize = (counList.size() / 2) + 1;
+        }
+      } else
+      {
+        listSize = counList.size();
+      }
+    } else
+    {
+
+      /** 判断并计算总页数 */
+      if ((counList.size() % 2) == 0)
+      {
+        listSize = (counList.size() / 2);
+      } else
+      {
+        listSize = (counList.size() / 2) + 1;
+      }
+
+    }
+
+    /** 清除之前遗留的数据 */
+    list.clear();
+    for (int i = 0; i < listSize; i++)
+    {
+      list.add(i);
+    }
+    sumCount = counList.size();
+    currentPage = conditionEntity.getCurrentPage();
+    turnPage = conditionEntity.getTurnPage();
+    if ((currentPage == null) || (turnPage == 1))
+    {
+      currentPage = 1;
+    } else if (turnPage == 2)
+    {
+      if (currentPage != 1)
+      {
+        currentPage--;
+      }
+    } else if (turnPage == 3)
+    {
+      if (currentPage < listSize)
+      {
+        currentPage++;
+      }
+    } else if (turnPage == 4)
+    {
+      currentPage = listSize;
+
+    }
+    if (currentPage == 0)
+    {
+      currentPage = 1;
+    }
+
+    /** 后台每页分页条数，参数类型为5 */
+    ConditionEntity con = comSjMapper.getNum(5);
+    baseNum = con.getBaseNum();
+    forNum = baseNum * (currentPage - 1) + 1;
+    toNum = baseNum * currentPage;
+    conditionEntity.setForNum(forNum);
+    conditionEntity.setToNum(toNum);
+    comList = comSjMapper.getActivityEntity(conditionEntity);
+
+    request.setAttribute("currentPage", currentPage);
+    request.setAttribute("sumCount", sumCount);
+    request.setAttribute("comList", comList);
+    request.setAttribute("list", list);
+    /** 每次过去带模糊搜索的条件回去，分页的时候在带回来 */
+    request.setAttribute("comName", conditionEntity.getComName());
+    request.setAttribute("hapTimeS", conditionEntity.getHapTimeS());
+    request.setAttribute("count", conditionEntity.getCount());
+    request.setAttribute("position", conditionEntity.getPosition());
+    request.setAttribute("price", conditionEntity.getPrice());
+    request.setAttribute("onStage", conditionEntity.getOnStage());
+    request.setAttribute("hapTimeE", conditionEntity.getHapTimeE());
+    return comList;
+  }
+
+  /** 展示活动信息，并且支持修改 */
+  @Override
+  public void updateAct(ActivityEntity activityEntity)
+  {
+    comSjMapper.updateAct(activityEntity);
+  }
+
+  /** 进入修改界面 */
+  @Override
+  public void getAct(Integer activityId)
+  {
+    ActivityEntity activityEntity = comSjMapper.getAct(activityId);
+
+  }
+
 }

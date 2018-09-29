@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.xmgreat.mapper.EmailLxdMapper">
+
+	<!-- 写信 -->
+	<insert id="addEmail"
+		parameterType="org.xmgreat.entity.EmailEntity">
+		insert into emailTb(emailId,userId,emailName,msg,toUserId,time,stage,deleteTime,deleteId)
+		values(seq_email.nextval,#{userId},null,#{msg},#{toUserId},
+		to_char(sysdate,'YYYY-MM-DD'),1,null,1)
+	</insert>
+
+  <!--   读信更改状态 -->
+	<update id="updateState" parameterType="org.xmgreat.entity.EmailEntity">
+	  update emailTb set stage=2 where userId=#{userId}  and toUserId=#{toUserId}
+	</update>
+	
+	<!-- 删除信件 -->
+	<update id="deleteEmail" parameterType="org.xmgreat.entity.EmailEntity">
+	  update emailTb set deleteId=2 where userId=#{userId}  and toUserId=#{toUserId}
+	</update>
+	
+	<!-- 找回信件 -->
+	<update id="getBackEmaile" parameterType="org.xmgreat.entity.EmailEntity">
+	  update emailTb set deleteId=1 where userId=#{userId}  and toUserId=#{toUserId}
+	</update>
+	
+	
+	<!-- 查询所有信件未读/已读  -->
+	<select id="getAllEmail" parameterType="org.xmgreat.entity.EmailEntity"
+	 resultType="org.xmgreat.entity.EmailEntity">
+	  select * from emailTb where 1=1
+	    <if test="userId!=0">
+			and userId=#{userId}
+		</if>
+		<if test="toUserId!=0">
+			and toUserId=#{toUserId}
+		</if>
+		 and stage=#{stage} and deleteId=21
+	</select>
+	
+	<!-- 查询单页信件未读/已读  -->
+	<select id="getPageEmail" parameterType="org.xmgreat.entity.EmailEntity"
+	resultMap="emailMap">
+		select b.* from(select a.*,rownum rn from
+		(select
+		e.*,p.url,p.photoId,u.lgtime,u.userName,u.brithday,u.address,u.height,u.married
+		 from emailTb e left outer join phototb p
+		on
+		<if test="ee.userId!=0 and ee.toUserId==0">
+			e.touserid=p.userid
+		</if>
+		<if test="ee.toUserId!=0 and ee.userId==0">
+			e.userId=p.userid
+		</if>
+
+		<if test="ee.toUserId!=0 and ee.userId!=0">
+			e.touserid=p.userid
+		</if>
+
+		<if test="ee.toUserId==0 and ee.userId==0">
+			e.touserid=p.userid
+		</if>
+
+		and p.parameter=1,userTb u
+
+		where 1=1 and e.deleteId=1 and stage=#{ee.stage}
+
+		<if test="ee.userId!=0">
+			and e.userId=#{ee.userId} and u.userid=e.toUserId
+		</if>
+		<if test="ee.toUserId!=0">
+			and e.toUserId=#{ee.toUserId} and u.userid=e.userId
+		</if>
+		order by time desc ) a
+		where rownum &lt;= #{max}) b where rn &gt;
+		#{min}
+	</select>
+	<resultMap type="org.xmgreat.entity.EmailEntity"
+		id="emailMap">
+		<id property="emailId" column="emailId" /><!-- 主键 -->
+		<result property="emailId" column="emailId" />
+		<result property="userId" column="userId" />
+		<result property="toUserId" column="toUserId" />
+		<result property="time" column="time" />
+		<result property="stage" column="stage" />
+
+		<association property="photoEntity" column="photoId"
+			javaType="org.xmgreat.entity.PhotoEntity">
+			<id property="photoId" column="photoId" /><!-- 主键 -->
+			<result property="userId" column="userId" />
+			<result property="URL" column="URL" />
+		</association>
+		<association property="userEntity" column="userId"
+			javaType="org.xmgreat.entity.UserEntity">
+			<id property="userId" column="userId" /><!-- 主键 -->
+			<result property="userId" column="userId" />
+			<result property="lgTime" column="lgTime" />
+			<result property="userName" column="userName" />
+			<result property="brithday" column="brithday" />
+			<result property="address" column="address" />
+			<result property="height" column="height" />
+			<result property="married" column="married" />
+		</association>
+	</resultMap>
+	
+
+	
+	
+	
+
+</mapper>
+	
+
+
+
+	

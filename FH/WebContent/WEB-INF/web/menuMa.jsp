@@ -13,14 +13,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <style>
 #a {
 	height: 500px;
-	width: 700px;
+	width: 900px;
 	border: #000 1px solid;
 	margin-left: 50px
 }
 
 #b {
 	height: 500px;
-	width: 100px;
+	width: 200px;
 	border: yellow 1px solid;
 	margin-left: 10px;
 	float: left;
@@ -35,56 +35,210 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	float: left;
 	text-align: left;
 }
+#main {
+	width: 80%;
+	height: 800px;
+	margin: 0 auto;
+}
+
+#role {
+	width: 30%;
+	height: 800px;
+	float: left;
+}
+
+#menuON {
+	width: 30%;
+	height: 800px;
+	float: left;
+}
+
+#menuButton {
+	width: 10%;
+	height: 800px;
+	float: left;
+	text-align: center
+}
+
+#menuOFF {
+	width: 30%;
+	height: 800px;
+	float: left;
+}
+
+.selectMe {
+	background-color: green;
+}
 </style>
+<script type="text/javascript" src="<%=basePath%>js/jquery.min.js"></script>
 <script type="text/javascript">
-	function delet() {
-		//获得表单
-		var form = document.getElementById("form1");
-		//设置地址
-		form.action = "AdminChangeMenu?action=deletMu";
-		//提交表单
-		form.submit();
-	}
-	function addMu() {
+$(document).ready(function(){
+    $("ul[id=roleul] li").click(function(){
+    	$("ul[id=roleul] li").removeClass("selectMe");
+        $(this).addClass("selectMe").siblings().removeClass("selectMe");
+    });
+});
 
-		//获得表单
-		var form = document.getElementById("form1");
-		//设置地址
-		form.action = "AdminChangeMenu?action=addMu";
-		//提交表单
-		form.submit();
+	function selectRole(id) {
+		$.ajax({
+		       type: "post",  
+		       url: "<%=basePath%>admin/zzh/alloRole.action",
+					data : {"roleId":id},
+					async : false,
+					dataType:"text",
+					success : function(redata) {
+					
+						$("#menuON").empty();
+						var jsonList = eval("(" + redata + ")");
+						
+						var len = jsonList.length;
+						
+						var plist;
+						var list;
+						var str="已有菜单权限";
+						for (var i = 0; i < len; i++) {
+							
+							plist = jsonList[i];
+							
+							if(plist.pId==0 && plist.menuname!=null){
+								
+								str+="<ul><li>"+plist.menuname+"<ul id='menuONul'>";
+								
+							}
+							for (var j = 0; j < len; j++) {
+								list = jsonList[j];
+								if(plist.menuId==list.pId){
+									
+									str+="<li id="+list.menuId+">"+list.menuname+"</li>";
+								}
+							}
+							str+="</ul></li></ul>";
+						}
+						
+						$("#menuON").append(str);
+						
+				        $("ul[id=menuONul] li").click(function(){
+				        	$("ul[id=menuONul] li").removeClass("selectMe");
+				        	$("ul[id=menuOFFul] li").removeClass("selectMe");
+				            $(this).addClass("selectMe").siblings().removeClass("selectMe");
+				        });
+					},
+
+				});
+		
+		$.ajax({
+		    type: "post",  
+		    url: "<%=basePath%>admin/zzh/unaMenu.action",
+			data : {"roleId":id},
+			dataType:"text",
+			async : false,
+			success : function(redata) {
+				$("#menuOFF").empty();
+				var jsonList = eval("(" + redata + ")");
+				var len = jsonList.length;
+				var plist;
+				var list;
+				var str = "未有菜单权限";
+				for (var i = 0; i < len; i++) {
+					plist = jsonList[i];
+					if (plist.pId == 0 && plist.menuname != null) {
+						alert(plist.menuname);
+						str += "<ul><li>" + plist.menuname + "<ul id='menuOFFul'>";
+					}
+					for (var j = 0; j < len; j++) {
+						list = jsonList[j];
+						if (plist.menuId == list.pId) {
+							str += "<li id="+list.menuId+">" + list.menuname + "</li>";
+						}
+					}
+					str += "</ul></li></ul>";
+				}
+				$("#menuOFF").append(str);
+				
+				 $("ul[id=menuOFFul] li").click(function(){
+			        	$("ul[id=menuONul] li").removeClass("selectMe");
+			        	$("ul[id=menuOFFul] li").removeClass("selectMe");
+			            $(this).addClass("selectMe").siblings().removeClass("selectMe");
+			        });
+			},
+
+		});
 	}
-	function addFirstM() {
-		//获得表单
-		var form = document.getElementById("form1");
-		//设置地址
-		form.action = "AdminChangeMenu?action=addFirstM";
-		//提交表单
-		form.submit();
+	function removeSelectMenu(){
+		var m_id = $("ul[id=menuONul] li.selectMe").attr('id');
+		var r_id = $("ul[id=roleul] li.selectMe").attr('id');
+	$.ajax({
+		type:"post",
+		url:"<%=basePath%>admin/zzh/removeSelectMenu.action",
+		data:{"menuId":m_id,"roleId":r_id},
+		dataType:"text",
+		async : false,
+		success : function(redata) {
+      },		
+	});
+	selectRole(r_id);
 
 	}
+	function removeSelectMenuWithParent(){
+		var m_id = $("ul[id=menuONull] li.selectMe").attr('id');
+		var r_id = $("ul[id=roleul] li.selectMe").attr('id');
+	$.ajax({
+		type:"post",
+		url:"<%=basePath%>admin/zzh/removeSelectMenuWithParent.action",
+		data:{"menuId":m_id,"roleId":r_id},
+		dataType:"text",
+		async : false,
+		success : function(redata) {
+      },		
+	});
+	selectRole(r_id);
 
-	function deleFirstM() {
-		//获得表单
-		var form = document.getElementById("form1");
-		//设置地址
-		form.action = "AdminChangeMenu?action=deleFirstM";
-		//提交表单
-		form.submit();
 	}
+	function addSelectMenu() {
+		var m_id = $("ul[id=menuOFFul] li.selectMe").attr('id');
+		var r_id = $("ul[id=roleul] li.selectMe").attr('id');
+		
+		 $.ajax({
+		       type: "post",  
+		       url:"<%=basePath%>admin/zzh/addSelectMenu.action",
+			   data:{"menuId":m_id,"roleId":r_id},
+			   dataType:"text",
+			   async : false,
+			success : function(redata) {
+			},
+		}); 
+				selectRole(r_id);
+	}
+    	
+	
+	
+	
 </script>
 
 
 </head>
 <body>
-	<form id="form1" name="form1" method="post">
+	<!-- <form id="form1" name="form1" method="post"> -->
 		<div id="a">
 			<div id="b">
-				<p>
-					<label> 普通管理员 </label>
-				</p>
+			<ul>
+				<li>角色 <c:forEach items="${roleList}" var="rlist">
+						<ul id="roleul">
+							<li id="${rlist.roleId}" onclick="selectRole(this.id)">${rlist.roleName}</li>
+						</ul>
+					</c:forEach>
+				</li>
+			</ul>
 			</div>
-			<div id="c">
+			<div id="menuON"></div>
+			<div id="menuButton">
+			<input type="button" name="addAll" id="addAll" value="&lt&lt" onclick="addSelectMenuWithParent()"/> <input
+				type="button" name="add" id="add" value="&lt" onclick="addSelectMenu()"/> <input
+				type="button" name="removeAll" id="removeAll" value="&gt&gt" onclick="removeSelectMenuWithParent()" /> <input
+				type="button" name="remove" id="remove" value="&gt"	onclick="removeSelectMenu()" />
+		</div>
+		<div id="menuOFF"></div>
+			<%-- <div id="c">
 				已分配菜单------------ --
 				<c:forEach items="${Power}" var="mp">
 					<c:if test="${mp.pId==0 }">
@@ -138,11 +292,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:forEach>
 					</c:if>
 				</c:forEach>
-			</div>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-
+			</div> --%>
 		</div>
 	</form>
 

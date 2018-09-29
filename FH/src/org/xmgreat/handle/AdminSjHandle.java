@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xmgreat.biz.impl.ComSjBizImpl;
+import org.xmgreat.entity.ActivityEntity;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.RuleEntity;
 
 /*
  * 作者：沈杰
@@ -21,6 +23,55 @@ public class AdminSjHandle
 {
   @Resource
   private ComSjBizImpl comSjBizImpl;
+
+  @RequestMapping("/alertRule.action")
+  public ModelAndView alertRule(HttpServletRequest request)
+  {
+    /** 跳转后台套智能推荐规则管理，要查询规则情况。localhost:8080/FH/admin/sj/alertRule.action */
+    ModelAndView mav = new ModelAndView();
+    comSjBizImpl.getRuleEntity();
+    mav.setViewName("web/alertRule");
+    return mav;
+  }
+
+  @RequestMapping("/changeRule.action")
+  public String changeRule(HttpServletRequest request, RuleEntity rule)
+  {
+    /** 跳转后台套智能推荐提交修改。localhost:8080/FH/admin/sj/changeRule.action */
+    rule.setRuleId(2);
+    comSjBizImpl.alertRule(rule);
+    return "forward:alertRule.action";
+  }
+
+  @RequestMapping("/actManager.action")
+  public ModelAndView actManager(HttpServletRequest request,
+    ConditionEntity con)
+  {
+    /** 跳转后台线下活动管理页面，展示活动信息。localhost:8080/FH/admin/sj/actManager.action */
+    ModelAndView mav = new ModelAndView();
+    con.setRequest(request);
+    comSjBizImpl.getActivityEntity(con);
+    mav.setViewName("web/actManager");
+    return mav;
+  }
+
+  @RequestMapping("/alertAct.action")
+  public String alertAct(ActivityEntity act)
+  {
+    /** 活动修改完成，跳转回活动管理界面。localhost:8080/FH/admin/sj/alertAct.action */
+    comSjBizImpl.updateAct(act);
+    return "forward:actManager.action";
+  }
+
+  @RequestMapping("/getAct.action")
+  public ModelAndView getAct(Integer activityId)
+  {
+    /** 展示修改界面。localhost:8080/FH/admin/sj/getAct.action */
+    ModelAndView mav = new ModelAndView();
+    comSjBizImpl.getAct(activityId);
+    mav.setViewName("web/alertActivity");
+    return mav;
+  }
 
   @RequestMapping("/comManager.action")
   public ModelAndView comManager(HttpServletRequest request,
@@ -38,7 +89,6 @@ public class AdminSjHandle
   public String delete(HttpServletRequest request, Integer comboId)
   {
     /** 删除某条套餐,删除成功后跳转到上一个action。localhost:8080/FH/admin/sj/delete.action */
-    ModelAndView mav = new ModelAndView();
     comSjBizImpl.update(comboId);
     return "forward:comManager.action";
 

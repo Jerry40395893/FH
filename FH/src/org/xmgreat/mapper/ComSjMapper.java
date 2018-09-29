@@ -3,6 +3,7 @@ package org.xmgreat.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.xmgreat.entity.ActivityEntity;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.FigureEntity;
@@ -23,6 +24,17 @@ import org.xmgreat.entity.WorkEntity;
 @Repository
 public interface ComSjMapper
 {
+  /** 展示活动界面，获取线下活动信息 */
+  public List<ActivityEntity> getActivityEntity(ConditionEntity con);
+
+  public ActivityEntity getAct(@Param("activityId") Integer activityId);
+
+  /** 展示活动界面，并且提供修改 */
+  public void updateAct(ActivityEntity activityEntity);
+
+  /** 展示活动界面，不带分页,带搜索条件获取获取活动总条数 */
+  public List<ActivityEntity> getActivityCount(ConditionEntity conditionEntity);
+
   /** 展示套餐界面，获取套餐信息 */
   public List<ComboEntity> getComboEntity(ConditionEntity conditionEntity);
 
@@ -104,9 +116,6 @@ public interface ComSjMapper
   /** 获取智能推荐的SQL语句 */
   public RuleEntity getRuleEntity(@Param("ruleId") Integer ruleId);
 
-  /** 更新智能推荐的SQL语句 */
-  public void updateSql(RuleEntity ruleEntity);
-
   /** 获取曾经聊天过的用户 **/
   public List<UserEntity> getChatList(UserEntity userEntity);
 
@@ -115,5 +124,8 @@ public interface ComSjMapper
 
   /** 获取曾经访问过的用户 **/
   public List<UserEntity> getVisitList(UserEntity userEntity);
+
+  /** 规则修改 */
+  public void alertRule(RuleEntity ruleEntity);
 
 }

@@ -1,10 +1,12 @@
 package org.xmgreat.biz;
 
 import java.util.List;
-
 import org.xmgreat.entity.AdminEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MenuEntity;
+import org.xmgreat.entity.RoleEntity;
+import org.xmgreat.entity.RoleMenuEntity;
+import org.xmgreat.entity.RoleMiddleEntity;
 import org.xmgreat.entity.UserEntity;
 
 public interface AdminZzhBiz
@@ -42,5 +44,21 @@ public interface AdminZzhBiz
   public String checkAdmin(AdminEntity adminEntity);// 判断账户是否存在
 
   public List<UserEntity> userInfo(ConditionEntity conditionEntity);// 显示会员管理列表
+  
+  public List<MenuEntity> alloMenu(RoleEntity roleEntity);//查询已分配的菜单
+  
+  public List<MenuEntity> unaMenu(RoleEntity roleEntity);//查询未分配的菜单
+  
+  public List<RoleMiddleEntity> roleMenu(RoleEntity roleEntity);//找到这个角色的菜单
+  
+  public void delMenu(RoleMenuEntity roleEntity); //删除选择的菜单
+  
+  public void chMenu(RoleMenuEntity roleEntity);//添加选择的菜单 
+
+  public void addFnode(RoleMenuEntity roleEntity);//添加菜单的父节点
+  
+  public List<MenuEntity> selectAllMenu();//查询所有的菜单
+  
+  public List<RoleEntity> selectRole();//查找角色
  
 }

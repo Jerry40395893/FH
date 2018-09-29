@@ -21,6 +21,10 @@ public class FigureEntity
   private String muscle;
   private String healthy;
   private String wearStyle;
+  private String eyeType;//眼型
+  private String hairType;//发型
+  private String hairLength;//发长
+
 
   public void setWeight(String weight)
   {
@@ -194,4 +198,29 @@ public class FigureEntity
     this.wearStyle = wearStyle;
   }
 
+public String getEyeType() {
+	return eyeType;
+}
+
+public void setEyeType(String eyeType) {
+	this.eyeType = eyeType;
+}
+
+public String getHairType() {
+	return hairType;
+}
+
+public void setHairType(String hairType) {
+	this.hairType = hairType;
+}
+
+public String getHairLength() {
+	return hairLength;
+}
+
+public void setHairLength(String hairLength) {
+	this.hairLength = hairLength;
+}
+
+  
 }

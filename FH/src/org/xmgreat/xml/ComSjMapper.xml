@@ -4,10 +4,12 @@
 <mapper namespace="org.xmgreat.mapper.ComSjMapper">
 
 	<!-- 更新智能推荐的SQL语句 -->
-	<update id="updateSql" parameterType="org.xmgreat.entity.RuleEntity">
+	<update id="alertRule" parameterType="org.xmgreat.entity.RuleEntity">
 		update ruleTb set
-		sqlStr=#{sqlStr} where ruleId=#{ruleId}
+		figureId=#{figureId},lifeId=#{lifeId},workId=#{workId},marriedId=#{marriedId},salaryId=#{salaryId},hobbyId=#{hobbyId}
+		where ruleId=#{ruleId}
 	</update>
+
 	<!-- 获取用户本身信息 -->
 	<select id="getUser" parameterType="java.lang.Integer"
 		resultType="org.xmgreat.entity.UserEntity">
@@ -35,7 +37,7 @@
 		and a.married=b.married and
 		a.doctor=b.doctor
 		and c.sex=#{mateEntity.sex} and c.userId!=d.userId
-		and to_char(c.lgTime)>=#{mateEntity.month}
+		and to_char(c.lgTime)&gt;=#{mateEntity.month}
 		<if test="ruleEntity.figureId==1">
 			Union select distinct c.* from figureTb a ,figureTb b
 			,userTb c,showTb d where a.userId=#{mateEntity.userId} and
@@ -48,7 +50,7 @@
 			a.healthy=b.healthy
 			and a.wearStyle=b.wearStyle and
 			c.sex=#{mateEntity.sex} and c.userId!=d.userId and
-			to_char(c.lgTime)>=#{mateEntity.month}
+			to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 		<if test="ruleEntity.lifeId==1">
 			Union select distinct c.* from lifeStyleTb a ,lifeStyleTb
@@ -62,7 +64,7 @@
 			and
 			a.dietary=b.dietary and a.likeLevel=b.likeLevel and
 			a.aboutPet=b.aboutPet and c.sex=#{mateEntity.sex} and
-			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+			c.userId!=d.userId and to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 		<if test="ruleEntity.workId==1">
 			Union select distinct c.* from workTb a ,workTb b ,userTb
@@ -77,7 +79,7 @@
 			a.language=b.language
 			and
 			a.changeWork=b.changeWork and c.sex=#{mateEntity.sex} and
-			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+			c.userId!=d.userId and to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 		<if test="ruleEntity.marriedId==1">
 			Union select distinct c.* from marriedTb a ,marriedTb b
@@ -96,7 +98,7 @@
 			a.parentWork=b.parentWork
 			and a.parentSalary=b.parentSalary and
 			a.parentInsurance=b.parentInsurance and c.sex=#{mateEntity.sex} and
-			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+			c.userId!=d.userId and to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 		<if test="ruleEntity.salaryId==1">
 			Union select distinct c.* from salaryTb a ,salaryTb b
@@ -104,7 +106,7 @@
 			c.userId=b.userId
 			and a.finance=b.finance and a.debt=b.debt and
 			a.salaryPoint=b.salaryPoint and c.sex=#{mateEntity.sex} and
-			c.userId!=d.userId and to_char(c.lgTime)>=#{mateEntity.month}
+			c.userId!=d.userId and to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 		<if test="ruleEntity.hobbyId==1">
 			Union select distinct c.* from hobbyTb a ,hobbyTb b
@@ -116,28 +118,31 @@
 			and
 			a.joke=b.joke and a.hobby=b.hobby and a.travle=b.travle and
 			c.sex=#{mateEntity.sex} and c.userId!=d.userId and
-			to_char(c.lgTime)>=#{mateEntity.month}
+			to_char(c.lgTime)&gt;=#{mateEntity.month}
 		</if>
 	</select>
 
 	<!-- 获取曾经聊天过的用户 -->
 	<select id="getChatList" parameterType="org.xmgreat.entity.UserEntity"
 		resultType="org.xmgreat.entity.UserEntity">
-		select distinct toUserId userId from chatTb where userId=#{userId}  and to_char(msgTime)>=#{lgTime}
+		select distinct toUserId userId from chatTb where
+		userId=#{userId} and to_char(msgTime)&gt;=#{lgTime}
 	</select>
-	
+
 	<!-- 获取曾经发送过邮件 -->
 	<select id="getEamilList" parameterType="org.xmgreat.entity.UserEntity"
 		resultType="org.xmgreat.entity.UserEntity">
-		select distinct toUserId userId from emailTb where userId=#{userId}  and to_char(Time)>=#{lgTime}
+		select distinct toUserId userId from emailTb where
+		userId=#{userId} and to_char(Time)&gt;=#{lgTime}
 	</select>
-	
+
 	<!-- 获取曾经访问过的用户 -->
 	<select id="getVisitList" parameterType="org.xmgreat.entity.UserEntity"
 		resultType="org.xmgreat.entity.UserEntity">
-		select distinct toUserId userId from visitTb where userId=#{userId}  and to_char(Time)>=#{lgTime}
+		select distinct toUserId userId from visitTb where
+		userId=#{userId} and to_char(Time)&gt;=#{lgTime}
 	</select>
-	
+
 	<!-- 获取用户的外貌体型 -->
 	<select id="getFigureEntity" resultType="org.xmgreat.entity.FigureEntity"
 		parameterType="java.lang.Integer">
@@ -243,12 +248,12 @@
 		</if>
 		order by comboId desc) where rw &gt;=#{forNum} and
 		rw &lt;=#{toNum}
-
 	</select>
 
 	<!-- 服务器后台套餐管理不带分页查询加模糊搜索 -->
-	<select id="getComboCount" resultType="org.xmgreat.entity.ComboEntity">
-		select rownum rw ,comboTb.* from comboTb
+	<select id="getComboCount" resultType="org.xmgreat.entity.ComboEntity"
+		parameterType="org.xmgreat.entity.ConditionEntity">
+		select * from comboTb
 		where
 		deleteId!=16
 		<if test='comName!=null and comName!=""'>
@@ -263,6 +268,83 @@
 		order by comboId desc
 	</select>
 
+	<!-- 获取活动信息 -->
+	<select id="getAct" parameterType="java.lang.Integer"
+		resultType="org.xmgreat.entity.ActivityEntity">
+		select * from activityTb where activityId=#{activityId}
+	</select>
+	<!-- 更新活动信息 -->
+	<update id="updateAct" parameterType="org.xmgreat.entity.ActivityEntity">
+		update activityTb set
+		count=#{count},time=#{time},position=#{position},msg=#{msg},fare=#{fare},title=#{title},stage=#{stage},photoUrl=#{photoUrl},overTime=#{overTime}
+		where activityId=#{activityId}
+	</update>
+	<!-- 服务器后台活动管理带分页查询加模糊搜索 -->
+	<select id="getActivityEntity" resultType="org.xmgreat.entity.ActivityEntity"
+		parameterType="org.xmgreat.entity.ConditionEntity">
+		select * from( select
+		rownum rw,activityTb.* from activityTb
+		where
+		1=1
+		<if test='comName!=null and comName!=""'>
+			and title like
+			'%'||upper(#{comName,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='hapTimeS!=null and hapTimeS!=""'>
+			and to_char(time)&gt;=#{hapTimeS}
+		</if>
+		<if test='count!=null and count!=""'>
+			and count like '%'||upper(#{count,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='position!=null and position!=""'>
+			and position like
+			'%'||upper(#{position,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='price!=null and price!=""'>
+			and fare like '%'||upper(#{price,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='onStage!=null and onStage!=""'>
+			and stage =#{onStage}
+		</if>
+		<if test='hapTimeE!=null and hapTimeE!=""'>
+			and to_char(overTime)&lt;=#{hapTimeE}
+		</if>
+		order by activityId desc) where rw
+		&gt;=#{forNum} and
+		rw
+		&lt;=#{toNum}
+	</select>
+	<!-- 服务器后台活动管理不带分页查询加模糊搜索 -->
+	<select id="getActivityCount" resultType="org.xmgreat.entity.ActivityEntity"
+		parameterType="org.xmgreat.entity.ConditionEntity">
+		select * from activityTb
+		where
+		1=1
+		<if test='comName!=null and comName!=""'>
+			and title like
+			'%'||upper(#{comName,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='hapTimeS!=null and hapTimeS!=""'>
+			and to_char(time)&gt;=#{hapTimeS}
+		</if>
+		<if test='count!=null and count!=""'>
+			and count like '%'||upper(#{count,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='position!=null and position!=""'>
+			and position like
+			'%'||upper(#{position,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='price!=null and price!=""'>
+			and fare like '%'||upper(#{price,jdbcType=VARCHAR})||'%'
+		</if>
+		<if test='onStage!=null and onStage!=""'>
+			and stage =#{onStage}
+		</if>
+		<if test='hapTimeE!=null and hapTimeE!=""'>
+			and to_char(overTime)&lt;=#{hapTimeE}
+		</if>
+		order by activityId desc
+	</select>
 	<!-- 获取后台分页条数 -->
 	<select id="getNum" resultType="org.xmgreat.entity.ConditionEntity"
 		parameterType="java.lang.Integer">
@@ -301,6 +383,5 @@
 		parameterType="java.lang.String">
 		select * from comboTb where name=#{name}
 	</select>
-
 </mapper>
 	

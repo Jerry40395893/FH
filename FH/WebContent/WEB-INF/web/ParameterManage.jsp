@@ -30,7 +30,7 @@ var requestCounts =0;//请求次数，用于解决AJAX数据库请求连接失�
 function delParameter(parameterID){
 	if(confirm("您确定要删除吗?")){
 		$.ajax({
-		    url:'<%=basePath%>/admin/hwy/delAnyParameter.action',
+		    url:'<%=basePath%>admin/hwy/delAnyParameter.action',
 		    data:"parameterID="+parameterID,
 		    async:false,//true为异步，false为同步
 		    success:function(result){
@@ -66,7 +66,7 @@ function updateParameter(parameterID,parameterPID,trNum)
 		return;
 	}
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/updateAnyParameter.action',
+	    url:'<%=basePath%>admin/hwy/updateAnyParameter.action',
 	    data:"parameterID="+parameterID+"&value="+value+"&trNum="+trNum,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -106,7 +106,7 @@ function addParameter(parameterPID)
 		return;
 	}
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/addAnyParameter.action',
+	    url:'<%=basePath%>admin/hwy/addAnyParameter.action',
 	    data:"value="+value+"&parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -132,7 +132,7 @@ function readyForManage() {
 var parameterPID = 0
 	
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/getAnyParameter.action',
+	    url:'<%=basePath%>admin/hwy/getAnyParameter.action',
 	    data:"parameterPID="+parameterPID,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -189,7 +189,7 @@ function getParameter(value) {
 		pageNow = pageTotal;
 	}
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/getAnyParameterWithPaging.action',
+	    url:'<%=basePath%>admin/hwy/getAnyParameterWithPaging.action',
 	    data:"parameterPID="+parameterPID+"&pageNow="+pageNow+"&value="+value,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -285,7 +285,7 @@ function getPageTotal(parameterPID,value) {
 	var pageTotal;
 	
 	$.ajax({
-	    url:'<%=basePath%>/admin/hwy/getAnyParameterWithPageTotal.action',
+	    url:'<%=basePath%>admin/hwy/getAnyParameterWithPageTotal.action',
 	    data:"parameterPID="+parameterPID+"&value="+value,
 	    async:false,//true为异步，false为同步
 	    success:function(result){

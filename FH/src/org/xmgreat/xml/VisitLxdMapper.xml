@@ -33,13 +33,31 @@
 	</select>
 
 	<!-- 查询访问或赞的单页记录 -->
-	<select id="selectPageVisit"
-		resultMap="visitMap"
+	<select id="selectPageVisit" resultMap="visitMap"
 		parameterType="org.xmgreat.entity.VisitEntity">
 		select b.* from(select a.*,rownum rn from
-		(select v.*,p.url,p.photoId from visitTb v left  outer  join phototb p 
-		  on v.touserid=p.userid and p.parameter=1
-		 where 1=1
+		(
+
+
+		select v.*,p.url,p.photoId from visitTb v left outer join phototb p
+		on
+		<if test="ve.userId!=0 and ve.toUserId==0">
+			v.touserid=p.userid
+		</if>
+		<if test="ve.toUserId!=0 and ve.userId==0">
+			v.userId=p.userid
+		</if>
+
+		<if test="ve.toUserId!=0 and ve.userId!=0">
+			v.touserid=p.userid
+		</if>
+
+		<if test="ve.toUserId==0 and ve.userId==0">
+			v.touserid=p.userid
+		</if>
+
+		and p.parameter=1
+		where 1=1
 		<if test="ve.userId!=0">
 			and v.userId=#{ve.userId}
 		</if>
@@ -47,17 +65,21 @@
 			and v.toUserId=#{ve.toUserId}
 		</if>
 		and v.style=#{ve.style} order by time desc ) a
-		where rownum &lt;= #{max}) b where rn &gt; #{min}
+		where rownum &lt;=
+		#{max}) b where rn &gt; #{min}
 	</select>
-	
-	<resultMap type="org.xmgreat.entity.VisitEntity" id="visitMap">
+
+
+
+	<resultMap type="org.xmgreat.entity.VisitEntity"
+		id="visitMap">
 		<id property="visitId" column="visitId" /><!-- 主键 -->
 		<result property="visitId" column="visitId" />
 		<result property="userId" column="userId" />
 		<result property="toUserId" column="toUserId" />
 		<result property="time" column="time" />
 		<result property="style" column="style" />
-		
+
 		<association property="photoEntity" column="photoId"
 			javaType="org.xmgreat.entity.PhotoEntity">
 			<id property="photoId" column="photoId" /><!-- 主键 -->
@@ -65,8 +87,8 @@
 			<result property="URL" column="URL" />
 		</association>
 	</resultMap>
-	
-	
+
+
 	<!-- 添加关注记录 -->
 	<insert id="addFocus"
 		parameterType="org.xmgreat.entity.FocusEntity">
@@ -74,7 +96,7 @@
 		values(seq_focus.nextval,#{userId},#{toUserId},21,
 		to_char(sysdate,'YYYY-MM-DD'))
 	</insert>
-	
+
 	<!-- 查询关注所有记录 -->
 	<select id="selectAllFocus"
 		resultType="org.xmgreat.entity.FocusEntity"
@@ -85,47 +107,68 @@
 		</if>
 		<if test="toUserId!=0">
 			and toUserId=#{toUserId}
-		</if>	
+		</if>
 		<if test="deleteId!=0">
 			and deleteId=#{deleteId}
 		</if>
 	</select>
-	
+
 	<!-- 更新关注记录状态 -->
-	<update id="updateFocusState"		
+	<update id="updateFocusState"
 		parameterType="org.xmgreat.entity.FocusEntity">
-		update focusTb set 	time=to_char(sysdate,'YYYY-MM-DD'),deleteId=#{deleteId}
-		where userId=#{userId} and toUserId=#{toUserId}
+		update focusTb set
+		time=to_char(sysdate,'YYYY-MM-DD'),deleteId=#{deleteId}
+		where
+		userId=#{userId} and toUserId=#{toUserId}
 	</update>
-	
+
 	<!-- 查询关注单页记录 -->
 
-	<select id="selectPageFocus"
-		resultMap="focusMap"
+	<select id="selectPageFocus" resultMap="focusMap"
 		parameterType="org.xmgreat.entity.FocusEntity">
 		select b.* from(select a.*,rownum rn from
-		(select f.*,p.url,p.photoId,u.lgtime from focusTb f left  outer  join phototb p 
-		  on f.touserid=p.userid and p.parameter=1,userTb u
-		 where 1=1 and f.deleteId=#{fe.deleteId}
-        
+		(select
+		f.*,p.url,p.photoId,u.lgtime from focusTb f left outer join phototb p
+		on
+		<if test="fe.userId!=0 and fe.toUserId==0">
+			f.touserid=p.userid
+		</if>
+		<if test="fe.toUserId!=0 and fe.userId==0">
+			f.userId=p.userid
+		</if>
+
+		<if test="fe.toUserId!=0 and fe.userId!=0">
+			f.touserid=p.userid
+		</if>
+
+		<if test="fe.toUserId==0 and fe.userId==0">
+			f.touserid=p.userid
+		</if>
+
+		and p.parameter=1,userTb u
+
+		where 1=1 and f.deleteId=#{fe.deleteId}
+
 		<if test="fe.userId!=0">
-			and f.userId=#{fe.userId} and  u.userid=f.toUserId
+			and f.userId=#{fe.userId} and u.userid=f.toUserId
 		</if>
 		<if test="fe.toUserId!=0">
-			and f.toUserId=#{fe.toUserId} and  u.userid=f.userId
+			and f.toUserId=#{fe.toUserId} and u.userid=f.userId
 		</if>
-		 order by time desc ) a
-		where rownum &lt;= #{max}) b where rn &gt; #{min}
+		order by time desc ) a
+		where rownum &lt;= #{max}) b where rn &gt;
+		#{min}
 	</select>
-	
-	<resultMap type="org.xmgreat.entity.FocusEntity" id="focusMap">
+
+	<resultMap type="org.xmgreat.entity.FocusEntity"
+		id="focusMap">
 		<id property="focusId" column="focusId" /><!-- 主键 -->
 		<result property="focusId" column="focusId" />
 		<result property="userId" column="userId" />
 		<result property="toUserId" column="toUserId" />
 		<result property="time" column="time" />
 		<result property="deleteId" column="deleteId" />
-		
+
 		<association property="photoEntity" column="photoId"
 			javaType="org.xmgreat.entity.PhotoEntity">
 			<id property="photoId" column="photoId" /><!-- 主键 -->
@@ -139,9 +182,9 @@
 			<result property="lgTime" column="lgTime" />
 		</association>
 	</resultMap>
-	
-	
-	
+
+
+
 
 </mapper>
 	

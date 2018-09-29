@@ -22,34 +22,36 @@ addEventListener("load", function() {
 <script type="text/javascript">
 function addFocus(){
 	
+	document.getElementById("addFocus").value="已关注";
+	
+	document.getElementById("addFocus").disabled=true;
+	document.getElementById("addFocus").style.color="#808080";
 	$.ajax({
 		url:"<%=basePath%>user/lxd/addFocus.action",
-		data:{"toUserId":$("#toUserId").val(),"userId":11},
+		data:{"toUserId":$("#toUserId").val()},
 		dataType:"text",
 		type:"post",
 		success:function(redata){
 			
-			var obj = eval(redata);	
-			if(obj!=null){
-				
-				alert(redata);
-			}
 		}
 	});
+	
 }
 
 function addVisit(){
-	
+	document.getElementById("addVisit").value="已赞";
+	document.getElementById("addVisit").disabled=true;
+	document.getElementById("addVisit").style.color="#808080";
 	$.ajax({
 		url:"<%=basePath%>user/lxd/addVisit.action",
-		data:{"toUserId":$("#toUserId").val(),"userId":10},
+		data:{"toUserId":$("#toUserId").val(),},
 		dataType:"text",
 		type:"post",
 		success:function(redata){
 			
-		  
 		}
 	});
+	
 }
 </script>
 
@@ -146,9 +148,27 @@ table {
 										${userEntity.userName} &nbsp; 
 										<input type="hidden" id="toUserId" value="${userEntity.userId}">
 										<span >ID:${userEntity.userId}</span>
-										&nbsp; &nbsp;<a href="#" onclick="addFocus()"
-											style="color: #DC143C; font-size: 16px">+关注</a> &nbsp; &nbsp;
-										&nbsp;<a href="#" onclick="addVisit()"  style="color: #DC143C; font-size: 16px">赞</a>
+										&nbsp; &nbsp;
+										
+										<c:if test="${focusList.size()==0||focusList[0].deleteId==22}">
+                                                 
+								         <input type="button" value="+关注" onclick="addFocus()" id="addFocus" style="background:none;border:none;color: #DC143C; font-size: 16px">
+							            </c:if>
+							            <c:if test="${focusList[0].deleteId==21}">
+                                                <input type="button" disabled value="已关注"  id="addFocus" style="background:none;border:none;color: #808080; font-size: 16px">
+								         
+							            </c:if>
+										 &nbsp; &nbsp;
+										&nbsp;
+										<c:if test="${visitList.size()==0}">
+                                            <input type="button" value="赞" onclick="addVisit()" id="addVisit" style="background:none;border:none;color: #DC143C; font-size: 16px">
+								          	
+							            </c:if>
+										<c:if test="${visitList.size()>=1}">
+                                             <input type="button" disabled value="赞" distabled=true id="addFocus" style="background:none;border:none;color: #808080; font-size: 16px">
+								          
+							            </c:if>
+										
 
 									</div>
 									<div class="clearfix"></div></li>
@@ -158,7 +178,17 @@ table {
 									<div class="clearfix"></div></li>
 								<li><div class="li1">婚姻情况</div>
 									<div class="li2">:</div>
-									<div class="li3">${userEntity.married}</div>
+									<div class="li3">
+									   <c:if test="${userEntity.married==1}">
+						                  <span>未婚</span>
+							           </c:if>
+							           <c:if test="${userEntity.married==2}">
+						                  <span>离异</span>
+							           </c:if>
+							           <c:if test="${userEntity.married==3}">
+						                  <span>丧偶</span>
+							           </c:if>
+									</div>
 									<div class="clearfix"></div></li>
 								<li><div class="li1">民族</div>
 									<div class="li2">:</div>
@@ -166,7 +196,7 @@ table {
 									<div class="clearfix"></div></li>
 								<li><div class="li1">身高</div>
 									<div class="li2">:</div>
-									<div class="li3">${userEntity.height}</div>
+									<div class="li3">${userEntity.height}CM</div>
 									<div class="clearfix"></div></li>
 								<li><div class="li1">现住地</div>
 									<div class="li2">:</div>
@@ -176,7 +206,7 @@ table {
 									<div class="li2">:</div>
 									<div class="li3">${userEntity.doctor}</div>
 									<div class="clearfix"></div></li>
-								<li><input type="button" value="发信"
+								<li><input type="button" value="发信" onclick="window.location.href='<%=basePath%>user/lxd/showWrite.action?toUserId=${userEntity.userId}'"
 									style="color: #DC143C; font-size: 24px; background-color: #7ED321; width: 100px; height: 36px;"></li>
 
 							</ul>

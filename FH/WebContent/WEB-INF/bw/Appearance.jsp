@@ -54,6 +54,76 @@
   <!-- Theme styles END -->
   
   
+   <script type="text/javascript">
+
+    $(document).ready(function(){
+    
+    	 var figure="${Appearance.figure}";
+    	 $("select[name='figure']").find("option[value='"+figure+"']").attr("selected",true);
+    	
+    	 var feature="${Appearance.feature}";
+    	 $("select[name='feature']").find("option[value='"+feature+"']").attr("selected",true);
+    	 
+    	 var eyes="${Appearance.eyes}";
+    	 $("select[name='eyes']").find("option[value='"+eyes+"']").attr("selected",true);
+    	 
+    	 var hair="${Appearance.hair}";
+    	 $("select[name='hair']").find("option[value='"+hair+"']").attr("selected",true);
+    	 
+    	 var skin="${Appearance.skin}";
+    	 $("select[name='skin']").find("option[value='"+skin+"']").attr("selected",true);
+    	 
+    	 var skinColor="${Appearance.skinColor}";
+    	 $("select[name='skinColor']").find("option[value='"+skinColor+"']").attr("selected",true);
+    	 
+    	 var muscle="${Appearance.muscle}";
+    	 $("select[name='muscle']").find("option[value='"+muscle+"']").attr("selected",true);
+    	 
+    	 var healthy="${Appearance.healthy}";
+    	 $("select[name='healthy']").find("option[value='"+healthy+"']").attr("selected",true);
+    	 
+    	 var hairType="${Appearance.hairType}";
+    	 $("select[name='hairType']").find("option[value='"+hairType+"']").attr("selected",true);
+    	 
+    	 var eyeType="${Appearance.eyeType}";
+    	 $("select[name='eyeType']").find("option[value='"+eyeType+"']").attr("selected",true);
+    	 
+    	 var hairLength="${Appearance.hairLength}";
+    	 $("select[name='hairLength']").find("option[value='"+hairLength+"']").attr("selected",true);
+    	 
+    	 
+    	 var checkeds = "${Appearance.wearStyle}";
+    	    //拆分为字符串数组
+    	   
+    	    console.log(checkeds)
+    	    var checkArray =checkeds.split(",");
+    	    //获得所有的复选框对象
+    	    var checkBoxAll = $("input[name='wearStyle']");
+    	     //alert("获取到的value：" + checkBoxAll); 
+    	    //alert("获取到的value：" + checkValue); 
+    	    //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
+    	    for(var i=0;i<checkArray.length;i++){
+    	    //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
+    	     
+    	    $.each(checkBoxAll,function(j,checkbox){
+    	    //获取复选框的value属性
+    	    var checkValue=$(checkbox).val();
+    	   
+    	    if(checkArray[i]==checkValue){
+    	    $(checkbox).attr("checked",true);
+    	    }
+    	    })
+    	    }
+    	
+    });
+    
+    
+    
+    </script>
+  
+  
+  
+  
   <style type="text/css">
 dl,dt,dd,h5,p{
 padding:0px;
@@ -320,209 +390,188 @@ function ShowFLT(i) {
                   <h1>&nbsp;</h1>
                   
                   
-                  <form id="form_base" name="form_base" action="profile_postdo_new.php?action=economy" method="post" onsubmit="return cal();">
+                  <form id="form_base" name="form_base" action="<%=basePath%>user/qx/savaAppearance.action" method="post" >
 
 
 									<table width="482" cellpadding="0" cellspacing="0">
 										<tr>
 											<td class="item"><span>体重：</span></td>
 											<td width="370"><input type="text" maxlength=3
-												name="weight" id="weight" value="0"
-												onChange="select_changed()" />&nbsp;公斤</td>
+												name="weight" id="weight" value="${Appearance.weight}"
+												 />&nbsp;公斤</td>
 										</tr>
 										<tr>
 											<td class="item"><span>体型：</span></td>
-											<td><select name="shape" id="shape"
-												onchange="select_changed()" class="m_select195">
+											<td><select name="figure" id="figure">
 													<option value="0">--请选择--</option>
-													<option label="苗条型" value="1">苗条型</option>
-													<option label="匀称型" value="3">匀称型</option>
-													<option label="高挑型" value="5">高挑型</option>
-													<option label="丰满型" value="6">丰满型</option>
-													<option label="健壮型" value="7">健壮型</option>
-													<option label="魁梧型" value="8">魁梧型</option>
-													<option label="运动型" value="11">运动型</option>
-													<option label="曲线型" value="12">曲线型</option>
-													<option label="高大型" value="13">高大型</option>
+													<option label="苗条型" value="苗条型">苗条型</option>
+													<option label="匀称型" value="匀称型">匀称型</option>
+													<option label="高挑型" value="高挑型">高挑型</option>
+													<option label="丰满型" value="丰满型">丰满型</option>
+													<option label="健壮型" value="健壮型">健壮型</option>
+													<option label="魁梧型" value="魁梧型">魁梧型</option>
+													<option label="运动型" value="运动型">运动型</option>
+													<option label="曲线型" value="曲线型">曲线型</option>
+													<option label="高大型" value="高大型">高大型</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>脸型：</span></td>
-											<td><select name="face_type" id="face_type"
-												class="m_select195" onChange="select_changed()">
+											<td><select name="feature" id="feature">
 													<option value="0">--请选择--</option>
-													<option label="圆脸型" value="1">圆脸型</option>
-													<option label="方脸型" value="2">方脸型</option>
-													<option label="长脸型" value="3">长脸型</option>
-													<option label="瓜子脸型" value="4">瓜子脸型</option>
-													<option label="鸭蛋脸型" value="5">鸭蛋脸型</option>
-													<option label="国字脸型" value="6">国字脸型</option>
-													<option label="三角脸型" value="7">三角脸型</option>
-													<option label="菱形脸型" value="8">菱形脸型</option>
-													<option label="保密" value="9">保密</option>
+													<option label="圆脸型" value="圆脸型">圆脸型</option>
+													<option label="方脸型" value="方脸型">方脸型</option>
+													<option label="长脸型" value="长脸型">长脸型</option>
+													<option label="瓜子脸型" value="瓜子脸型">瓜子脸型</option>
+													<option label="鸭蛋脸型" value="鸭蛋脸型">鸭蛋脸型</option>
+													<option label="国字脸型" value="国字脸型">国字脸型</option>
+													<option label="三角脸型" value="三角脸型">三角脸型</option>
+													<option label="菱形脸型" value="菱形脸型">菱形脸型</option>
+													<option label="保密" value="保密">保密</option>
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>眼睛：</span></td>
-											<td><select name="rank_consumption"
-												id="rank_consumption" class="om_select128"
-												onChange="select_changed()">
+											<td><select name="eyes" id="eyes" >
 													<option value="0">--请选择眼色--</option>
-													<option label="黑色" value="1">黑色</option>
-													<option label="蓝色" value="2">蓝色</option>
-													<option label="浅褐色" value="3">浅褐色</option>
-													<option label="棕色" value="4">棕色</option>
-													<option label="灰色" value="5">灰色</option>
-													<option label="绿色" value="6">绿色</option>
-													<option label="特殊颜色" value="7">特殊颜色</option>
+													<option label="黑色" value="黑色">黑色</option>
+													<option label="蓝色" value="蓝色">蓝色</option>
+													<option label="浅褐色" value="浅褐色">浅褐色</option>
+													<option label="棕色" value="棕色">棕色</option>
+													<option label="灰色" value="灰色">灰色</option>
+													<option label="绿色" value="绿色">绿色</option>
+													<option label="特殊颜色" value="特殊颜色">特殊颜色</option>
 
-											</select> <select name="eye_type" id="eye_shape"
-												onchange="select_changed()" class="om_select128">
+											</select> <select name="eyeType" id="eyeType">
 													<option value="0" selected="selected">--请选择眼型--</option>
-													<option label="标准眼" value="1">标准眼</option>
-													<option label="丹凤眼" value="2">丹凤眼</option>
-													<option label="细长眼" value="3">细长眼</option>
-													<option label="眯缝眼" value="4">眯缝眼</option>
-													<option label="三角眼" value="5">三角眼</option>
-													<option label="深眼窝" value="6">深眼窝</option>
-													<option label="双眼皮大眼睛" value="7">双眼皮大眼睛</option>
+													<option label="标准眼" value="标准眼">标准眼</option>
+													<option label="丹凤眼" value="丹凤眼">丹凤眼</option>
+													<option label="细长眼" value="细长眼">细长眼</option>
+													<option label="眯缝眼" value="眯缝眼">眯缝眼</option>
+													<option label="三角眼" value="三角眼">三角眼</option>
+													<option label="深眼窝" value="深眼窝">深眼窝</option>
+													<option label="双眼皮大眼睛" value="双眼皮大眼睛">双眼皮大眼睛</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>头发：</span></td>
-											<td><select name="hair_color" id="hair-color"
-												class="om_select128" onchange="select_changed()">
+											<td><select name="hair" id="hair">
 													<option value="0" selected="selected">--请选择发色--</option>
-													<option label="黑色" value="1">黑色</option>
-													<option label="金色" value="2">金色</option>
-													<option label="褐色" value="3">褐色</option>
-													<option label="栗色" value="4">栗色</option>
-													<option label="灰色" value="5">灰色</option>
-													<option label="红色" value="6">红色</option>
-													<option label="白色" value="7">白色</option>
-													<option label="挑染" value="8">挑染</option>
-													<option label="光头" value="9">光头</option>
+													<option label="黑色" value="黑色">黑色</option>
+													<option label="金色" value="金色">金色</option>
+													<option label="褐色" value="褐色">褐色</option>
+													<option label="栗色" value="栗色">栗色</option>
+													<option label="灰色" value="灰色">灰色</option>
+													<option label="红色" value="红色">红色</option>
+													<option label="白色" value="白色">白色</option>
+													<option label="挑染" value="挑染">挑染</option>
+													<option label="光头" value="光头">光头</option>
 
-											</select> <select name="hair_type" id="hair-style"
+											</select> <select name="hairType" id="hairType"
 												class="om_select128" onchange="select_changed()">
 													<option value="0" selected="selected">--请选择发型--</option>
-													<option label="顺直" value="8">顺直</option>
-													<option label="大卷" value="9">大卷</option>
-													<option label="小卷" value="10">小卷</option>
-													<option label="微卷" value="11">微卷</option>
+													<option label="顺直" value="顺直">顺直</option>
+													<option label="大卷" value="大卷">大卷</option>
+													<option label="小卷" value="小卷">小卷</option>
+													<option label="微卷" value="微卷">微卷</option>
 
-											</select> <select name="hair_length" id="hair-length"
-												class="om_select128" onchange="select_changed()">
+											</select> <select name="hairLength" id="hairLength">
 													<option value="0" selected="selected">--请选择发长--</option>
-													<option label="平头" value="1">平头</option>
-													<option label="短发" value="2">短发</option>
-													<option label="中长发" value="3">中长发</option>
-													<option label="长发" value="4">长发</option>
-													<option label="其他" value="5">其他</option>
+													<option label="平头" value="平头">平头</option>
+													<option label="短发" value="短发">短发</option>
+													<option label="中长发" value="中长发">中长发</option>
+													<option label="长发" value="长发">长发</option>
+													<option label="其他" value="其他">其他</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>皮肤：</span></td>
-											<td><select name="skin" id="skin_type"
-												onchange="select_changed()" class="m_select195">
+											<td><select name="skin" id="skin">
 													<option value="0" selected="selected">--请选择--</option>
-													<option label="皮肤光滑" value="1">皮肤光滑</option>
-													<option label="皮肤白皙" value="2">皮肤白皙</option>
-													<option label="皮肤细腻" value="3">皮肤细腻</option>
-													<option label="皮肤暗黄" value="4">皮肤暗黄</option>
-													<option label="皮肤粗糙" value="5">皮肤粗糙</option>
-													<option label="皮肤敏感" value="6">皮肤敏感</option>
+													<option label="皮肤光滑" value="皮肤光滑">皮肤光滑</option>
+													<option label="皮肤白皙" value="皮肤白皙">皮肤白皙</option>
+													<option label="皮肤细腻" value="皮肤细腻">皮肤细腻</option>
+													<option label="皮肤暗黄" value="皮肤暗黄">皮肤暗黄</option>
+													<option label="皮肤粗糙" value="皮肤粗糙">皮肤粗糙</option>
+													<option label="皮肤敏感" value="皮肤敏感">皮肤敏感</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>肤色：</span></td>
-											<td><select name="skin_color" id="Skin_colour"
-												onchange="select_changed()" class="m_select195">
+											<td><select name="skinColor" id="skinColor">
 													<option value="0" selected="selected">--请选择--</option>
-													<option label="小麦肤色" value="1">小麦肤色</option>
-													<option label="黝黑肤色" value="2">黝黑肤色</option>
-													<option label="健康肤色" value="3">健康肤色</option>
-													<option label="亮白肤色" value="4">亮白肤色</option>
+													<option label="小麦肤色" value="小麦肤色">小麦肤色</option>
+													<option label="黝黑肤色" value="黝黑肤色">黝黑肤色</option>
+													<option label="健康肤色" value="健康肤色">健康肤色</option>
+													<option label="亮白肤色" value="亮白肤色">亮白肤色</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>肌肉：</span></td>
-											<td><select name="cupormuscle" id="muscle"
-												onchange="select_changed()" class="m_select195">
+											<td><select name="muscle" id="muscle">
 													<option value="0" selected="selected">--请选择--</option>
-													<option label="肌肉发达" value="1">肌肉发达</option>
-													<option label="有少量肌肉" value="2">有少量肌肉</option>
-													<option label="没有肌肉" value="3">没有肌肉</option>
+													<option label="肌肉发达" value="肌肉发达">肌肉发达</option>
+													<option label="有少量肌肉" value="有少量肌肉">有少量肌肉</option>
+													<option label="没有肌肉" value="没有肌肉">没有肌肉</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item"><span>健康情况：</span></td>
-											<td><select name="health" id="healthy"
-												onchange="select_changed()" class="m_select195">
+											<td><select name="healthy" id="healthy">
 													<option value="0" selected="selected">--请选择--</option>
-													<option label="运动健将" value="1">运动健将</option>
-													<option label="结实健壮" value="2">结实健壮</option>
-													<option label="身体健康" value="3">身体健康</option>
-													<option label="体质一般" value="4">体质一般</option>
-													<option label="体弱多病" value="5">体弱多病</option>
-													<option label="身体残疾" value="6">身体残疾</option>
+													<option label="运动健将" value="运动健将">运动健将</option>
+													<option label="结实健壮" value="结实健壮">结实健壮</option>
+													<option label="身体健康" value="身体健康">身体健康</option>
+													<option label="体质一般" value="体质一般">体质一般</option>
+													<option label="体弱多病" value="体弱多病">体弱多病</option>
+													<option label="身体残疾" value="身体残疾">身体残疾</option>
 
 											</select></td>
 										</tr>
 										<tr>
 											<td class="item l-title"><span>穿着风格：</span></td>
 											<td>
-												<dl class="data-checkbox clearfix">
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="1" onclick="check_count(this, 5)"
-															onchange="change(1)">休闲风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="2" onclick="check_count(this, 5)"
-															onchange="change(1)">商务风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="3" onclick="check_count(this, 5)"
-															onchange="change(1)">运动风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="4" onclick="check_count(this, 5)"
-															onchange="change(1)">英伦风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="5" onclick="check_count(this, 5)"
-															onchange="change(1)">非主流风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="6" onclick="check_count(this, 5)"
-															onchange="change(1)">复古风格</label>
-													</dd>
-													<dd>
-														<label><input name="dress_style[]" type="checkbox"
-															value="7" onclick="check_count(this, 5)"
-															onchange="change(1)">混搭风格</label>
-													</dd>
+												<dl >
+													
+														<label><input name="wearStyle" id="wearStyle" type="checkbox"
+															value="休闲风格" >休闲风格</label>
+													
+													
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="商务风格" >商务风格</label>
+												
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="运动风格" >运动风格</label>
+													<br/>
+													
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="英伦风格" >英伦风格</label>
+													
+													
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="非主流风格" >非主流风格</label>
+													
+													
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="复古风格" >复古风格</label>
+													<br/>
+													
+														<label><input  name="wearStyle" id="wearStyle" type="checkbox"
+															value="混搭风格" >混搭风格</label>
+													
 												</dl>
 											</td>
 										</tr>
 										<tr>
 											<td>&nbsp;</td>
-											<td><input type="submit" class="save" value="保存并继续"
-												onmousedown="send_jy_pv2('editprofile|save_body|m|182580144');" /><input
-												type="button" value="跳过此页" class="skip" onClick="skip()"
-												onmousedown="send_jy_pv2('editprofile|skip_body|m|182580144');" /></td>
+											<td><input type="submit" class="save" value="保存" />
+												<input type="button" value="跳过此页" /></td>
 										</tr>
 									</table>
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -12,6 +11,9 @@ import org.xmgreat.biz.AdminZzhBiz;
 import org.xmgreat.entity.AdminEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MenuEntity;
+import org.xmgreat.entity.RoleEntity;
+import org.xmgreat.entity.RoleMenuEntity;
+import org.xmgreat.entity.RoleMiddleEntity;
 import org.xmgreat.entity.UserEntity;
 import org.xmgreat.mapper.AdminZzhMapper;
 
@@ -38,7 +40,8 @@ public class AdminZzhBizImpl implements AdminZzhBiz
   private Integer currentPage;
   /** 管理员列表 */
   private List<AdminEntity> adminList;
-
+  /**角色列表*/
+  private List<RoleEntity> roleList;
 
   /*
    * 管理员登录
@@ -232,7 +235,9 @@ public class AdminZzhBizImpl implements AdminZzhBiz
 
     return msg1;
   }
-
+  /*
+   * 审核查看详情
+   */
   @Override
   public List<UserEntity> userInfo(ConditionEntity conditionEntity)
   {
@@ -242,12 +247,78 @@ public class AdminZzhBizImpl implements AdminZzhBiz
     request.setAttribute("userList", userList);
     return userList;
   }
-
+  /*
+   * 查重新增管理员中间表的角色
+   */
   @Override
   public void addRoleId(AdminEntity adminEntity)
   {
     adminMapper.addRoleId(adminEntity);
 
   }
+  /*
+   * 查询已分配的菜单
+   */
+@Override
+public List<MenuEntity> alloMenu(RoleEntity roleEntity) {
+	
+	return adminMapper.alloMenu(roleEntity);
+}
+/*
+ * 查询未分配的菜单
+ */
+@Override
+public List<MenuEntity> unaMenu(RoleEntity roleEntity) {
+	
+	return adminMapper.unaMenu(roleEntity);
+}
+/*
+ * 找到这个角色的菜单
+ */
+@Override
+public List<RoleMiddleEntity> roleMenu(RoleEntity roleEntity) {
+	// TODO Auto-generated method stub
+	return null;
+}
+/*
+ * 删除选择的菜单
+ */
+@Override
+public void delMenu(RoleMenuEntity roleEntity) {
+	adminMapper.delMenu(roleEntity);
+	
+}
+/*
+ *添加选择的菜单 
+ */
+@Override
+public void chMenu(RoleMenuEntity roleEntity) {
+	adminMapper.chMenu(roleEntity);
+	
+}
+/*
+ * 添加菜单的父节点
+ */
+@Override
+public void addFnode(RoleMenuEntity roleEntity) {
+	// TODO Auto-generated method stub
+	
+}
+/*
+ * 查询所有的菜单
+ */
+@Override
+public List<MenuEntity> selectAllMenu() {
+	// TODO Auto-generated method stub
+	return null;
+}
+/*
+ * 查询所有的角色
+ */
+@Override
+public List<RoleEntity> selectRole() {
+	roleList=adminMapper.selectRole();
+	return roleList;
+}
 
 }

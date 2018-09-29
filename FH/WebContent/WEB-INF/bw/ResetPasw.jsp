@@ -37,12 +37,12 @@
 		}
 		
 		$.ajax({
-		    url:'<%=basePath%>/user/hwy/resetPasw.action',
+		    url:'<%=basePath%>user/hwy/resetPasw.action',
 		    data:"teleNum="+teleNum+"&pasw="+pasw,
 		    async:false,//true为异步，false为同步
 		    success:function(result){
 				alert('修改成功');
-				window.top.location.href="<%=basePath%>/user/hwy/index.action"; 
+				window.top.location.href="<%=basePath%>user/hwy/index.action"; 
 		    },
 		    error:function(e){
 		        //请求失败时
@@ -70,7 +70,7 @@ function sendPhone() {
 		return;
 	}
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/getResetPaswPhoneVCode.action',
+	    url:'<%=basePath%>user/hwy/getResetPaswPhoneVCode.action',
 	    data:"teleNum="+teleNum,
 	    async:false,//true为异步，false为同步
 	    success:function(result){
@@ -107,7 +107,7 @@ function phoneVCodeAjax() {
 	var phoneVCode = $("#phoneVCode").val();
 	
 	$.ajax({
-	    url:'<%=basePath%>/user/hwy/checkResetPaswPhoneVCode.action',
+	    url:'<%=basePath%>user/hwy/checkResetPaswPhoneVCode.action',
 	    data:"phoneVCode="+phoneVCode,
 	    async:false,//true为异步，false为同步
 	    success:function(result){

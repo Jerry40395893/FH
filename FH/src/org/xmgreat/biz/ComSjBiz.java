@@ -2,8 +2,10 @@ package org.xmgreat.biz;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.xmgreat.entity.ActivityEntity;
 import org.xmgreat.entity.ComboEntity;
 import org.xmgreat.entity.ConditionEntity;
+import org.xmgreat.entity.RuleEntity;
 import org.xmgreat.entity.UserEntity;
 
 /*
@@ -12,6 +14,15 @@ import org.xmgreat.entity.UserEntity;
  */
 public interface ComSjBiz
 {
+  /** 展示活动界面，获取线下活动信息 */
+  public List<ActivityEntity> getActivityEntity(ConditionEntity con);
+
+  /** 进入修改界面 */
+  public void getAct(@Param("activityId") Integer activityId);
+
+  /** 提交活动修改 */
+  public void updateAct(ActivityEntity activityEntity);
+
   /** 展示套餐界面，获取套餐信息 */
   public List<ComboEntity> geComboEntity(ConditionEntity conditionEntity);
 
@@ -41,5 +52,11 @@ public interface ComSjBiz
 
   /** 获取智能推荐的所有用户 **/
   public List<UserEntity> getRecomList(@Param("userId") Integer userId);
+
+  /** 展示智能推荐规则管理信息 */
+  public void getRuleEntity();
+
+  /** 规则修改 */
+  public void alertRule(RuleEntity ruleEntity);
 
 }

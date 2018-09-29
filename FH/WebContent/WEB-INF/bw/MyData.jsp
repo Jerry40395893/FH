@@ -359,11 +359,11 @@ $("#counselor").change(function(){
          <dt onClick=javascript:ShowFLT(1) href="javascript:void(null)"><a href="javascript:;">详细资料</a></dt>
           <dd id=LM1 style="DISPLAY: none">
           <h5><a href="<%=basePath%>user/qx/economics.action"> 经济实力</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 生活方式</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 工作学习</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 外貌体型</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 婚姻观念</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 兴趣爱好</a></h5>
+          <h5><a href="<%=basePath%>user/qx/life.action"> 生活方式</a></h5>
+          <h5><a href="<%=basePath%>user/qx/job.action"> 工作学习</a></h5>
+          <h5><a href="<%=basePath%>user/qx/appearance.action"> 外貌体型</a></h5>
+          <h5><a href="<%=basePath%>user/qx/marriage.action"> 婚姻观念</a></h5>
+          <h5><a href="<%=basePath%>user/qx/Hobbies.action"> 兴趣爱好</a></h5>
 		</dd>
         
         </dl>
@@ -386,7 +386,8 @@ $("#counselor").change(function(){
               <div class="item">
                 
                 <h3><a href="shop-item.html">我的账户</a></h3>
-                
+                <h3><a href="<%=basePath%>user/hwy/toCombo.action">我的套餐</a></h3>
+                <h3><a href="<%=basePath%>user/hwy/toAlipay.action">购买套餐页面跳转测试</a></h3>
               </div>
             </div>
           </div>

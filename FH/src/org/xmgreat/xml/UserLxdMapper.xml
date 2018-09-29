@@ -49,7 +49,7 @@
 		select * from labeltb where labelid in(select labelid from lbmidtb where userid=#{userId})
 	</select>
 	
-	<!-- 获取用户的个性标签 -->
+	<!-- 获取用户的头像 -->
 	<select id="getPhoto" resultType="org.xmgreat.entity.PhotoEntity"
 		parameterType="java.lang.Integer">
 		select * from phototb where userid=#{userId} and parameter =1

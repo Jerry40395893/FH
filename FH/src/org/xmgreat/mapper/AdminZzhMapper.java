@@ -1,10 +1,14 @@
 package org.xmgreat.mapper;
 
 import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.xmgreat.entity.AdminEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MenuEntity;
+import org.xmgreat.entity.RoleEntity;
+import org.xmgreat.entity.RoleMenuEntity;
+import org.xmgreat.entity.RoleMiddleEntity;
 import org.xmgreat.entity.UserEntity;
 
 @Repository
@@ -39,10 +43,24 @@ public interface AdminZzhMapper
   public void audNoUser(ConditionEntity conditionEntityint);// 会员审核通过
 
   public void audYUser(ConditionEntity conditionEntityint);// 会员审核不通过
-  // public String nSAdmin(AdminEntity adminEntity);//判断账户是否存在
-
+ 
   public List<AdminEntity> nSAdmin(AdminEntity adminEntity);// 判断账户是否存在
 
-  public List<UserEntity> infoUser(ConditionEntity conditionEntity);
+  public List<UserEntity> infoUser(ConditionEntity conditionEntity);//用户信息
 
+  public List<MenuEntity> alloMenu(RoleEntity roleEntity);//查询已分配的菜单
+  
+  public List<MenuEntity> unaMenu(RoleEntity roleEntity);//查询未分配的菜单
+  
+  public List<RoleMiddleEntity> roleMenu(RoleEntity roleEntity);//找到这个角色的菜单
+  
+  public void delMenu(RoleMenuEntity roleEntity); //删除选择的菜单
+  
+  public void chMenu(RoleMenuEntity roleEntity);//添加选择的菜单 
+
+  public void addFnode(RoleMenuEntity roleEntity);//添加菜单的父节点
+  
+  public List<MenuEntity> selectAllMenu();//查询所有的菜单
+  
+  public List<RoleEntity> selectRole();//查找角色
 }

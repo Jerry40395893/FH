@@ -27,14 +27,19 @@ public class TestHwy {
 		Integer pid = null;
 		List<ParameterEntity> parameterList1 = hwyBizImpl.getParameterByPIds(pid);
 		// 传多个pid
-		List<ParameterEntity> parameterList2 =hwyBizImpl.getParameterByPIds(pid, pid, pid, pid, pid);
+		List<ParameterEntity> parameterList2 = hwyBizImpl.getParameterByPIds(pid, pid, pid, pid, pid);
 		// 传一个id
-		List<ParameterEntity> parameterList3 =hwyBizImpl.getParameterById(id);
+		List<ParameterEntity> parameterList3 = hwyBizImpl.getParameterById(id);
 	}
-	
+
 	@Test
 	public void test2() {
-		System.out.println(MD5Utils.MD5("123456"));
+
+	}
+
+	@Test
+	public void alipay() {
+		
 	}
 
 }

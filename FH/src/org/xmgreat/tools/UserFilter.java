@@ -43,13 +43,16 @@ public class UserFilter implements Filter
       return;
     } else
     {
-      UserEntity user = (UserEntity) session.getAttribute("UserEntity");
+      UserEntity user = (UserEntity) session.getAttribute("user");
       /** 核心，跳出框架的方法 */
       if (null == user)
       {
         /** 嵌在框架内部 */
-        response
-          .sendRedirect(request.getContextPath() + "/user/sj/index.action");
+
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://" + request.getServerName()
+          + ":" + request.getServerPort() + path + "/user/sj/showWelcom.action";
+        response.sendRedirect(basePath);
         return;
 
       } else

@@ -230,7 +230,7 @@ function logOFF() {
 								<ul class="nav navbar-nav sf-menu clearfix">
 									<li class="active"><a href="<%=basePath%>#home">首页</a></li>
 									<li class="sub-menu sub-menu-1"><a
-										href="<%=basePath%>#about">我的佳缘</a></li>
+										href="<%=basePath%>user/qx/showMycompany.action">我的佳缘</a></li>
 									<li class="sub-menu sub-menu-1"><a
 										href="<%=basePath%>#services">搜索</a></li>
 									<li><a href="<%=basePath%>#prices">活动</a></li>

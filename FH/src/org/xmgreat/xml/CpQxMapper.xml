@@ -21,36 +21,139 @@
     <!-- 保存资料 -->
     <update id="saveData" parameterType="org.xmgreat.entity.UserEntity">
     update userTb set userName=#{userName},height=#{height},doctor=#{doctor},married=#{married},children=#{children},
-    residence=#{residence},bloodStyle=#{bloodStyle},nation=#{nation},salary=#{salary},car=#{car} where userId=2
+    residence=#{residence},bloodStyle=#{bloodStyle},nation=#{nation},salary=#{salary},car=#{car} where userId=#{userId}
    
     </update>
     
     <!-- 保存内心独白 -->
     <update id="saveSoliloquy" parameterType="org.xmgreat.entity.UserEntity">
-    update userTb set information=#{information} where userId=2
+    update userTb set information=#{information} where userId=#{userId}
     </update>
     
      <!-- 上传头像 -->
     <update id="upHeadPortrait" parameterType="org.xmgreat.entity.UserEntity">
-    update userTb set headPortrait=#{headPortrait} where userId=2
+    update userTb set headPortrait=#{headPortrait} where userId=#{userId}
     </update>
     
       <!-- 添加经济实力 -->
     <insert id="savaFinance" parameterType="org.xmgreat.entity.SalaryEntity">
-    insert into salaryTb values(SALARYID.NEXTVAL,2,#{finance},#{debt},#{salaryPoint})
+    insert into salaryTb values(SALARYID.NEXTVAL,#{userId},#{finance},#{debt},#{salaryPoint})
     </insert>
     
     	<!--查询经济实力  -->
 	<select id="selectEconomics"  parameterType="org.xmgreat.entity.SalaryEntity"  resultType="org.xmgreat.entity.SalaryEntity">
 	
-	select * from salaryTb where userId=2
+	select * from salaryTb where userId=#{userId}
 	
 	</select>
     
       <!-- 修改经济实力 -->
     <update id="savaEconomics" parameterType="org.xmgreat.entity.SalaryEntity">
-    update salaryTb set finance=#{finance},debt = #{debt},salaryPoint=#{salaryPoint}  where userId=2
+    update salaryTb set finance=#{finance},debt = #{debt},salaryPoint=#{salaryPoint}  where userId=#{userId}
     </update>
     
+    	<!--查询生活方式  -->
+	<select id="selectLife"  parameterType="org.xmgreat.entity.LifeEntity"  resultType="org.xmgreat.entity.LifeEntity">
+	
+	select * from lifeStyleTb where userId=#{userId}
+	
+	</select>
+	
+	 <!-- 添加生活方式 -->
+    <insert id="addLife" parameterType="org.xmgreat.entity.LifeEntity">
+    insert into lifeStyleTb values(LIFEID.NEXTVAL,#{userId},#{smoke},#{drink},#{exercise},#{dietary},#{shopping},#{church},#{rest},#{friend},#{maxcost},
+    #{homework},#{dohomework},#{likeLevel},#{aboutPet})
+    </insert>
+    
+       <!-- 修改生活方式 -->
+    <update id="savaLife" parameterType="org.xmgreat.entity.LifeEntity">
+    update lifeStyleTb set smoke=#{smoke},drink=#{drink},exercise=#{exercise},dietary=#{dietary},shopping=#{shopping},church=#{church},
+    rest=#{rest},friend=#{friend},maxcost=#{maxcost},homework=#{homework},dohomework=#{dohomework},likeLevel=#{likeLevel},
+    aboutPet=#{aboutPet} where userId=#{userId}
+    </update>
+    
+     	<!--查询毕业院校  -->
+	<select id="School"  parameterType="org.xmgreat.entity.SchoolEntity"  resultType="org.xmgreat.entity.SchoolEntity">
+	
+	select * from tb_school where area_Name like concat(concat('%',#{area_Name}),'%')
+	
+	</select>
+    
+    	<!--查询工作学习  -->
+	<select id="selectWork"  parameterType="org.xmgreat.entity.WorkEntity"  resultType="org.xmgreat.entity.WorkEntity">
+	
+	select * from workTb where userId=#{userId}
+	
+	</select>
+    
+     <!-- 添加工作学习 -->
+    <insert id="addWork" parameterType="org.xmgreat.entity.WorkEntity">
+    insert into workTb values(WORKID.NEXTVAL,#{userId},#{postion},#{industry},#{cpanyStyle},#{welfare},#{workStage},#{changeWork},#{wortSea},
+    #{workHome},#{graduation},#{majorStyle},#{language},#{area_Name})
+    </insert>
+       <!-- 修改工作学习 -->
+    <update id="savaWork" parameterType="org.xmgreat.entity.WorkEntity">
+    update workTb set postion=#{postion},industry=#{industry},cpanyStyle=#{cpanyStyle},welfare=#{welfare},workStage=#{workStage},
+    changeWork=#{changeWork},wortSea=#{wortSea},workHome=#{workHome},graduation=#{graduation},majorStyle=#{majorStyle},language=#{language},
+    area_Name=#{area_Name} where userId=#{userId}
+    </update>
+    
+    
+    	<!--查询外贸体型  -->
+	<select id="selectAppearance"  parameterType="org.xmgreat.entity.FigureEntity"  resultType="org.xmgreat.entity.FigureEntity">
+	
+	select * from figureTb where userId=#{userId}
+	</select>
+	
+	  <!-- 添加外贸体型 -->
+    <insert id="addAppearance" parameterType="org.xmgreat.entity.FigureEntity">
+    insert into figureTb values(FIGUREID.NEXTVAL,#{userId},#{weight},#{figure},#{feature},#{eyes},#{hair},#{skin},#{skinColor},
+    #{muscle},#{healthy},#{wearStyle},#{eyeType},#{hairType},#{hairLength})
+    </insert>
+	
+	  <!-- 保存外贸体型 -->
+    <update id="savaAppearance" parameterType="org.xmgreat.entity.FigureEntity">
+    update figureTb set weight=#{weight},figure=#{figure},feature=#{feature},eyes=#{eyes},hair=#{hair},skin=#{skin},skinColor=#{skinColor},
+    muscle=#{muscle},healthy=#{healthy},wearStyle=#{wearStyle},eyeType=#{eyeType},hairType=#{hairType},hairLength=#{hairLength} 
+    where userId=#{userId}
+    </update>
+	
+		<!--查询婚姻观念  -->
+	<select id="selectMarried"  parameterType="org.xmgreat.entity.MarriedEntity"  resultType="org.xmgreat.entity.MarriedEntity">
+	
+	select * from marriedTb where userId=#{userId}
+	</select>
+	
+	 <!-- 添加婚姻观念 -->
+    <insert id="addMarried" parameterType="org.xmgreat.entity.MarriedEntity">
+    insert into marriedTb values(MARRIEDID.NEXTVAL,#{userId},#{nation},#{character},#{humor},#{temper},#{feeling},#{chriden},#{marryTime},
+    #{relationship},#{marryMsg},#{liveParent},#{ranking},#{brother},#{parentMsg},#{parentWork},#{parentSalary},#{parentInsurance},
+    #{motherWork})
+    </insert>
+	
+	 <!-- 保存婚姻观念 -->
+    <update id="savaMarried" parameterType="org.xmgreat.entity.MarriedEntity">
+    update  marriedTb set nation=#{nation},character=#{character},humor=#{humor},temper=#{temper},feeling=#{feeling},chriden=#{chriden},
+    marryTime=#{marryTime},relationship=#{relationship},marryMsg=#{marryMsg},liveParent=#{liveParent},ranking=#{ranking},brother=#{brother},
+    parentMsg=#{parentMsg},parentWork=#{parentWork},parentSalary=#{parentSalary},parentInsurance=#{parentInsurance},motherWork=#{motherWork} 
+    where userId=#{userId}
+    </update>
+    
+    <!--查询兴趣爱好 -->
+	<select id="selectHobby"  parameterType="org.xmgreat.entity.HobbyEntity"  resultType="org.xmgreat.entity.HobbyEntity">
+	
+	select * from hobbyTb where userId=#{userId}
+	</select>
+    
+    <!-- 添加兴趣爱好 -->
+    <insert id="addHobby" parameterType="org.xmgreat.entity.HobbyEntity">
+    insert into hobbyTb values(HOBBYID.NEXTVAL,#{userId},#{sport},#{food},#{book},#{movie},#{chanel},#{joke},#{hobby},#{travle})
+    </insert>
+    
+     <!-- 保存兴趣爱好 -->
+    <update id="savaHobby" parameterType="org.xmgreat.entity.HobbyEntity">
+    update  hobbyTb set sport=#{sport},food=#{food},book=#{book},movie=#{movie},chanel=#{chanel},joke=#{joke},hobby=#{hobby},
+    travle=#{travle} where userId=#{userId}
+    </update>
     
 </mapper>

@@ -21,7 +21,7 @@ public class WorkEntity
   private String graduation;
   private String majorStyle;
   private String language;
-
+  private String area_Name;
   public WorkEntity()
   {
     super();
@@ -30,7 +30,7 @@ public class WorkEntity
   public WorkEntity(Integer workId, Integer userId, String postion,
     String industry, String cpanyStyle, String welfare, String workStage,
     String changeWork, String wortSea, String workHome, String graduation,
-    String majorStyle, String language)
+    String majorStyle, String language,String area_Name)
   {
     super();
     this.workId = workId;
@@ -46,6 +46,7 @@ public class WorkEntity
     this.graduation = graduation;
     this.majorStyle = majorStyle;
     this.language = language;
+    this.area_Name = area_Name;
   }
 
   /**
@@ -268,5 +269,13 @@ public class WorkEntity
   {
     this.language = language;
   }
+
+public String getArea_Name() {
+	return area_Name;
+}
+
+public void setArea_Name(String area_Name) {
+	this.area_Name = area_Name;
+}
 
 }

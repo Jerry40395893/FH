@@ -81,18 +81,6 @@ function ajaxLogin() {
 	var userAccount=$("#userAccount").val();
 	var pasw=$("#pasw").val();
 	
-<%-- 	$("#loginForm").ajaxSubmit({
-		url:'<%=basePath%>user/ajaxLogin.action',
-		type: 'post',
-		dateType:'json',
-		contentType:"application/json",
-		success:function(data){
-			alert('success'+data);
-		},
-		error:function(e){
-			alert('error'+e);
-		}
-	}); --%>
 	
 	$.ajax({
 		url:'<%=basePath%>user/ajaxLogin.action',
@@ -121,17 +109,6 @@ function ajaxLogin() {
 	<div id="load"></div>
 
 	<div id="main">
-		<div align="left">
-			<c:if test="${user == null }">
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好,请 <a id="modal-1"
-					href="#loginModal" role="button" data-toggle="modal">登录</a> &nbsp;&nbsp;
-  <a href="#"> 免费注册</a>
-			</c:if>
-			<c:if test="${user != null }">
-  	欢迎您，${user.userName} <a href="#">注销</a>
-			</c:if>
-		</div>
-
 		<div class="container">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
@@ -199,28 +176,16 @@ function ajaxLogin() {
 
 						<header>
 							<div class="logo_wrapper">
-							<h1>异常错误，请重新操作</h1>
+							<h1>404异常错误，请重新操作</h1>
 							</div>
 						</header>
-
-
-
 						<div class="search-form-wrapper clearfix"></div>
-
-
-
 					</div>
-
 				</div>
 			</div>
-
 			<div class="top2_wrapper" id="top2">
 				<div class="container">
-
 					<div class="top2 clearfix">
-
-
-
 						<div class="navbar navbar_ navbar-default">
 							<button type="button" class="navbar-toggle collapsed"
 								data-toggle="collapse" data-target=".navbar-collapse">

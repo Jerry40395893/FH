@@ -21,8 +21,8 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 	private VisitLxdMapper visitLxdMapper;
 	@Resource
 	private PageNumLxdMapper pageNumLxdMapper;
-	
-	 /** 添加访问或赞的记录*/
+
+	/** 添加访问或赞的记录 */
 	@Override
 	public void addVisit(VisitEntity visitEntity)
 	{
@@ -44,7 +44,7 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 	}
 
 	@Override
-	public List<VisitEntity> selectPageVisit(HttpServletRequest request,VisitEntity visitEntity, int page)
+	public List<VisitEntity> selectPageVisit(HttpServletRequest request, VisitEntity visitEntity, int page)
 	{
 
 		// 查询所有记录
@@ -52,7 +52,7 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 		// 每页显示数量
 		ParaEntity paraEntity = pageNumLxdMapper.selectPara(1);
 		int pageNum = paraEntity.getPageNum();
-		int totalPage = 0;
+		int totalPage = 1;
 		if (visitList != null)
 		{
 
@@ -64,7 +64,9 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 			{
 				totalPage = visitList.size() / pageNum + 1;
 			}
-
+            if(totalPage==0) {
+            	totalPage=1;
+            }
 			if (page > 0 && page <= totalPage)
 			{
 				// 获取分信息
@@ -83,39 +85,79 @@ public class VisitLxdBizImpl implements VisitLxdBiz
 	public String addFocus(FocusEntity focusEntity)
 	{
 		int rs = 0;
-		String flag=null;
-		//不查状态
+		String flag = null;
+		// 不查状态
 		focusEntity.setDeleteId(0);
 		List<FocusEntity> focusList = visitLxdMapper.selectAllFocus(focusEntity);
 		if (focusList.size() == 0)
 		{
+			
 			rs = visitLxdMapper.addFocus(focusEntity);
 
 		} else if (focusList.get(0).getDeleteId() == 22)
 		{
 			focusEntity.setDeleteId(21);
 			visitLxdMapper.updateFocusState(focusEntity);
-			rs=1;
+			rs = 1;
 		}
-		if(rs<=0) {
-			flag="已经关注，请在我的关注中查看";
+		if (rs <= 0)
+		{
+			flag = "已经关注，请在我的关注中查看";
 		}
 		return flag;
-		
+
 	}
 
 	@Override
 	public int cancelFocus(FocusEntity focusEntity)
 	{
-		// TODO Auto-generated method stub
+		focusEntity.setDeleteId(22);
+		visitLxdMapper.updateFocusState(focusEntity);
 		return 0;
 	}
 
 	@Override
 	public List<FocusEntity> selectPageFocus(HttpServletRequest request, FocusEntity focusEntity, int page)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// 只查询已经关注的
+		focusEntity.setDeleteId(21);
+
+		// 查询所有记录
+		List<FocusEntity> focusList = visitLxdMapper.selectAllFocus(focusEntity);
+		System.out.println(11);
+		// 每页显示数量
+		ParaEntity paraEntity = pageNumLxdMapper.selectPara(1);
+		System.out.println(22);
+		System.out.println("daxiao" + focusList.size());
+		int pageNum = paraEntity.getPageNum();
+		int totalPage = 1;
+		if (focusList != null)
+		{
+
+			// 计算总页数
+			if (focusList.size() % pageNum == 0)
+			{
+				totalPage = focusList.size() / pageNum;
+			} else
+			{
+				totalPage = focusList.size() / pageNum + 1;
+			}
+			if(totalPage==0) {
+            	totalPage=1;
+            }
+			if (page > 0 && page <= totalPage)
+			{
+				System.out.println(33);
+				// 获取分信息
+				focusList = visitLxdMapper.selectPageFocus(focusEntity, pageNum * (page - 1), pageNum * page);
+				System.out.println(44);
+			}
+
+		}
+		request.setAttribute("focusTotalPage", totalPage);
+		request.setAttribute("focusCurrentPage", page);
+		request.setAttribute("focusList", focusList);
+		return focusList;
 	}
 
 }

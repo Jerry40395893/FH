@@ -29,8 +29,8 @@
     </select>
     
     <insert id="insert_register" parameterType="org.xmgreat.entity.UserEntity">
- 		 insert into userTb(userID,userName,pasw,sex,brithday,address,height,doctor,salary,teleNum) 
- 		 values(SEQ_USER.Nextval,#{user.userName},#{user.pasw},#{user.sex},#{user.brithday},#{user.address},#{user.height},#{user.doctor},#{user.salary},#{user.teleNum})
+ 		 insert into userTb(userID,cityId,userName,pasw,sex,brithday,address,height,doctor,salary,teleNum) 
+ 		 values(SEQ_USER.Nextval,#{user.cityId},#{user.userName},#{user.pasw},#{user.sex,jdbcType=VARCHAR},#{user.brithday},#{user.address},#{user.height},#{user.doctor},#{user.salary},#{user.teleNum})
 	</insert>
 	
 	<select id="getParameterById" resultType="org.xmgreat.entity.ParameterEntity">

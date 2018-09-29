@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,8 @@ import org.xmgreat.biz.impl.AdminZzhBizImpl;
 import org.xmgreat.entity.AdminEntity;
 import org.xmgreat.entity.ConditionEntity;
 import org.xmgreat.entity.MenuEntity;
+import org.xmgreat.entity.RoleEntity;
+import org.xmgreat.entity.RoleMenuEntity;
 import org.xmgreat.entity.UserEntity;
 
 @Controller // 此注释的含义是将该类设置成为浏览器提交的上来的类
@@ -32,6 +35,9 @@ public class AdminHandleZZH
   private List<AdminEntity> uList;
   private List<MenuEntity> menulist;
   private List<UserEntity> userList;
+  private List<RoleEntity> roleList;
+  private List<MenuEntity> menuList1;
+  private List<MenuEntity> menuList2;
   private AdminEntity adminB;
 
   // localhost:8080/FH/admin/zzh/login.action --跳转登录路径
@@ -140,7 +146,6 @@ public class AdminHandleZZH
 	  uList = adminBizImpl.selecAdmin(udf);
 	  mav.addObject("ulist", uList);
 	  return mav;
-
   }
 //会员管理列表显示
   @RequestMapping(value = "/userList.action")  
@@ -197,19 +202,15 @@ public class AdminHandleZZH
 	  return mav; 
   }
 
-   //添加管理员账号是否重复admin/checkAdmin.action
-
-  
+ //添加管理员账号是否重复admin/checkAdmin.action  
   @RequestMapping(value = "/checkAdmin.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
-   //public @ResponseBody User userinfo4(@RequestBody User user){
-  //@RequestMapping(value = "/checkAdmin.action")  
   public @ResponseBody String checkAdmin( AdminEntity udf) {
 	  System.out.println("查询账户存在与否"+udf.getAdmin().toString());	 
-	  //ModelAndView mav = new ModelAndView("web/addAdmin");
 	  String flag=adminBizImpl.checkAdmin(udf);
 	  return flag; 
-  }  
-//会员信息查询
+  } 
+  
+ //会员信息查询
   @RequestMapping(value = "/infoUser.action")  
   public ModelAndView infoUser(HttpServletRequest request,ConditionEntity uet) {
 	  System.out.println("会员信息");
@@ -217,10 +218,8 @@ public class AdminHandleZZH
 	  ModelAndView mav = new ModelAndView("web/userInfo");
 	  adminBizImpl.userInfo(uet);
 	  return mav; 
-
   }
-
-  
+  //注销
   @RequestMapping(value = "/loginout.action")
   public ModelAndView loginout(HttpServletRequest request) 
   {
@@ -236,5 +235,50 @@ public class AdminHandleZZH
       mav.setViewName("web/login");
       }	
       return mav;
+  }
+  //点击菜单分配进入菜单分配界面
+  @RequestMapping(value = "/menuC.action")
+  public ModelAndView menuC(HttpServletRequest request)
+  {
+      System.out.println("进入菜单分配页面");
+      ModelAndView mav1 = new ModelAndView("web/menuMa");
+      roleList = adminBizImpl.selectRole();
+      mav1.addObject("roleList", roleList);
+      return mav1;
+  }
+//点击角色后通过角色id获取导已分配的菜单
+  
+  @RequestMapping(value = "/alloRole.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+  @ResponseBody
+  public  List<MenuEntity> alloRole( RoleEntity role1) {
+      System.out.println("获取已分配菜单"+role1.getRoleId());
+      
+      menuList1 = adminBizImpl.alloMenu(role1);
+      System.out.println("lieb"+menuList1);
+      return menuList1;
+  }
+  @RequestMapping(value = "/unaMenu.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+  @ResponseBody
+  public  List<MenuEntity> unaMenu( RoleEntity role1) {
+      System.out.println("获取未分配菜单"+role1.getRoleId());
+      menuList2 = adminBizImpl.unaMenu(role1);
+      System.out.println("lieb"+menuList2);
+      return menuList2;
+  }
+  
+  @RequestMapping(value = "/removeSelectMenu.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+  @ResponseBody
+  public  String removeSelectMenu( RoleMenuEntity role1) {
+      System.out.println("删除选中的菜单"+role1.getRoleId()+role1.getMenuId());
+      adminBizImpl.delMenu(role1);
+      return null;
+  }
+  
+  @RequestMapping(value = "/addSelectMenu.action", method=RequestMethod.POST, produces="application/json;charset=utf-8")
+  @ResponseBody
+  public  String addSelectMenu( RoleMenuEntity role1) {
+      System.out.println("添加选中的菜单"+role1.getRoleId()+role1.getMenuId());
+      adminBizImpl.chMenu(role1);	
+      return null;
   }
 }

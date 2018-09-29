@@ -14,7 +14,7 @@ public class FocusEntity
   private Integer toUserId;
   private Integer deleteId;
   private String time;
-  private UserEntity UserEntity;
+  private UserEntity userEntity;
   private PhotoEntity photoEntity;
 
   public void setTime(String time)
@@ -107,7 +107,7 @@ public void setToUserId(Integer toUserId)
 }
 
 public FocusEntity(Integer focusId, Integer userId, Integer toUserId,
-    Integer deleteId, String time,UserEntity UserEntity,PhotoEntity photoEntity)
+    Integer deleteId, String time,UserEntity userEntity,PhotoEntity photoEntity)
   {
     super();
     this.focusId = focusId;
@@ -115,18 +115,20 @@ public FocusEntity(Integer focusId, Integer userId, Integer toUserId,
     this.toUserId = toUserId;
     this.deleteId = deleteId;
     this.time = time;
-    this.UserEntity=UserEntity;
+    this.userEntity=userEntity;
     this.photoEntity=photoEntity;		
   }
 
+
+
 public UserEntity getUserEntity()
 {
-	return UserEntity;
+	return userEntity;
 }
 
 public void setUserEntity(UserEntity userEntity)
 {
-	UserEntity = userEntity;
+	this.userEntity = userEntity;
 }
 
 public PhotoEntity getPhotoEntity()

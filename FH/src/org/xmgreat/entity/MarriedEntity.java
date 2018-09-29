@@ -27,8 +27,19 @@ public class MarriedEntity
   private String parentWork;
   private String parentSalary;
   private String parentInsurance;
+  private String motherWork;//母亲工作
 
-  public void setNation(String nation)
+  
+  
+  public String getMotherWork() {
+	return motherWork;
+}
+
+public void setMotherWork(String motherWork) {
+	this.motherWork = motherWork;
+}
+
+public void setNation(String nation)
   {
     this.nation = nation;
   }
@@ -303,4 +314,5 @@ public class MarriedEntity
     this.parentInsurance = parentInsurance;
   }
 
+  
 }

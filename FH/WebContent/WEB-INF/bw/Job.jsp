@@ -54,6 +54,109 @@
   <!-- Theme styles END -->
   
   
+   <script type="text/javascript">
+
+   
+ $(document).ready(function(){
+
+	
+	$("#area_Name").change(function(){
+		
+     	$.ajax({
+			url:"<%=basePath%>user/qx/school.action",
+			data:"area_Name="+$("#area_Name").val(),
+			dataType:"json",
+			type:"post",
+			
+			success:function(redata){
+			
+				$("#graduation").find("option").remove();
+				
+				$("#graduation").append("<option>"+"--请选择--"+"</option>");
+				$.each(redata,function(i,item){
+					
+					$("#graduation").append("<option value="+item.school_Name+">"+item.school_Name+"</option>");
+				});
+			}
+		}); 		
+	});
+
+	
+	var postion="${work.postion}";
+	 $("select[name='postion']").find("option[value='"+postion+"']").attr("selected",true);
+	 
+	 var industry="${work.industry}";
+	 $("select[name='industry']").find("option[value='"+industry+"']").attr("selected",true);
+	 
+	 var cpanyStyle="${work.cpanyStyle}";
+	 $("select[name='cpanyStyle']").find("option[value='"+cpanyStyle+"']").attr("selected",true);
+	 
+	 var welfare="${work.welfare}";
+	 $("select[name='welfare']").find("option[value='"+welfare+"']").attr("selected",true);
+	 
+	 var workStage="${work.workStage}";
+	 $("select[name='workStage']").find("option[value='"+workStage+"']").attr("selected",true);
+	 
+	 var changeWork="${work.changeWork}";
+	 $("select[name='changeWork']").find("option[value='"+changeWork+"']").attr("selected",true);
+	 
+	 var wortSea="${work.wortSea}";
+	 $("select[name='wortSea']").find("option[value='"+wortSea+"']").attr("selected",true);
+	 
+	 var workHome="${work.workHome}";
+	 $("select[name='workHome']").find("option[value='"+workHome+"']").attr("selected",true);
+	
+	 var graduation="${work.graduation}";
+	 $("#graduation").append("<option value="+graduation+" selected>"+graduation+"</option>");
+	/*  $("select[name='graduation']").find("option[value='"+graduation+"']").attr("selected",true); */
+	 
+	 var majorStyle="${work.majorStyle}";
+	 $("select[name='majorStyle']").find("option[value='"+majorStyle+"']").attr("selected",true);
+	 
+	 var area_Name="${work.area_Name}";
+	 $("select[name='area_Name']").find("option[value='"+area_Name+"']").attr("selected",true);
+	 
+	 
+	 var checkeds = "${work.language}";
+	    //拆分为字符串数组
+	   
+	    console.log(checkeds)
+	    var checkArray =checkeds.split(",");
+	    //获得所有的复选框对象
+	    var checkBoxAll = $("input[name='language']");
+	     //alert("获取到的value：" + checkBoxAll); 
+	    //alert("获取到的value：" + checkValue); 
+	    //获得所有复选框的value值，然后，用checkArray中的值和他们比较，如果有，则说明该复选框被选中
+	    for(var i=0;i<checkArray.length;i++){
+	    //获取所有复选框对象的value属性，然后，用checkArray[i]和他们匹配，如果有，则说明他应被选中
+	     
+	    $.each(checkBoxAll,function(j,checkbox){
+	    //获取复选框的value属性
+	    var checkValue=$(checkbox).val();
+	   
+	    if(checkArray[i]==checkValue){
+	    $(checkbox).attr("checked",true);
+	    }
+	    })
+	    }
+	
+})
+
+
+
+
+
+</script> 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <style type="text/css">
 dl,dt,dd,h5,p{
 padding:0px;
@@ -320,7 +423,7 @@ function ShowFLT(i) {
                   <h1>&nbsp;</h1>
                   
                   
-                  <form id="form_base" name="form_base" action="profile_postdo_new.php?action=economy" method="post" onsubmit="return cal();">
+                  <form id="form_base" name="form_base" action="<%=basePath%>user/qx/Work.action" method="post" >
 			
 			
 			
@@ -329,129 +432,133 @@ function ShowFLT(i) {
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >职业职位：</span></td>
 						<td>
-							<select id="job" name="job" onChange="select_changed()" class="om_select195" >
+							<select id="postion" name="postion" >
 								<option value="0">--请选择--</option>
-								<option label="在校学生" value="1">在校学生</option>
-<option label="计算机/互联网/IT" value="2">计算机/互联网/IT</option>
-<option label="电子/半导体/仪表仪器" value="3">电子/半导体/仪表仪器</option>
-<option label="通信技术" value="4">通信技术</option>
-<option label="销售" value="5">销售</option>
-<option label="市场拓展" value="6">市场拓展</option>
-<option label="公关/商务" value="7">公关/商务</option>
-<option label="采购/贸易" value="8">采购/贸易</option>
-<option label="客户服务/技术支持" value="9">客户服务/技术支持</option>
-<option label="人力资源/行政/后勤" value="10">人力资源/行政/后勤</option>
-<option label="高级管理" value="11">高级管理</option>
-<option label="生产/加工/制造" value="12">生产/加工/制造</option>
-<option label="质控/安检" value="13">质控/安检</option>
-<option label="工程机械" value="14">工程机械</option>
-<option label="技工" value="15">技工</option>
-<option label="财会/审计/统计" value="16">财会/审计/统计</option>
-<option label="金融/证券/投资/保险" value="17">金融/证券/投资/保险</option>
-<option label="房地产/装修/物业" value="18">房地产/装修/物业</option>
-<option label="仓储/物流" value="19">仓储/物流</option>
-<option label="交通/运输" value="43">交通/运输</option>
-<option label="普通劳动力/家政服务" value="20">普通劳动力/家政服务</option>
-<option label="普通服务行业" value="21">普通服务行业</option>
-<option label="航空服务业" value="22">航空服务业</option>
-<option label="教育/培训" value="23">教育/培训</option>
-<option label="咨询/顾问" value="24">咨询/顾问</option>
-<option label="学术/科研" value="25">学术/科研</option>
-<option label="法律" value="26">法律</option>
-<option label="设计/创意" value="27">设计/创意</option>
-<option label="文学/传媒/影视" value="28">文学/传媒/影视</option>
-<option label="餐饮/旅游" value="29">餐饮/旅游</option>
-<option label="化工" value="30">化工</option>
-<option label="能源/地质勘查" value="31">能源/地质勘查</option>
-<option label="医疗/护理" value="32">医疗/护理</option>
-<option label="保健/美容" value="33">保健/美容</option>
-<option label="生物/制药/医疗器械" value="34">生物/制药/医疗器械</option>
-<option label="体育工作者" value="35">体育工作者</option>
-<option label="翻译" value="36">翻译</option>
-<option label="公务员/国家干部" value="37">公务员/国家干部</option>
-<option label="私营业主" value="38">私营业主</option>
-<option label="农/林/牧/渔业" value="39">农/林/牧/渔业</option>
-<option label="自由职业者" value="41">自由职业者</option>
-<option label="其他" value="42">其他</option>
+								<option label="在校学生" value="在校学生">在校学生</option>
+<option label="计算机/互联网/IT" value="计算机/互联网/IT">计算机/互联网/IT</option>
+<option label="电子/半导体/仪表仪器" value="电子/半导体/仪表仪器">电子/半导体/仪表仪器</option>
+<option label="通信技术" value="通信技术">通信技术</option>
+<option label="销售" value="销售">销售</option>
+<option label="市场拓展" value="市场拓展">市场拓展</option>
+<option label="公关/商务" value="公关/商务">公关/商务</option>
+<option label="采购/贸易" value="采购/贸易">采购/贸易</option>
+<option label="客户服务/技术支持" value="客户服务/技术支持">客户服务/技术支持</option>
+<option label="人力资源/行政/后勤" value="人力资源/行政/后勤">人力资源/行政/后勤</option>
+<option label="高级管理" value="高级管理">高级管理</option>
+<option label="生产/加工/制造" value="生产/加工/制造">生产/加工/制造</option>
+<option label="质控/安检" value="质控/安检">质控/安检</option>
+<option label="工程机械" value="工程机械">工程机械</option>
+<option label="技工" value="技工">技工</option>
+<option label="财会/审计/统计" value="财会/审计/统计">财会/审计/统计</option>
+<option label="金融/证券/投资/保险" value="金融/证券/投资/保险">金融/证券/投资/保险</option>
+<option label="房地产/装修/物业" value="房地产/装修/物业">房地产/装修/物业</option>
+<option label="仓储/物流" value="仓储/物流">仓储/物流</option>
+<option label="交通/运输" value="交通/运输">交通/运输</option>
+<option label="普通劳动力/家政服务" value="普通劳动力/家政服务">普通劳动力/家政服务</option>
+<option label="普通服务行业" value="普通服务行业">普通服务行业</option>
+<option label="航空服务业" value="航空服务业">航空服务业</option>
+<option label="教育/培训" value="教育/培训">教育/培训</option>
+<option label="咨询/顾问" value="咨询/顾问">咨询/顾问</option>
+<option label="学术/科研" value="学术/科研">学术/科研</option>
+<option label="法律" value="法律">法律</option>
+<option label="设计/创意" value="设计/创意">设计/创意</option>
+<option label="文学/传媒/影视" value="文学/传媒/影视">文学/传媒/影视</option>
+<option label="餐饮/旅游" value="餐饮/旅游">餐饮/旅游</option>
+<option label="化工" value="化工">化工</option>
+<option label="能源/地质勘查" value="能源/地质勘查">能源/地质勘查</option>
+<option label="医疗/护理" value="医疗/护理">医疗/护理</option>
+<option label="保健/美容" value="保健/美容">保健/美容</option>
+<option label="生物/制药/医疗器械" value="生物/制药/医疗器械">生物/制药/医疗器械</option>
+<option label="体育工作者" value="体育工作者">体育工作者</option>
+<option label="翻译" value="翻译">翻译</option>
+<option label="公务员/国家干部" value="公务员/国家干部">公务员/国家干部</option>
+<option label="私营业主" value="私营业主">私营业主</option>
+<option label="农/林/牧/渔业" value="农/林/牧/渔业">农/林/牧/渔业</option>
+<option label="自由职业者" value="自由职业者">自由职业者</option>
+<option label="其他" value="其他">其他</option>
 
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >公司行业：</span></td>
-						<td><select id="rank_condition" name="rank_condition" onChange="select_changed()" class="om_select195" ><option value="0">--请选择--</option><option label="计算机（软件、硬件、服务）" value="1">计算机（软件、硬件、服务）</option>
-<option label="通信、电信" value="2">通信、电信</option>
-<option label="互联网" value="3">互联网</option>
-<option label="电子（半导体、仪器、自动化）" value="4">电子（半导体、仪器、自动化）</option>
-<option label="金融服务（会计/审计，银行，保险）" value="5">金融服务（会计/审计，银行，保险）</option>
-<option label="金融/投资/证券" value="6">金融/投资/证券</option>
-<option label="贸易（进出口,批发,零售）" value="7">贸易（进出口,批发,零售）</option>
-<option label="快速消费品（食品,饮料,化妆品）" value="8">快速消费品（食品,饮料,化妆品）</option>
-<option label="服装/纺织/皮革" value="9">服装/纺织/皮革</option>
-<option label="家具/家电/工艺品/玩具" value="10">家具/家电/工艺品/玩具</option>
-<option label="办公用品及设备" value="11">办公用品及设备</option>
-<option label="医疗，医药" value="12">医疗，医药</option>
-<option label="广告/公关/市场推广/会展" value="13">广告/公关/市场推广/会展</option>
-<option label="影视/媒体/出版/印刷/包装" value="14">影视/媒体/出版/印刷/包装</option>
-<option label="房地产相关" value="15">房地产相关</option>
-<option label="家居/室内设计/装潢" value="16">家居/室内设计/装潢</option>
-<option label="服务（咨询，人力资源）" value="17">服务（咨询，人力资源）</option>
-<option label="法律相关" value="18">法律相关</option>
-<option label="教育/培训" value="19">教育/培训</option>
-<option label="学术/科研" value="20">学术/科研</option>
-<option label="酒店/餐饮业" value="21">酒店/餐饮业</option>
-<option label="旅游" value="22">旅游</option>
-<option label="娱乐/休闲/体育" value="23">娱乐/休闲/体育</option>
-<option label="美容/保健" value="24">美容/保健</option>
-<option label="交通（运输、物流、航天、航空）" value="25">交通（运输、物流、航天、航空）</option>
-<option label="汽车及零配件" value="26">汽车及零配件</option>
-<option label="农业" value="27">农业</option>
-<option label="政府/非盈利机构" value="28">政府/非盈利机构</option>
-<option label="其他行业" value="29">其他行业</option>
+						<td><select id="industry" name="industry"  >
+						<option value="0">--请选择--</option><option label="计算机（软件、硬件、服务）" value="计算机（软件、硬件、服务）">计算机（软件、硬件、服务）</option>
+<option label="通信、电信" value="通信、电信">通信、电信</option>
+<option label="互联网" value="互联网">互联网</option>
+<option label="电子（半导体、仪器、自动化）" value="电子（半导体、仪器、自动化）">电子（半导体、仪器、自动化）</option>
+<option label="金融服务（会计/审计，银行，保险）" value="金融服务（会计/审计，银行，保险）">金融服务（会计/审计，银行，保险）</option>
+<option label="金融/投资/证券" value="金融/投资/证券">金融/投资/证券</option>
+<option label="贸易（进出口,批发,零售）" value="贸易（进出口,批发,零售）">贸易（进出口,批发,零售）</option>
+<option label="快速消费品（食品,饮料,化妆品）" value="快速消费品（食品,饮料,化妆品）">快速消费品（食品,饮料,化妆品）</option>
+<option label="服装/纺织/皮革" value="服装/纺织/皮革">服装/纺织/皮革</option>
+<option label="家具/家电/工艺品/玩具" value="家具/家电/工艺品/玩具">家具/家电/工艺品/玩具</option>
+<option label="办公用品及设备" value="办公用品及设备">办公用品及设备</option>
+<option label="医疗，医药" value="医疗，医药">医疗，医药</option>
+<option label="广告/公关/市场推广/会展" value="广告/公关/市场推广/会展">广告/公关/市场推广/会展</option>
+<option label="影视/媒体/出版/印刷/包装" value="影视/媒体/出版/印刷/包装">影视/媒体/出版/印刷/包装</option>
+<option label="房地产相关" value="房地产相关">房地产相关</option>
+<option label="家居/室内设计/装潢" value="家居/室内设计/装潢">家居/室内设计/装潢</option>
+<option label="服务（咨询，人力资源）" value="服务（咨询，人力资源）">服务（咨询，人力资源）</option>
+<option label="法律相关" value="法律相关">法律相关</option>
+<option label="教育/培训" value="教育/培训">教育/培训</option>
+<option label="学术/科研" value="学术/科研">学术/科研</option>
+<option label="酒店/餐饮业" value="酒店/餐饮业">酒店/餐饮业</option>
+<option label="旅游" value="旅游">旅游</option>
+<option label="娱乐/休闲/体育" value="娱乐/休闲/体育">娱乐/休闲/体育</option>
+<option label="美容/保健" value="美容/保健">美容/保健</option>
+<option label="交通（运输、物流、航天、航空）" value="交通（运输、物流、航天、航空）">交通（运输、物流、航天、航空）</option>
+<option label="汽车及零配件" value="汽车及零配件">汽车及零配件</option>
+<option label="农业" value="农业">农业</option>
+<option label="政府/非盈利机构" value="政府/非盈利机构">政府/非盈利机构</option>
+<option label="其他行业" value="其他行业">其他行业</option>
 </select></td>
 					</tr>
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >公司类型：</span></td>
-						<td><select id="company" name="company" onChange="select_changed()" class="om_select195"  ><option value="0">--请选择--</option><option label="政府机关" value="1">政府机关</option>
-<option label="事业单位 " value="2">事业单位 </option>
-<option label="外企企业 " value="3">外企企业 </option>
-<option label="世界500强 " value="4">世界500强 </option>
-<option label="上市公司 " value="5">上市公司 </option>
-<option label="国有企业 " value="6">国有企业 </option>
-<option label="私营企业 " value="7">私营企业 </option>
-<option label="自有公司" value="8">自有公司</option>
+						<td><select id="cpanyStyle" name="cpanyStyle"   >
+						<option value="0">--请选择--</option><option label="政府机关" value="政府机关">政府机关</option>
+<option label="事业单位 " value="事业单位">事业单位 </option>
+<option label="外企企业 " value="外企企业">外企企业 </option>
+<option label="世界500强 " value="世界500强">世界500强 </option>
+<option label="上市公司 " value="上市公司">上市公司 </option>
+<option label="国有企业 " value="国有企业">国有企业 </option>
+<option label="私营企业 " value="私营企业">私营企业 </option>
+<option label="自有公司" value="自有公司">自有公司</option>
 </select></td>
 					</tr>
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >福利待遇：</span></td>
-						<td><select id="welfare" name="welfare" onChange="select_changed()" class="om_select195" ><option value="0">--请选择--</option><option label="福利优越" value="10">福利优越</option>
-<option label="奖金丰厚" value="20">奖金丰厚</option>
-<option label="事业稳定上升" value="30">事业稳定上升</option>
-<option label="事业刚起步" value="40">事业刚起步</option>
-<option label="投资高回报" value="50">投资高回报</option>
+						<td><select id="welfare" name="welfare"  ><option value="0">--请选择--</option>
+						<option label="福利优越" value="福利优越">福利优越</option>
+<option label="奖金丰厚" value="奖金丰厚">奖金丰厚</option>
+<option label="事业稳定上升" value="事业稳定上升">事业稳定上升</option>
+<option label="事业刚起步" value="事业刚起步">事业刚起步</option>
+<option label="投资高回报" value="投资高回报">投资高回报</option>
 </select></td>
 					</tr>
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >工作状态：</span></td>
-						<td><select id="rank_desire" name="rank_desire" onChange="select_changed()" class="om_select195" ><option value="0">--请选择--</option><option label="轻松稳定" value="1">轻松稳定</option>
-<option label="朝九晚五" value="2">朝九晚五</option>
-<option label="偶尔加班" value="3">偶尔加班</option>
-<option label="经常加班" value="4">经常加班</option>
-<option label="偶尔出差" value="5">偶尔出差</option>
-<option label="经常出差" value="6">经常出差</option>
-<option label="经常有应酬" value="7">经常有应酬</option>
-<option label="工作时间自由" value="8">工作时间自由</option>
+						<td><select id="workStage" name="workStage" >
+						<option value="0">--请选择--</option><option label="轻松稳定" value="轻松稳定">轻松稳定</option>
+<option label="朝九晚五" value="朝九晚五">朝九晚五</option>
+<option label="偶尔加班" value="偶尔加班">偶尔加班</option>
+<option label="经常加班" value="经常加班">经常加班</option>
+<option label="偶尔出差" value="偶尔出差">偶尔出差</option>
+<option label="经常出差" value="经常出差">经常出差</option>
+<option label="经常有应酬" value="经常有应酬">经常有应酬</option>
+<option label="工作时间自由" value="工作时间自由">工作时间自由</option>
 </select></td>
 					</tr>
 					<tr>
 						<td class="item item105"><span >调动工作可能性：</span></td>
 						<td>
-							<select id="transferred" name="work_change" onChange="select_changed()" class="om_select195" >
+							<select id="changeWork" name="changeWork"  >
 								<option value="0">--请选择--</option>
-								<option label="完全无可能" value="1">完全无可能</option>
-<option label="未来几年几乎没可能" value="2">未来几年几乎没可能</option>
-<option label="未来几年有可能" value="3">未来几年有可能</option>
-<option label="最近即将调动" value="4">最近即将调动</option>
+								<option label="完全无可能" value="完全无可能">完全无可能</option>
+<option label="未来几年几乎没可能" value="未来几年几乎没可能">未来几年几乎没可能</option>
+<option label="未来几年有可能" value="未来几年有可能">未来几年有可能</option>
+<option label="最近即将调动" value="最近即将调动">最近即将调动</option>
 
 							</select>
 						</td>
@@ -459,12 +566,12 @@ function ShowFLT(i) {
 					<tr>
 						<td class="item item105"><span >海外工作可能性：</span></td>
 						<td>
-							<select id="overseas-work" name="overseas_work" onChange="select_changed()" class="om_select195" >
+							<select id="wortSea" name="wortSea" >
 								<option value="0">--请选择--</option>
-								<option label="完全无可能" value="1">完全无可能</option>
-<option label="未来几年几乎没可能" value="2">未来几年几乎没可能</option>
-<option label="未来几年有可能" value="3">未来几年有可能</option>
-<option label="最近即将调动" value="4">最近即将调动</option>
+								<option label="完全无可能" value="完全无可能">完全无可能</option>
+<option label="未来几年几乎没可能" value="未来几年几乎没可能">未来几年几乎没可能</option>
+<option label="未来几年有可能" value="未来几年有可能">未来几年有可能</option>
+<option label="最近即将调动" value="最近即将调动">最近即将调动</option>
 
 							</select>
 						</td>
@@ -472,13 +579,13 @@ function ShowFLT(i) {
 					<tr>
 						<td class="item item105"><span >事业与家庭：</span></td>
 						<td>
-							<select id="work-family" name="workorfamily" onChange="select_changed()" class="om_select195"  >
+							<select id="workHome" name="workHome"   >
 								<option value="0">--请选择--</option>
-								<option label="一切以家庭为重" value="1">一切以家庭为重</option>
-<option label="会为家庭牺牲事业" value="2">会为家庭牺牲事业</option>
-<option label="尽量均衡事业与家庭" value="3">尽量均衡事业与家庭</option>
-<option label="会为事业牺牲家庭利益" value="4">会为事业牺牲家庭利益</option>
-<option label="事业第一" value="5">事业第一</option>
+								<option label="一切以家庭为重" value="一切以家庭为重">一切以家庭为重</option>
+<option label="会为家庭牺牲事业" value="会为家庭牺牲事业">会为家庭牺牲事业</option>
+<option label="尽量均衡事业与家庭" value="尽量均衡事业与家庭">尽量均衡事业与家庭</option>
+<option label="会为事业牺牲家庭利益" value="会为事业牺牲家庭利益">会为事业牺牲家庭利益</option>
+<option label="事业第一" value="事业第一">事业第一</option>
 
 							</select>
 						</td>
@@ -488,181 +595,121 @@ function ShowFLT(i) {
 				<table style="margin-bottom:200px;" cellpadding="0" cellspacing="0">
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >毕业学校：</span></td>
-						<td><select   id="uni_location" name="uni_location" onChange="select_changed();change_school(this.value, 'university');" style="width:100px" class="om_select195"><option value="0">--保密--</option><option label="北京" value="11">北京</option>
-<option label="天津" value="12">天津</option>
-<option label="河北" value="13">河北</option>
-<option label="山西" value="14">山西</option>
-<option label="内蒙古" value="15">内蒙古</option>
-<option label="辽宁" value="21">辽宁</option>
-<option label="吉林" value="22">吉林</option>
-<option label="黑龙江" value="23">黑龙江</option>
-<option label="上海" value="31">上海</option>
-<option label="江苏" value="32">江苏</option>
-<option label="浙江" value="33">浙江</option>
-<option label="安徽" value="34">安徽</option>
-<option label="福建" value="35">福建</option>
-<option label="江西" value="36">江西</option>
-<option label="山东" value="37">山东</option>
-<option label="河南" value="41">河南</option>
-<option label="湖北" value="42">湖北</option>
-<option label="湖南" value="43">湖南</option>
-<option label="广东" value="44">广东</option>
-<option label="广西" value="45">广西</option>
-<option label="海南" value="46">海南</option>
-<option label="重庆" value="50">重庆</option>
-<option label="四川" value="51">四川</option>
-<option label="贵州" value="52">贵州</option>
-<option label="云南" value="53">云南</option>
-<option label="西藏" value="54">西藏</option>
-<option label="陕西" value="61">陕西</option>
-<option label="甘肃" value="62">甘肃</option>
-<option label="青海" value="63">青海</option>
-<option label="宁夏" value="64">宁夏</option>
-<option label="新疆" value="65">新疆</option>
-<option label="台湾" value="71">台湾</option>
-<option label="香港" value="81">香港</option>
-<option label="澳门" value="82">澳门</option>
-<option label="钓鱼岛" value="83">钓鱼岛</option>
-<option label="美国" value="98">美国</option>
-<option label="其他国家" value="99">其他国家</option>
-</select>&nbsp;&nbsp;<select   id="university" name="university" onChange="select_changed()" style="width:200px;"><option value="0">--请选择--</option></select></td>
-						<script type="text/javascript">
-						change_school(0,'university');
-						my_getbyid('university').value = '0';
-						</script>	
+						<td><select   id="area_Name" name="area_Name"  style="width:100px">
+						<option value="0">--保密--</option>
+						<option label="北京" value="北京">北京</option>
+<option label="天津" value="天津市">天津市</option>
+<option label="河北" value="河北省">河北省</option>
+<option label="山西" value="山西省">山西省</option>
+<option label="内蒙古" value="内蒙古">内蒙古</option>
+<option label="辽宁" value="辽宁省">辽宁省</option>
+<option label="吉林" value="吉林省">吉林省</option>
+<option label="黑龙江" value="黑龙江省">黑龙江省</option>
+<option label="上海" value="上海市">上海市</option>
+<option label="江苏" value="江苏省">江苏省</option>
+<option label="浙江" value="浙江省">浙江省</option>
+<option label="安徽" value="安徽省">安徽省</option>
+<option label="福建" value="福建省">福建省</option>
+<option label="江西" value="江西省">江西省</option>
+<option label="山东" value="山东省">山东省</option>
+<option label="河南" value="河南省">河南省</option>
+<option label="湖北" value="湖北省">湖北省</option>
+<option label="湖南" value="湖南省">湖南省</option>
+<option label="广东" value="广东省">广东省</option>
+<option label="广西" value="广西省">广西省</option>
+<option label="海南" value="海南省">海南省</option>
+<option label="重庆" value="重庆市">重庆市</option>
+<option label="四川" value="四川省">四川省</option>
+<option label="贵州" value="贵州省">贵州省</option>
+<option label="云南" value="云南省">云南省</option>
+<option label="西藏" value="西藏">西藏</option>
+<option label="陕西" value="陕西省">陕西省</option>
+<option label="甘肃" value="甘肃省">甘肃省</option>
+<option label="青海" value="青海省">青海省</option>
+<option label="宁夏" value="宁夏">宁夏</option>
+<option label="新疆" value="新疆">新疆</option>
+<!-- <option label="台湾" value="台湾">台湾</option>
+<option label="香港" value="香港">香港</option>
+<option label="澳门" value="澳门">澳门</option>
+<option label="钓鱼岛" value="钓鱼">钓鱼岛</option> -->
+<!-- <option label="美国" value="98">美国</option>
+<option label="其他国家" value="99">其他国家</option> -->
+</select>&nbsp;&nbsp;<select   id="graduation" name="graduation"  style="width:200px;"><option value="0">--请选择--</option></select></td>
+						
 					</tr>
 					<tr>
 						<td class="item item105"><span class="ico_stars">*</span><span >专业类型：</span></td>
-						<td><select id="speciality" name="speciality" onChange="select_changed()" class="om_select195"  ><option value="0">--请选择--</option><option label="计算机类" value="1">计算机类</option>
-<option label="电子信息类" value="2">电子信息类</option>
-<option label="中文类" value="3">中文类</option>
-<option label="外文类" value="4">外文类</option>
-<option label="经济学类" value="5">经济学类</option>
-<option label="金融学类" value="6">金融学类</option>
-<option label="管理类" value="7">管理类</option>
-<option label="市场营销类" value="8">市场营销类</option>
-<option label="法学类" value="9">法学类</option>
-<option label="教育类" value="10">教育类</option>
-<option label="社会学类" value="11">社会学类</option>
-<option label="历史类" value="12">历史类</option>
-<option label="哲学类" value="13">哲学类</option>
-<option label="艺术类" value="14">艺术类</option>
-<option label="图书馆类" value="15">图书馆类</option>
-<option label="情报档案类" value="16">情报档案类</option>
-<option label="政治类" value="17">政治类</option>
-<option label="数学类" value="18">数学类</option>
-<option label="统计类" value="19">统计类</option>
-<option label="物理类" value="20">物理类</option>
-<option label="化学类" value="21">化学类</option>
-<option label="生物类" value="22">生物类</option>
-<option label="食品类" value="23">食品类</option>
-<option label="医学类" value="24">医学类</option>
-<option label="环境类" value="25">环境类</option>
-<option label="地理类" value="26">地理类</option>
-<option label="建筑类" value="27">建筑类</option>
-<option label="测绘类" value="28">测绘类</option>
-<option label="电气类" value="29">电气类</option>
-<option label="机械类" value="30">机械类</option>
+						<td><select id="majorStyle" name="majorStyle"   >
+						<option value="0">--请选择--</option><option label="计算机类" value="计算机类">计算机类</option>
+<option label="电子信息类" value="电子信息类">电子信息类</option>
+<option label="中文类" value="中文类">中文类</option>
+<option label="外文类" value="外文类">外文类</option>
+<option label="经济学类" value="经济学类">经济学类</option>
+<option label="金融学类" value="金融学类">金融学类</option>
+<option label="管理类" value="管理类">管理类</option>
+<option label="市场营销类" value="市场营销类">市场营销类</option>
+<option label="法学类" value="法学类">法学类</option>
+<option label="教育类" value="教育类">教育类</option>
+<option label="社会学类" value="社会学类">社会学类</option>
+<option label="历史类" value="历史类">历史类</option>
+<option label="哲学类" value="哲学类">哲学类</option>
+<option label="艺术类" value="艺术类">艺术类</option>
+<option label="图书馆类" value="图书馆类">图书馆类</option>
+<option label="情报档案类" value="情报档案类">情报档案类</option>
+<option label="政治类" value="政治类">政治类</option>
+<option label="数学类" value="数学类">数学类</option>
+<option label="统计类" value="统计类">统计类</option>
+<option label="物理类" value="物理类">物理类</option>
+<option label="化学类" value="化学类">化学类</option>
+<option label="生物类" value="生物类">生物类</option>
+<option label="食品类" value="食品类">食品类</option>
+<option label="医学类" value="医学类">医学类</option>
+<option label="环境类" value="环境类">环境类</option>
+<option label="地理类" value="地理类">地理类</option>
+<option label="建筑类" value="建筑类">建筑类</option>
+<option label="测绘类" value="测绘类">测绘类</option>
+<option label="电气类" value="电气类">电气类</option>
+<option label="机械类" value="机械类">机械类</option>
 </select></td>
 					</tr>
 					<tr>
 						<td class="item item105" valign="top"><span >语言能力：</span></td>
 						<td id="em_language_edit" >
-							<ul >
-																	<li><label for="language_1"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_1" value="1" />&nbsp;中文(普通话)</label></li> 
-																	<li><label for="language_2"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_2" value="2" />&nbsp;中文(广东话)</label></li> 
-																	<li><label for="language_3"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_3" value="3" />&nbsp;英语</label></li> 
-																	<li><label for="language_4"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_4" value="4" />&nbsp;法语</label></li> 
-																	<li><label for="language_5"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_5" value="5" />&nbsp;日语</label></li> 
-																	<li><label for="language_6"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_6" value="6" />&nbsp;韩语</label></li> 
-																	<li><label for="language_7"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_7" value="7" />&nbsp;德语</label></li> 
-																	<li><label for="language_8"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_8" value="8" />&nbsp;意大利语</label></li> 
-																	<li><label for="language_9"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_9" value="9" />&nbsp;俄语</label></li> 
-																	<li><label for="language_10"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_10" value="10" />&nbsp;芬兰语</label></li> 
-																	<li><label for="language_11"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_11" value="11" />&nbsp;荷兰语</label></li> 
-																	<li><label for="language_12"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_12" value="12" />&nbsp;葡萄牙语</label></li> 
-																	<li><label for="language_13"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_13" value="13" />&nbsp;西班牙语</label></li> 
-																	<li><label for="language_14"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_14" value="14" />&nbsp;越南语</label></li> 
-																	<li><label for="language_15"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_15" value="15" />&nbsp;阿拉伯语</label></li> 
-																	<li><label for="language_16"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_16" value="16" />&nbsp;泰国语</label></li> 
-																	<li><label for="language_17"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_17" value="17" />&nbsp;印度尼希亚语</label></li> 
-																	<li><label for="language_18"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_18" value="18" />&nbsp;印度语</label></li> 
-																	<li><label for="language_19"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_19" value="19" />&nbsp;丹麦语</label></li> 
-																	<li><label for="language_20"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_20" value="20" />&nbsp;希腊语</label></li> 
-																	<li><label for="language_21"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_21" value="21" />&nbsp;伊朗语</label></li> 
-																	<li><label for="language_22"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_22" value="22" />&nbsp;匈牙利语</label></li> 
-																	<li><label for="language_23"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_23" value="23" />&nbsp;土耳其语</label></li> 
-																	<li><label for="language_24"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_24" value="24" />&nbsp;挪威语</label></li> 
-																	<li><label for="language_25"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_25" value="25" />&nbsp;捷克语</label></li> 
-																	<li><label for="language_26"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_26" value="26" />&nbsp;波兰语</label></li> 
-																	<li><label for="language_27"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_27" value="27" />&nbsp;瑞典语</label></li> 
-																	<li><label for="language_28"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_28" value="28" />&nbsp;缅甸语</label></li> 
-																	<li><label for="language_29"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_29" value="29" />&nbsp;罗马尼亚语</label></li> 
-																	<li><label for="language_30"  ><input 
-									onclick="check_count(this, 5)" type="checkbox" 
-									name="language[]" id="language_30" value="30" />&nbsp;其它</label></li> 
+  <ul >
+	<li><label for="language_1"  ><input type="checkbox" name="language" id="language" value="中文(普通话)" />&nbsp;中文(普通话)</label></li> 
+	<li><label for="language_2"  ><input type="checkbox" name="language" id="language" value="中文(广东话)" />&nbsp;中文(广东话)</label></li> 
+	<li><label for="language_3"  ><input type="checkbox" name="language" id="language" value="英语" />&nbsp;英语</label></li> 
+	<li><label for="language_4"  ><input type="checkbox" name="language" id="language" value="法语" />&nbsp;法语</label></li> 
+	<li><label for="language_5"  ><input type="checkbox" name="language" id="language" value="日语" />&nbsp;日语</label></li> 
+	<li><label for="language_6"  ><input type="checkbox" name="language" id="language" value="韩语" />&nbsp;韩语</label></li> 
+	<li><label for="language_7"  ><input  type="checkbox" name="language" id="language" value="德语" />&nbsp;德语</label></li> 
+	<li><label for="language_8"  ><input  type="checkbox" name="language" id="language" value="意大利语" />&nbsp;意大利语</label></li> 
+    <li><label for="language_9"  ><input  type="checkbox" name="language" id="language" value="俄语" />&nbsp;俄语</label></li> 
+	<li><label for="language_10"  ><input  type="checkbox" name="language" id="language" value="芬兰语" />&nbsp;芬兰语</label></li> 
+	<li><label for="language_11"  ><input  type="checkbox" name="language" id="language" value="荷兰语" />&nbsp;荷兰语</label></li> 
+	<li><label for="language_12"  ><input  type="checkbox" name="language" id="language" value="葡萄牙语" />&nbsp;葡萄牙语</label></li> 
+	<li><label for="language_13"  ><input  type="checkbox" name="language" id="language" value="西班牙语" />&nbsp;西班牙语</label></li> 
+	<li><label for="language_14"  ><input  type="checkbox" name="language" id="language" value="越南语" />&nbsp;越南语</label></li> 
+	<li><label for="language_15"  ><input  type="checkbox" name="language" id="language" value="阿拉伯语" />&nbsp;阿拉伯语</label></li> 
+	<li><label for="language_16"  ><input  type="checkbox" name="language" id="language" value="泰国语" />&nbsp;泰国语</label></li> 
+    <li><label for="language_17"  ><input  type="checkbox" name="language" id="language" value="印度尼希亚语" />&nbsp;印度尼希亚语</label></li> 
+	<li><label for="language_18"  ><input  type="checkbox" name="language" id="language" value="印度语" />&nbsp;印度语</label></li> 
+	<li><label for="language_19"  ><input  type="checkbox" name="language" id="language" value="丹麦语" />&nbsp;丹麦语</label></li> 
+	<li><label for="language_20"  ><input  type="checkbox" name="language" id="language" value="希腊语" />&nbsp;希腊语</label></li> 
+	<li><label for="language_21"  ><input  type="checkbox" name="language" id="language" value="伊朗语" />&nbsp;伊朗语</label></li> 
+	<li><label for="language_22"  ><input  type="checkbox" name="language" id="language" value="匈牙利语" />&nbsp;匈牙利语</label></li> 
+	<li><label for="language_23"  ><input  type="checkbox" name="language" id="language" value="土耳其语" />&nbsp;土耳其语</label></li> 
+	<li><label for="language_24"  ><input  type="checkbox" name="language" id="language" value="挪威语" />&nbsp;挪威语</label></li> 
+	<li><label for="language_25"  ><input  type="checkbox" name="language" id="language" value="捷克语" />&nbsp;捷克语</label></li> 
+	<li><label for="language_26"  ><input  type="checkbox" name="language" id="language" value="波兰语" />&nbsp;波兰语</label></li> 
+	<li><label for="language_27"  ><input  type="checkbox" name="language" id="language" value="瑞典语" />&nbsp;瑞典语</label></li> 
+	<li><label for="language_28"  ><input  type="checkbox" name="language" id="language" value="缅甸语" />&nbsp;缅甸语</label></li> 
+	<li><label for="language_29"  ><input  type="checkbox" name="language" id="language" value="罗马尼亚语" />&nbsp;罗马尼亚语</label></li> 
+	<li><label for="language_30"  ><input  type="checkbox" name="language" id="language" value="其它" />&nbsp;其它</label></li> 
 															</ul>
 						</td>
 					</tr>
-					<tr><td>&nbsp;</td><td><input type="submit" class="save" value="保存并继续" onmousedown="send_jy_pv2('editprofile|save_work|m|182580144');" /><input type="button" value="跳过此页" class="skip" onClick="skip();" onmousedown="send_jy_pv2('editprofile|skip_work|m|182580144');" /></td></tr>
+					<tr><td>&nbsp;</td><td><input type="submit" class="save" value="保存"  /><input type="button" value="跳过此页"  /></td></tr>
 				</table>
 			
 			

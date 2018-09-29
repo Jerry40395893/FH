@@ -198,18 +198,24 @@
 		resultType="org.xmgreat.entity.UserEntity">
 		select * from userTb  where userId=#{userId}
 	</select>	
-	
+<!-- 查找角色 -->	
+   <select id="selectRole"
+		resultType="org.xmgreat.entity.RoleEntity">
+		select * from roletb  where roleid !=1
+	</select>	
 <!-- 查询已分配菜单 -->	
     <select id="alloMenu"
 		parameterType="org.xmgreat.entity.RoleEntity"
 		resultType="org.xmgreat.entity.MenuEntity">
 		select distinct p.* from menutb p,rolemunetb r where r.roleid=#{roleId} and r.menuid = p.menuid order by p.menuid
 	</select>	
-<!-- 查询为分配的菜单 -->	
+<!-- 查询未分配的菜单 -->	
     <select id="unaMenu"
 		parameterType="org.xmgreat.entity.RoleEntity"
 		resultType="org.xmgreat.entity.MenuEntity">
-		select  P.* from menutb p where p.menuid not in(select menuid from rolemunetb where roleid=#{roleId}) order by p.menuid
+		<!-- select  P.* from menutb p where p.menuid not in(select menuid from rolemunetb where roleid=#{roleId}) order by p.menuid -->
+	select  p.menuname ,p.menuid,p.pid  from menutb p where p.pid!=0 and p.menuid not in( select menuid from rolemunetb where roleid=#{roleId}  ) UNION select menuname ,menuid,pid from menutb where pid=0
+	
 	</select>
 <!-- 找到这个角色的菜单 -->
 	<select id="roleMenu"
@@ -218,7 +224,24 @@
 	    select * from rolemunetb where roleid=#{roleId}
 	</select>	
 <!-- 添加选择菜单 -->
-
+     <insert id="chMenu"
+        parameterType = "org.xmgreat.entity.RoleMenuEntity">
+        INSERT INTO roleMuneTb (middleid,ROLEID, menuid) VALUES (ROLEMENUTB_1.Nextval,#{roleId}, #{menuId})
+        </insert>
+<!-- 删除选择的菜单-->
+    <delete id = "delMenu"
+    parameterType = "org.xmgreat.entity.RoleMenuEntity">
+    delete from roleMuneTb where roleid=#{roleId} and menuId=#{menuId}
+    </delete>
 <!-- 添加菜单的父节点 -->
+     <insert id ="addFnode"
+     parameterType = "org.xmgreat.entity.RoleMenuEntity"> 
+     INSERT INTO roleMuneTb (roleId, menuId) VALUES (#{roleId}, (select menuId from menuTb  where menuId=(select pid from menuTb where menuid=#{menuId})))
+     </insert>
+<!--查询所有菜单 -->
+    <select id="selectAllMenu"  
+		resultType="org.xmgreat.entity.MenuEntity">
+	    select menuId from menutb 
+	</select>
 </mapper>
 	

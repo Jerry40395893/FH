@@ -6,6 +6,8 @@
   String path = request.getContextPath();
   String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
+
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -109,6 +111,8 @@
     })
     }
     
+    var projectName="${salary.salaryPoint}";
+    $("select[name='salaryPoint']").find("option[value='"+projectName+"']").attr("selected",true);
    
     });
 </script>
@@ -333,8 +337,8 @@ function ShowFLT(i) {
              <dl>
          <dt onClick=javascript:ShowFLT(1) href="javascript:void(null)"><a href="javascript:;">详细资料</a></dt>
           <dd id=LM1 style="DISPLAY: none">
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 经济实力</a></h5>
-          <h5><a href="http://51xuediannao.com/HTML+CSS"> 生活方式</a></h5>
+          <h5><a href=""> 经济实力</a></h5>
+          <h5><a href="<%=basePath%>user/qx/life.action"> 生活方式</a></h5>
           <h5><a href="http://51xuediannao.com/HTML+CSS"> 工作学习</a></h5>
           <h5><a href="http://51xuediannao.com/HTML+CSS"> 外貌体型</a></h5>
           <h5><a href="http://51xuediannao.com/HTML+CSS"> 婚姻观念</a></h5>
@@ -463,10 +467,12 @@ function ShowFLT(i) {
 				<dl><span  >经济观念：</span></dl>
 				</dl>
 				<dl >
-					<select  name="salaryPoint" id="salaryPoint" >
+					<select  name="salaryPoint" id="salaryPoint" value="${salary.salaryPoint}" >
+				
+							
 						<option value="0" selected="selected" >--请选择--</option>
-						<option label="基本是月光族，及时享乐主义" value="基本是月光族，及时享乐主义">基本是月光族，及时享乐主义</option>
-<option label="每月会存点钱，但是也要享受生活" value="每月会存点钱，但是也要享受生活">每月会存点钱，但是也要享受生活</option>
+						<option label="基本是月光族，及时享乐主义" value="基本是月光族，及时享乐主义" >基本是月光族，及时享乐主义</option>
+<option label="每月会存点钱，但是也要享受生活" value="每月会存点钱，但是也要享受生活" >每月会存点钱，但是也要享受生活</option>
 <option label="每月有固定存款，剩余自由分配" value="每月有固定存款，剩余自由分配">每月有固定存款，剩余自由分配</option>
 <option label="为了未来努力攒钱，勤俭节约过日子" value="为了未来努力攒钱，勤俭节约过日子">为了未来努力攒钱，勤俭节约过日子</option>
 

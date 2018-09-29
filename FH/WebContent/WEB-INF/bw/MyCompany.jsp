@@ -190,7 +190,8 @@
 								<a href="<%=basePath%>user/qx/showMyData.action">我的资料</a>
 							</h3>
 							<input type="button" value="收件箱">&nbsp;<input
-								type="button" value="谁看过我">
+								type="button" value="谁看过我"
+								onclick="window.location.href='<%=basePath%>user/lxd/showVisited.action?page=1'">
 						</div>
 						<div class="sidebar-filter margin-bottom-25">
 
@@ -241,7 +242,7 @@
 											<div>
 												<a href="assets/pages/img/products/model1.jpg"
 													class="btn btn-default fancybox-button">打招呼</a> <a
-													href="<%=basePath%>user/lxd/toUserInfo.action?userId=${user.userId}"
+													href="<%=basePath%>user/lxd/toUserInfo.action?toUserId=${user.userId}"
 													class="btn btn-default fancybox-fast-view">查看资料</a>
 											</div>
 										</div>
@@ -273,7 +274,7 @@
 			<c:forEach items='${allList}' var='user' varStatus='vs'>
 			str += "<div class='col-md-4 col-sm-6 col-xs-12'> <div class='product-item'> <div class='pi-img-wrapper'>"
 					+ "<img src='${user.headPortrait}'class='img-responsive'/> <div> <a href='assets/pages/img/products/model1.jpg' class='btn btn-default fancybox-button'>"
-					+ "打招呼</a> <a href='<%=basePath%>user/lxd/toUserInfo.action?userId=${user.userId}'class='btn btn-default fancybox-fast-view'>查看资料</a>"
+					+ "打招呼</a> <a href='<%=basePath%>user/lxd/toUserInfo.action?toUserId=${user.userId}'class='btn btn-default fancybox-fast-view'>查看资料</a>"
 					+ "</div> </div> <h3> <a href='shop-item.html'>${user.userName}</a> </h3> <div class='pi-price'>"
 					+"${user.strAge}&nbsp;${user.cityName}&nbsp;${user.height}cm </div> <a  onclick='addVisit(${user.userId})' class='btn btn-default add2cart'>添加关注</a>"
 					+ "</div> </div>";
@@ -338,9 +339,9 @@
 				dataType:"text",
 				type:"post",
 				success:function(redata){
-					if (redata="") {
+					if (redata==""||redata==null) {
 						alert("关注成功");
-					} else if(redata!=null){
+					} else if(redata!=null&&redata!=""){
 						alert(redata);
 					}
 				}

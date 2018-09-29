@@ -24,7 +24,8 @@
 	<link rel="apple-touch-icon" sizes="114x114" href="<%=basePath%>images/apple-touch-icon-114x114.png">
     <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'>
    <script type="text/javascript">
-function first(){
+
+   function first(){
 	
 	var page=document.getElementById("page").value;
 	if(page==null){
@@ -87,7 +88,7 @@ function next(){
 	<div class="poswrapheaderline"><div class="headerline"></div></div>  
     <!-- Remove or uncomment depending on if you want a background image or tile -->
     <!--<div class="tiledbackground"></div>-->
-    <img src="images/bg2.jpg" alt="" id="background" />
+    <img src="<%=basePath%>images/bg2.jpg" alt="" id="background" />
     <!-- Change to class="poswrapper wide" and class="whitebackground full" for a full-width site background -->
     <div class="poswrapper"><div class="whitebackground"></div></div>
 
@@ -103,10 +104,10 @@ function next(){
             <div class="mainmenu">
                 <div id="mainmenu" class="ddsmoothmenu">
                     <ul>
-                        <li><a href="#">主页</a>
+                        <li><a href="<%=basePath%>#home">主页</a>
                             
                         </li>
-                        <li><a href="#">我的佳缘</a>
+                        <li><a href="<%=basePath%>user/qx/showMycompany.action">我的佳缘</a>
                           
                         </li>
                         <li><a href="#">收件箱</a>
@@ -143,13 +144,13 @@ function next(){
         
         <div class="sixteen columns row portfolio_filter">
         	<ul>
-                <li><a  data-group="all-group" href="<%=basePath%>user/lxd/showVisit.action?userId=${user.userId}&page=1&toUserId=0&style=19">我看了谁</a><span>|</span></li>
-                <li><a  data-group="web-group" href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=1&toUserId=${user.userId}&style=19" style="color:#FF0000;">谁看了我</a><span>|</span></li>
-                <li><a  data-group="photoshop-group" href="<%=basePath%>user/lxd/showVisit.action?userId=${user.userId}&page=1&toUserId=0&style=20">我攒了谁</a><span>|</span></li>
-                <li><a  data-group="concepts-group" href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=1&toUserId=${user.userId}&style=20">谁攒了我</a><span>|</span></li>
-                <li><a  data-group="print-group" href="<%=basePath%>user/lxd/showVisit.action?userId=${user.userId}&page=1&toUserId=0&style=19">我关注了谁</a><span>|</span></li>
+                <li><a   href="<%=basePath%>user/lxd/showVisit.action?page=1">我看了谁</a><span>|</span></li>
+                <li><a   href="<%=basePath%>user/lxd/showVisited.action?page=1" style="color:#FF0000;">谁看了我</a><span>|</span></li>
+                <li><a   href="<%=basePath%>user/lxd/showAdmire.action?page=1">我赞了谁</a><span>|</span></li>
+                <li><a   href="<%=basePath%>user/lxd/showAdmired.action?page=1">谁赞了我</a><span>|</span></li>
+                <li><a   href="<%=basePath%>user/lxd/showFocus.action?page=1">我关注了谁</a><span>|</span></li>
                 
-                 <li><a  data-group="print-group" href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=1&toUserId=${user.userId}&style=19">谁关注了我</a></li>
+                 <li><a  data-group="print-group" href="<%=basePath%>user/lxd/showFocused.action?page=1">谁关注了我</a></li>
             </ul>
         </div><div class="clear"></div>
         
@@ -159,7 +160,7 @@ function next(){
               <div class="four columns teaser all-group web-group">
           
                <a target='_BLANK' href="<%=basePath%>user/lxd/toUserInfo.action?userId=${vl.toUserId}&toUserId=${vl.userId}" data-text="查看详细资料" class="hovering">
-              
+            
                <c:if test="${vl.photoEntity.URL!=null&&vl.photoEntity.URL!=''}">
 
 				
@@ -191,13 +192,13 @@ function next(){
         <span>总页数：</span><span id="totalPage">${visitTotalPage}</span>
        
               <a
-				href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=1&toUserId=${user.userId}&style=19" onclick="return first()">首页</a>
+				href="<%=basePath%>user/lxd/showVisited.action?page=1" onclick="return first()">首页</a>
 			<a
-				href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=${visitCurrentPage-1}&toUserId=${user.userId}&style=19" onclick="return previous()">上一页</a>
+				href="<%=basePath%>user/lxd/showVisited.action?page=${visitCurrentPage-1}" onclick="return previous()">上一页</a>
 			<a
-				href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=${visitCurrentPage+1}&toUserId=${user.userId}&style=19" onclick="return next()">下一页</a>
+				href="<%=basePath%>user/lxd/showVisited.action?page=${visitCurrentPage+1}" onclick="return next()">下一页</a>
 			<a
-				href="<%=basePath%>user/lxd/showVisit.action?userId=0&page=${visitTotalPage}&toUserId=${user.userId}&style=19" onclick="return last()">末页</a>
+				href="<%=basePath%>user/lxd/showVisited.action?page=${visitTotalPage}" onclick="return last()">末页</a>
         </div>
         <!-- News
 		================================================== -->
