@@ -197,7 +197,9 @@
 
 							<h3>服务中心</h3>
 
-							<h2>我的账户</h2>
+							<h2>
+								<a href="<%=basePath%>user/zzh/accList.action">我的账户</a>
+							</h2>
 
 						</div>
 					</div>
@@ -240,7 +242,8 @@
 										<div class="pi-img-wrapper">
 											<img src="${user.headPortrait}" class="img-responsive">
 											<div>
-												<a href="assets/pages/img/products/model1.jpg"
+												<a
+													href="<%=basePath%>user/lxd/showWrite.action?toUserId=${user.userId}"
 													class="btn btn-default fancybox-button">打招呼</a> <a
 													href="<%=basePath%>user/lxd/toUserInfo.action?toUserId=${user.userId}"
 													class="btn btn-default fancybox-fast-view">查看资料</a>
@@ -273,7 +276,7 @@
 			var str = "";
 			<c:forEach items='${allList}' var='user' varStatus='vs'>
 			str += "<div class='col-md-4 col-sm-6 col-xs-12'> <div class='product-item'> <div class='pi-img-wrapper'>"
-					+ "<img src='${user.headPortrait}'class='img-responsive'/> <div> <a href='assets/pages/img/products/model1.jpg' class='btn btn-default fancybox-button'>"
+					+ "<img src='${user.headPortrait}'class='img-responsive'/> <div> <a href='<%=basePath%>user/lxd/showWrite.action?toUserId=${user.userId}' class='btn btn-default fancybox-button'>"
 					+ "打招呼</a> <a href='<%=basePath%>user/lxd/toUserInfo.action?toUserId=${user.userId}'class='btn btn-default fancybox-fast-view'>查看资料</a>"
 					+ "</div> </div> <h3> <a href='shop-item.html'>${user.userName}</a> </h3> <div class='pi-price'>"
 					+"${user.strAge}&nbsp;${user.cityName}&nbsp;${user.height}cm </div> <a  onclick='addVisit(${user.userId})' class='btn btn-default add2cart'>添加关注</a>"
