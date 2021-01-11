@@ -19,6 +19,7 @@ import org.xmgreat.entity.RoleMenuEntity;
 import org.xmgreat.entity.UserEntity;
 
 @Controller // 此注释的含义是将该类设置成为浏览器提交的上来的类
+//test
 @RequestMapping("/admin/zzh")
 public class AdminHandleZZH
 {
